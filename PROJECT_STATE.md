@@ -1,20 +1,20 @@
 # FISH.IO project state
 
-**C0 complete. C1 modeling candidate delivered for review; visual acceptance pending. C2 not started.**
+**C0 complete. Further C1 refinement in progress from saved work; visual acceptance pending. C2 not started.**
 
 ## Current C1 work
 
-Authorized on 2026-10-12, based on `main` at `0ce0fc6143ea0b4827acd3d341f862a4c2e5090b`. Development branch: `dev/c1-largemouth-bass`. No changes to C0 gameplay, simulation, rendering or application tests. No merge is authorized.
+**C1 NOT ACCEPTED. Targeted anatomical reconstruction is in progress on `dev/c1-largemouth-bass`; draft [PR #2](https://github.com/timporachin/fish.io/pull/2) remains open and unmerged.** Main remains at `95f63b07575cece839f21c6d4dfd6fa9056ebf86` as checked against the remote. C0 application code is unchanged. C2 and Fish Factory are not authorized.
 
-Blender 4.3.2 Python generator authors a 0.455 m largemouth bass candidate, curved quad body with recessed mouth, a separate volumetric mandible and gill covers, embedded eye layers, separate spinous/soft dorsal, paired pectoral/pelvic, anal and caudal fins, and closed modeled rays. Seeded olive/broken-stripe scale textures, normal/roughness maps and olive/amber fin textures are generated and packed. The source has 24 anatomical mesh objects; a temporary joined export produces one GLB mesh with 11 material primitives. No rig, skin or clips are included.
+The owner’s completed feedback requires a fuller forebody tapering toward the tail and fins that blend into substantial roots. Those saved corrections are preserved. The current task reconstructs the upper/lower jaw, rounded lips, mouth corners, maxillary region and adjacent head only, using actual photographed largemouth bass. See [jaw references](docs/C1_JAW_REFERENCES.md) and [owner feedback](docs/C1_OWNER_FEEDBACK.md).
 
-Six 1200 × 800, 64-sample Cycles reference views and the actual Three.js browser screenshot are committed under `docs/evidence/c1/`. Generated Blender/GLB/texture artifacts remain in ignored `artifacts/c1/`, reproducible from the committed generator. See [modeling and render gallery](docs/C1_MODELING.md), [references](docs/C1_REFERENCES.md), [test evidence](docs/C1_TEST_EVIDENCE.md), and [Astra review](docs/C1_REVIEW.md).
+The immediately preceding asset is frozen under `artifacts/c1/anatomy-before/`. A first jaw reconstruction is preserved under `artifacts/c1/anatomical-revision/`, including seven 1600 × 1000 neutral views, matching baseline views and an additional matched three-quarter opening view. It passes the current export and limited articulation checks, but Astra identifies angular lip edges, a pointed posterior corner and a shelf-like mandibular rim. Another geometry correction is underway; these technical passes do not establish biological or visual acceptance. Source checkpoints and generated-asset hashes are retained in [the checkpoint manifest](docs/evidence/c1/jaw/checkpoints/manifest.json).
 
-Final checks pass: independent Blender geometry validation, pinned Khronos GLB validator (0 errors, 0 warnings), actual Three.js texture decoding/rendering, and corrupt/empty/animation/skin/geometry negative cases. Exported cost: 8,488 vertices, 10,976 triangles, 11 draw calls per fish, 2,585,016-byte GLB. Five embedded images: three 1024² and two 512². These checks establish technical validity; they do not establish production visual realism or user acceptance. The near-LOD 8k triangle proposal is exceeded; physical iPhone performance, LODs and deformation remain untested.
+The original performance reference remains **10,976 triangles, 11 draw calls and five textures**. The saved later body/fin asset has 21,762 triangles; the first jaw pass retains that count, uses nine runtime draw calls and packs five embedded textures. **The higher triangle count is an unapproved proposal, not an adopted production budget.** Device profiling, LODs, compression and population performance remain unverified. The next revision’s measurements and visual review must be recorded after its assets are frozen.
 
-**Stop at the C1 visual gate.** The model must not be labeled visually accepted because automated checks pass. Consult the independent review for remaining artistic/anatomical issues; C2 animation work requires the user's approval and further instruction.
+Generated `.blend`, `.glb` and licensed reference photographs remain ignored local artifacts; selected review PNGs, reports, procedural scripts and documentation are committed. Earlier rejected evidence remains under `docs/evidence/c1/before/`, matching-light baseline under `before-matched-lighting/`, and first rework under `rework-1/`.
 
-Draft [PR #2](https://github.com/timporachin/fish.io/pull/2) targets `main`; it remains a draft and is not merged. Main advanced during C1 to `95f63b0`, adding `docs/GAME_DESIGN.md`; that document is incorporated into this development branch and reconciled with the owner’s modeling-only C1 scope. No gameplay proposals were implemented.
+**Stop at the C1 visual gate.** Deliver the final revised asset, seven matching comparison views, photograph-based reference gallery, controlled jaw-opening evidence, geometry/runtime report and independent Astra review. C1 remains unaccepted until the user explicitly approves visual quality; any increased budget also requires explicit approval. No merge or next milestone is authorized.
 
 ## C0 delivery history (retained)
 
