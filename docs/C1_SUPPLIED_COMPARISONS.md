@@ -1,6 +1,6 @@
 # C1 supplied bass: visual review evidence
 
-**C1 NOT ACCEPTED.** This is an attributed personal, noncommercial adaptation of DigitalLife3D Model 67A, not an original model authored from scratch. The procedural checkpoint at `cc12202` remains preserved. See [source and changes](C1_SUPPLIED_ASSET.md), [validation](C1_SUPPLIED_VALIDATION.md), [Astra review](C1_SUPPLIED_REVIEW.md) and [creator/license notice](third-party/DigitalLife3D-Model67A-NOTICE.md).
+**C1 NOT ACCEPTED.** This is an attributed personal, noncommercial adaptation of DigitalLife3D Model 67A, not an original model authored from scratch. The compared procedural checkpoint at `cc12202` remains preserved, along with the separately archived final touchup at `9d4dcb2`. See [source and changes](C1_SUPPLIED_ASSET.md), [validation](C1_SUPPLIED_VALIDATION.md), [Astra review](C1_SUPPLIED_REVIEW.md) and [creator/license notice](third-party/DigitalLife3D-Model67A-NOTICE.md).
 
 ## Seven matched anatomical views
 

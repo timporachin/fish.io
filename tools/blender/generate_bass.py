@@ -14,6 +14,7 @@ import bpy
 import bmesh
 import numpy as np
 from mathutils import Vector
+from mathutils.geometry import tessellate_polygon
 
 
 def args():
@@ -112,20 +113,23 @@ NR, SPLIT, BRIDGE = 56, 17, 12
 HINGE = .151
 TRUNK_X = np.unique(np.concatenate((np.linspace(PROFILE[0][0], HINGE, 39),
                                     np.arange(.078,HINGE,.003))))
-HEAD_X = np.linspace(HINGE, .207, 17)
+NOSE_X = .2095
+HEAD_X = np.linspace(HINGE, NOSE_X, 17)
 # The corner lies behind/below the eye; the bite rises across a broad, blunt
 # muzzle. The small resting gape is real space between two skinned surfaces.
-mouth_marks=((HINGE,-.0087),(.161,-.0083),(.171,-.0068),
-             (.181,-.0040),(.191,-.0004),(.200,.0027),(.207,.0038))
+mouth_marks=((HINGE,shape(HINGE)[2]+shape(HINGE)[0]*math.cos(2*math.pi*SPLIT/NR)),
+             (.158,-.0083),(.167,-.0068),(.177,-.0038),
+             (.187,-.0005),(.198,.0031),(.207,.0044))
 
 def mouth_height(x):
-    return float(np.interp(x,[p[0] for p in mouth_marks],[p[1] for p in mouth_marks]))
+    # Cubic tissue contour avoids the angular joins of a piecewise-linear slot.
+    return cranial_curve_x(x,mouth_marks)
 
 def mouth_gape(x):
     # A rounded commissure opens faster than a triangular vanishing slit,
     # then settles to a narrow, relaxed anterior bite.
-    t=max(0,min(1,(x-HINGE)/(.207-HINGE)))
-    return .0019*t**.85
+    t=max(0,min(1,(x-HINGE)/(NOSE_X-HINGE)))
+    return .0016*math.sin(math.pi*.5*t)**.65
 
 OUTER_OPERCULUM = ((-.040,.124),(-.028,.106),(-.010,.096),
                    (.008,.098),(.022,.116),(.033,.135))
@@ -175,15 +179,15 @@ def cheek_relief(x,z):
     # One low oblong maxillary form follows the side of the upper jaw. A
     # rounded rear terminal sits aft of the eye; the opposite end fades into
     # the upper lip. Its supported lower turn stays above the mouth corner.
-    rear=smooth01((x-.135)/.010)
-    front=1-smooth01((x-.181)/.013)
-    plate_span=rear*front
-    maxilla_z=mouth_height(max(x,HINGE))+.012
-    halfwidth=.0095*(1-.28*smooth01((x-.175)/.016))
-    across=(z-maxilla_z)/halfwidth
-    maxilla=.0046*plate_span*smooth01((1-abs(across))/.36)
-    maxilla_edge=(-.00125*plate_span
-                  *math.exp(-((across+.92)/.20)**2))
+    # Rounded oblong rear maxilla, below/behind the eye. Elliptic support
+    # provides a return into the cheek rather than a rectangular wedge.
+    terminal=math.sqrt(((x-.1535)/.0145)**2+((z-.0030)/.0105)**2)
+    maxilla=.0048*(1-smooth01((terminal-.62)/.43))
+    maxilla_edge=-.0008*math.exp(-((terminal-1.12)/.16)**2)
+    # A narrower anterior arm blends the plate into the upper lip.
+    arm=smooth01((x-.159)/.012)*(1-smooth01((x-.189)/.013))
+    above=z-mouth_height(max(x,HINGE))
+    maxilla+=.0022*arm*math.exp(-((above-.0048)/.0045)**2)
     orbital_r=math.sqrt(((x-.169)/.0118)**2+((z-.024)/.0106)**2)
     orbit=-.0024*math.exp(-(orbital_r/.72)**2)+.0012*math.exp(-((orbital_r-1)/.30)**2)
     return orbit+maxilla+maxilla_edge
@@ -207,11 +211,13 @@ def skin_point(x,theta,z_override=None,lower=False):
         else:
             z-=.0012*bottom_mask*math.exp(-(y/.010)**2)
     r=max(0,min(1,(x-.175)/.032))
-    xx=x-(.0085 if lower else .0078)*r*math.sin(theta)**2
+    xx=x-(.0100 if lower else .0105)*r*math.sin(theta)**2
     if lower:
         # Set the ventral chin back from its rounded forward lip. Without
         # this, the underside and cap center sit almost in the same plane.
-        xx+=.0018*r-.0035*r*max(0,-math.cos(theta))**4
+        xx+=.0024*r-.0090*r*max(0,-math.cos(theta))**2
+    else:
+        xx-=.0020*r*max(0,math.cos(theta))**2
     return (xx,y,z)
 
 verts=[]; faces=[]; uvs=[]; face_mats=[]; face_regions=[]; jaw_weights=[]
@@ -244,6 +250,7 @@ branch_uvs={'upper':[],'lower':[]}
 inner_fracs=(.97,.90,.79,.64,.46,.25,0,-.25,-.46,-.64,-.79,-.90,-.97)
 for i,x_raw in enumerate(HEAD_X):
     x=float(x_raw); h,w,zc=shape(x)
+    r=max(0,min(1,(x-.175)/.032))
     base_edge=zc+h*math.cos(2*math.pi*SPLIT/NR)
     target=mouth_height(x); gap=mouth_gape(x)
     if i==0: target=base_edge; gap=0
@@ -268,6 +275,12 @@ for i,x_raw in enumerate(HEAD_X):
                     influence=(1+math.cos(a))/(1+math.cos(2*math.pi*SPLIT/NR))
                     desired=target-gap*.5
                 z=baseline+(desired-base_edge)*influence
+                # Taper skull/chin thickness into the anterior lip itself.
+                # The former full-height last section forced a blunt cap.
+                nose=smooth01((x-.194)/(NOSE_X-.194))
+                z=desired+(z-desired)*(1-(.30 if part=='upper' else .18)*nose)
+                arch=max(0,1-(math.sin(a)/math.sin(2*math.pi*SPLIT/NR))**2)
+                z+=.0048*smooth01((x-.177)/.030)*arch
                 # Roll the outer skin into a fleshy premaxillary and dentary
                 # lip. This acts on the last few circumferential skin loops,
                 # with its greatest volume just outside the oral edge.
@@ -276,24 +289,47 @@ for i,x_raw in enumerate(HEAD_X):
                 # Keep the bite edge itself nearly closed; the thickening
                 # peaks in the neighboring skin loop instead of opening it.
                 shoulder=lip*(1-math.exp(-(from_lip/.95)**2))
-                z+=(.0018 if part=='upper' else -.0032)*shoulder
+                z+=(.0008 if part=='upper' else -.0013)*shoulder
                 px,py,pz=skin_point(x,a,z,part=='lower')
-                px+=.0034*lip
-                py+=math.copysign(.0009*lip,py)
+                px+=.0010*lip
+                py+=math.copysign(.0005*lip,py)
+                if part=='upper':
+                    # The front snout is a domed half-ellipse above the oral
+                    # arch, not a compressed full skull section or tube.
+                    front_angle=(key/SPLIT)*math.pi*.5
+                    lip_width=abs(skin_point(x,2*math.pi*SPLIT/NR,desired)[1])+.0005*smooth01((x-HINGE)/.020)
+                    snout=smooth01((x-.180)/(NOSE_X-.180))
+                    top=cranial_curve_x(x,((HINGE,shape(HINGE)[2]+shape(HINGE)[0]),
+                                          (.177,.039),(.190,.028),(.200,.021),
+                                          (NOSE_X,.0172)))
+                    py=py*(1-snout)+lip_width*math.sin(front_angle)*snout
+                    pz=pz*(1-snout)+(desired+(top-desired)*math.cos(front_angle))*snout
+                    px=x+.0005*r-.006*r*(py/lip_width)**2-.0070*snout*math.cos(front_angle)**2
+                else:
+                    front_angle=(key-SPLIT)/(NR-2*SPLIT)*math.pi
+                    lip_width=abs(skin_point(x,2*math.pi*SPLIT/NR,desired,True)[1])+.0005*smooth01((x-HINGE)/.020)
+                    py=py*(1-nose)+lip_width*math.cos(front_angle)*nose
+                    pz=pz*(1-nose)+(desired-.012*math.sin(front_angle))*nose
                 vi=len(verts); verts.append((px,py,pz))
                 jaw_weights.append(smooth01((x-HINGE)/.030) if part=='lower' else 0.0)
             ring.append(vi); ring_uv.append(((x-PROFILE[0][0])/(PROFILE[-1][0]-PROFILE[0][0]),key/NR))
+        lip_a=verts[ring[0]]; lip_b=verts[ring[-1]]
+        # Interior samples must follow the actual deformed lip endpoints,
+        # not the undeformed torso ellipse (which can put walls outside skin).
+        actual_width=(abs(lip_a[1])+abs(lip_b[1]))*.5
         for j in (range(len(inner_fracs)) if part=='upper' else range(len(inner_fracs)-1,-1,-1)):
             if i==0:
                 vi=bridge[j]
             else:
                 frac=inner_fracs[j]
-                y=edge_width*frac
-                arch=max(0,1-(y/edge_width)**2)
-                oral_t=max(0,min(1,(x-HINGE)/(.207-HINGE)))
+                y=actual_width*frac
+                arch=max(0,1-frac**2)
+                oral_t=max(0,min(1,(x-HINGE)/(NOSE_X-HINGE)))
                 # The roof and floor deepen behind the rolled anterior rim;
                 # carrying maximum depth to the cap made a broad flat scoop.
-                bow=(.0050*math.sin(math.pi*oral_t)**1.4+.00015*oral_t)*arch
+                depth=(.0050*math.sin(math.pi*oral_t)**1.4+.00015*oral_t if part=='upper'
+                       else .0045*math.sin(math.pi*oral_t)**.8+.0015*oral_t**5)
+                bow=depth*arch
                 # Behind the horseshoe-shaped lip, a recessed roof and floor
                 # carry the cavity aft to the common hinge. A tighter lateral
                 # turn makes the oral edge a rounded lip instead of a sheet.
@@ -301,17 +337,28 @@ for i,x_raw in enumerate(HEAD_X):
                 # Do not push the first cavity section through the shared
                 # hinge plane: that would cross the upper/lower branch fan.
                 inset=min(.0055,.35*(x-HINGE))
-                bridge_x=x-inset*arch*(1-.82*lip_front)-.0015*arch*lip_front
+                edge_x=(lip_a[0]+lip_b[0])*.5
+                bridge_x=edge_x+(x-inset*(1-.82*lip_front)-.0015*lip_front-edge_x)*arch
                 inner_roll=(.0020*math.exp(-((abs(frac)-.79)/.15)**2)
                             *(1-.85*lip_front))
                 # Both halves follow one raised anterior U across the face;
                 # the common lift bends the bite without widening its gap.
-                bite_arch=.0024*smooth01((x-.177)/.030)*arch
+                bite_arch=.0048*smooth01((x-.177)/.030)*arch
                 z=target+bite_arch+(gap*.5+.0006*arch+inner_roll+bow)*(1 if part=='upper' else -1)
                 vi=len(verts); verts.append((bridge_x,y,z))
                 jaw_weights.append(smooth01((x-HINGE)/.030) if part=='lower' else 0.0)
             ring.append(vi)
             ring_uv.append(((x-PROFILE[0][0])/(PROFILE[-1][0]-PROFILE[0][0]),.5+(1-inner_fracs[j])*.06))
+        if i==len(HEAD_X)-1:
+            # A shared convex horseshoe section turns exterior skin into oral
+            # tissue. Ordered X sections eliminate cap meridian overtaking.
+            for vi in ring:
+                px,py,pz=verts[vi]
+                if vi not in ring[:len(keys)]:
+                    px=x+.0005-.006*(py/actual_width)**2
+                elif part=='lower':
+                    px=x+.0005-.006*(py/actual_width)**2-.0080*max(0,math.sin((keys[ring.index(vi)]-SPLIT)/(NR-2*SPLIT)*math.pi))**2
+                verts[vi]=(px,py,pz)
         branch_rings[part].append(ring)
         branch_uvs[part].append(ring_uv)
 
@@ -324,45 +371,43 @@ for part in ('upper','lower'):
             append_face((rings[i][j],rings[i+1][j],rings[i+1][jn],rings[i][jn]),
                         (uv_rings[i][j],uv_rings[i+1][j],uv_rings[i+1][jn],uv_rings[i][jn]),m,
                         1 if part=='upper' else 2)
-    # Round the snout and chin forward through concentric cross-sections.
-    # A single wide triangle fan made a planar diamond across the lower lip.
-    # These rings keep the aperture unchanged while turning the skin smoothly
-    # around each jaw's closed end.
+    # Close the U-shaped tissue rim with a curved strip, not a radial cap.
+    # An arched lip section is concave: contracting it to one center causes
+    # folds or forces a thick planar panel. Its Y/Z outline is tessellated
+    # while X follows the same horseshoe as the exterior and oral surfaces.
     last=rings[-1]; last_uv=uv_rings[-1]
     final_x=float(HEAD_X[-1]); h,w,zc=shape(final_x)
-    # The frontal cap belongs to the lip perimeter, not the midpoint of the
-    # entire skull/chin cross-section. Opposing centers leave a natural small
-    # resting bite while the outer loops carry the full jaw mass behind it.
-    center_z=mouth_height(final_x)+.0024+(.0020 if part=='upper' else -.0020)
-    center_x=final_x+(.0032 if part=='upper' else .0037)
-    center_v=0.0 if part=='upper' else .5
+    # Each section retains full lateral width and converges in tissue
+    # thickness around the bite arch; it never contracts to a center point.
+    actual_width=max(abs(verts[vi][1]) for vi in last)
     boundary,boundary_uv=last,last_uv
-    # A short forward rail clears the last cheek/lip section before the
-    # concentric turn. Contracting immediately beside the tapering head
-    # drove the upper outer wall through the palate near both mouth corners.
-    for scale in (1.0,.80,.58,.34,.15):
+    # One tissue turn replaces the redundant cap rails. A recessed crown
+    # and chin give the turn axial depth without an applied bulb at the tip.
+    for thickness,advance in ((.50,.0007),):
         next_ring=[]; next_uv=[]
         for vi,(u,v) in zip(boundary,boundary_uv):
             px,py,pz=verts[vi]
-            # All cap sections advance in X as coherent planes. Interpolating
-            # each irregular palate vertex from its own X made neighboring
-            # sections overtake one another and fold the anterior lip.
-            nx=final_x+.0007+(center_x-final_x-.0007)*math.sqrt(1-scale*scale)
+            arch=max(0,1-(py/actual_width)**2)
+            if part=='upper':
+                mid_z=mouth_height(final_x)+.0008+.5*(.0120*math.sqrt(arch)+.0055*arch)
+            else:
+                mid_z=mouth_height(final_x)-.0008+.5*(.0027*arch-.0120*math.sqrt(arch))
+            front_x=final_x+.0005+advance-.006*(py/actual_width)**2
+            nx=px+(front_x-px)*.85
             next_ring.append(len(verts))
-            verts.append((nx,py*scale,center_z+(pz-center_z)*scale))
+            verts.append((nx,py,mid_z+(pz-mid_z)*thickness))
             jaw_weights.append(1.0 if part=='lower' else 0.0)
-            next_uv.append((u*scale+(1-scale),v*scale+center_v*(1-scale)))
+            next_uv.append((u,v))
         for j in range(len(last)):
             jn=(j+1)%len(last)
             append_face((last[j],next_ring[j],next_ring[jn],last[jn]),
                         (last_uv[j],next_uv[j],next_uv[jn],last_uv[jn]),0,
                         1 if part=='upper' else 2)
         last,last_uv=next_ring,next_uv
-    center=len(verts); verts.append((center_x,0,center_z))
-    jaw_weights.append(1.0 if part=='lower' else 0.0)
-    for j in range(len(last)):
-        jn=(j+1)%len(last)
-        append_face((center,last[jn],last[j]),((1,center_v),last_uv[jn],last_uv[j]),0,
+    contour=[Vector((verts[vi][1],verts[vi][2],0)) for vi in last]
+    for triangle in tessellate_polygon([contour]):
+        js=list(reversed(triangle))
+        append_face(tuple(last[j] for j in js),tuple(last_uv[j] for j in js),0,
                     1 if part=='upper' else 2)
 
 body=mesh('Body_quadrilateral_loft',verts,faces,BODY_MAT,uvs)
@@ -376,6 +421,39 @@ body['jaw_hinge_x']=HINGE
 body['jaw_hinge_y']=0.0
 body['jaw_hinge_z']=mouth_height(HINGE)
 body['jaw_open_axis']='Y'
+
+# Support the oblong maxillary return locally; two circumferential samples
+# across its height cannot resolve a rounded plate. Subdivision is confined
+# to exterior cheek faces forward of the preserved rear-body boundary.
+bm=bmesh.new(); bm.from_mesh(body.data)
+regions=bm.faces.layers.int.get('anatomical_region')
+relief_layer=bm.verts.layers.float.new('maxillary_interpolation')
+for vertex in bm.verts:
+    vertex[relief_layer]=cheek_relief(vertex.co.x,vertex.co.z)
+original_vertices={vertex:index for index,vertex in enumerate(bm.verts)}
+original_positions={vertex:vertex.co.copy() for vertex in bm.verts}
+support_edges=set()
+for face in bm.faces:
+    center=face.calc_center_median()
+    if (face.material_index==0 and face[regions] in (0,1)
+        and .142<=center.x<=.174 and -.008<=center.z<=.015
+        and abs(center.y)>=.022 and all(v.co.x>.132 for v in face.verts)):
+        support_edges.update(face.edges)
+if support_edges:
+    bmesh.ops.subdivide_edges(bm,edges=list(support_edges),cuts=1,use_grid_fill=True)
+    for vertex in bm.verts:
+        if vertex not in original_vertices:
+            delta=cheek_relief(vertex.co.x,vertex.co.z)-vertex[relief_layer]
+            vertex.co.y+=delta*(1 if vertex.co.y>=0 else -1)
+        else:
+            vertex.co=original_positions[vertex]
+    # Preserve the source vertex IDs used by the rear-body regression hash.
+    new_order={vertex:index+len(original_vertices) for index,vertex in enumerate(bm.verts)
+               if vertex not in original_vertices}
+    bm.verts.sort(key=lambda vertex: original_vertices.get(vertex,new_order.get(vertex)))
+    bm.verts.index_update()
+bm.verts.layers.float.remove(relief_layer)
+bm.to_mesh(body.data); bm.free(); body.data.update()
 
 def uv_sphere(name, loc, scale, material, segments=24, rings=12):
     bpy.ops.mesh.primitive_uv_sphere_add(segments=segments, ring_count=rings, location=loc)
@@ -640,6 +718,13 @@ for ob in FISH:
 # Shared origin remains at body center, usable by a later dedicated rig stage.
 for ob in FISH:
     ob.hide_render=False
+
+# Local refinement can leave subnormal numeric noise on the untouched dorsal
+# axis. Keep analytically zero rear-axis coordinates exactly zero, preserving
+# the existing indexed position fingerprint without weakening its check.
+for vertex in body.data.vertices:
+    if vertex.co.x<=.13 and abs(vertex.co.y)<1e-20:
+        vertex.co.y=0.0
 
 # Export a joined copy for low draw-call playback. The anatomical source
 # objects remain independent in the .blend for later skinning and review.

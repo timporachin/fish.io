@@ -1,3 +1,49 @@
+# C1 jaw final-touchup modeling handoff
+
+**C1 NOT ACCEPTED; the final attempt fails the requested anatomical/visual standard.** This is the owner's final touchup attempt on `dev/c1-largemouth-bass` and draft PR #2. Owner visual approval and geometry-budget approval remain outstanding. No merge, C2 or Fish Factory is authorized. The final candidate is a procedural mesh referenced to photographs; it is not a photogrammetry scan or a dimensionally certified CAD reconstruction.
+
+## Final mesh changes
+
+The final source keeps the fuller head and anterior projection after withdrawing an overcompressed diagnostic. It changes the anterior exterior-to-oral correspondence, snout contour, curved bite, oral-floor depth and convex mandibular contour. Concave oral sections close with a horseshoe-shaped tissue strip and projected contour tessellation instead of contracting to a single cap center. The posterior maxillary relief is supported by local exterior cheek subdivision and an oval contour placed above the mouth seam. The final-image review still finds this contour too sharply bounded and the terminal seam unresolved. Original cheek vertices are preserved during subdivision; new points carry the local relief. Fin and rear-body indexed position fingerprints match the regenerated v2 baseline exactly.
+
+These are actual mesh changes. `bass_materials.py` is byte-for-byte unchanged. Primary cameras, neutral white lighting, exposure and render settings match the preceding evidence. Supplemental uniform-material views show the same geometry without texture detail. Source/asset identities and the independent anatomical verdict belong to the final evidence manifest and review, not to these implementation descriptions.
+
+The final asset has **22,238 triangles / nine runtime draw calls / five embedded images**, versus the owner's **10,976 / 11 / five** reference. Removing four cap sections and both center vertices removes 676 triangles; local maxillary support adds 660. Net reduction from v2 is only 16 triangles (0.0719%), not meaningful overall budget optimization. The entire higher budget remains unapproved. Existing fin/rear geometry is retained rather than silently decimated. No LOD, population or physical-device performance qualification is claimed.
+
+## Reproduce the final candidate
+
+From the repository root with Blender 4.3.2 and installed pinned npm dependencies:
+
+```sh
+blender --background --python-exit-code 1 --python tools/blender/generate_bass.py -- --seed 1947 --output artifacts/c1/jaw-final --skip-renders
+npm run test:bass --prefix tools/blender -- ../../artifacts/c1/jaw-final/largemouth-bass.glb
+```
+
+For the exact v2 source used to rebuild the geometry baseline, see `docs/evidence/c1/jaw/final-touchup/checkpoints/v2/`. The generator hash must match the historical v2 source recorded in the preceding review. Regenerating a `.blend` changes its file identity, even if the deterministic geometry matches.
+
+```sh
+blender --background --python-exit-code 1 --python docs/evidence/c1/jaw/final-touchup/checkpoints/v2/generate_bass.py -- --seed 1947 --output artifacts/c1/checkpoint-v2 --skip-renders
+blender --background --python-exit-code 1 --python tools/blender/render_jaw_revision.py -- --before artifacts/c1/checkpoint-v2/largemouth-bass.blend --after artifacts/c1/jaw-final/largemouth-bass.blend --output-dir artifacts/c1/jaw-final/jaw-qa --require-geometry-pass
+```
+
+This last command freshly renders both sides. The delivered primary set instead uses `--skip-before-renders`: geometry checks load the regenerated baseline, while the before pictures are the verbatim, previously rendered v2 images, with their original asset/image lineage preserved separately in the manifest. Do not attribute those historical pixels to the regenerated baseline's new `.blend` hash. The candidate's new images are bound to the exact frozen final `.blend` by the new QA report.
+
+The seven primary after views are 1600 × 1000, 128 Cycles samples, fixed orthographic cameras and neutral white lighting, without denoising. Supplemental open three-quarter rendering uses `--views jaw_open_25deg --open-three-quarter`. Additional three-view uniform-material comparisons use `--clay --views close_right_mouth,front_three_quarter_head,jaw_open_25deg --open-three-quarter --samples 32 --width 1200 --height 750`; their baseline pictures are freshly rendered from the regenerated v2 source.
+
+The QA opening is a weighted 25° lower-jaw deformation fixture. It is not a rig, feeding-motion validation, maxillary articulation, skin or animation clip. C2 remains outside scope. Strict triangle-crossing checks exclude shared-vertex pairs and do not classify coplanar contacts or enclosed volumes.
+
+A private photographic gallery can be rebuilt with:
+
+```sh
+python tools/blender/build_jaw_gallery.py --qa-dir artifacts/c1/jaw-final/jaw-qa --baseline-metrics docs/evidence/c1/jaw/browser-validation.json --candidate-metrics artifacts/c1/jaw-final/browser-validation.json --reference-dir artifacts/c1/references --baseline-label 'Previous v2 (NOT ACCEPTED)' --baseline-cost-label 'Previous v2 (unapproved)' --embed-images --output artifacts/c1/jaw-final/jaw-qa/jaw-comparison.html
+```
+
+Keep the licensed reference photographs, the embedded gallery, GLB and Blender asset under ignored `artifacts/`. Permitted renders, reports and reproducible sources are committed under `docs/evidence/c1/jaw/final-touchup/`. Inspect the latest [comparisons](C1_JAW_COMPARISONS.md), [validation](C1_JAW_VALIDATION.md), [independent final review](C1_JAW_FINAL_REVIEW.md) and [photographic reference limits](C1_JAW_REFERENCES.md).
+
+## Superseded v2 handoff (historical)
+
+The following retained record describes the previous v2 candidate, not the final touchup.
+
 # C1 jaw reconstruction — modeling handoff
 
 **Status: C1 NOT ACCEPTED.** The second jaw revision is frozen as an unaccepted review candidate. Seven matched 1600 × 1000 views, a supplemental open three-quarter comparison and the independent Astra review are delivered; owner visual and budget approval remain pending. The first jaw pass under `docs/evidence/c1/jaw/pass-1/` is a diagnostic checkpoint, not the final candidate.

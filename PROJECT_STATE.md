@@ -12,7 +12,23 @@ The static candidate retains the supplied head, volumetric jaws, oral pocket, bo
 
 Astra recommends presenting this anatomically stronger candidate for owner review while identifying a subtle upper-snout centerline seam, reduced close-up skin detail, broad/opaque-looking fin ribs and source-derived fin-root/dorsal-boundary limitations. **C1 remains NOT ACCEPTED.** Technical checks do not establish full photographic realism or deformation readiness. The owner’s visual approval remains pending; no merge, C2 or Fish Factory work is authorized by this checkpoint.
 
-## Preserved procedural C1 checkpoint
+## Preserved final procedural touchup (`9d4dcb2`)
+
+Existing branch `dev/c1-largemouth-bass`, draft [PR #2](https://github.com/timporachin/fish.io/pull/2), unmerged. Main remains at `95f63b07575cece839f21c6d4dfd6fa9056ebf86`. Application/simulation code and existing test assertions are unchanged.
+
+The final attempt modifies the jaw mesh: curved snout-to-lip and oral tissue transitions, local posterior maxillary support, deeper oral floor and a recessed convex chin. The overcompressed diagnostic was withdrawn following owner feedback that the face was becoming shorter/flatter. The final approximately 0.4524 m asset retains the fuller head and anterior projection. Fin and rear-body indexed position fingerprints exactly match the saved v2 source. Material source, primary cameras, neutral lighting and exposure remain unchanged; additional uniform-material pictures expose surface geometry.
+
+**Visual acceptance is withheld.** The owner's standard is CAD-grade accuracy and photogrammetry scan quality. Four uncalibrated photographs of different fish and an original procedural mesh cannot certify those standards. The independent [final Astra review](docs/C1_JAW_FINAL_REVIEW.md) records the actual final-image findings and remaining defects. Technical PASS is separate from biological/visual acceptance. This was the last authorized touchup attempt; stop for owner inspection and explicit approval.
+
+The final asset is **22,238 triangles / nine runtime draw calls / five embedded maps**. The owner's **10,976 / 11 / five** remains the reference, and the entire increase is unapproved. Cap simplification removes 676 triangles; local cheek support adds 660, for only 16 fewer than the previous 22,254 proposal. This is not meaningful overall budget optimization. No LOD, population, iPhone/Safari or thermal result is established.
+
+Khronos validation: zero errors/warnings. Three.js loads five images; zero skins/clips. Closed/outward/finite body checks and expanded strict upper/lower/cross-jaw checks pass at rest and in the 25° fixture. The application build, six unit tests and two browser tests pass. Contact/coplanar and enclosed-volume limitations remain; the deformation fixture is not a rig or a natural feeding sequence.
+
+Review [matched final comparisons](docs/C1_JAW_COMPARISONS.md), [latest review](docs/C1_JAW_REVIEW.md), [validation](docs/C1_JAW_VALIDATION.md), [modeling/reproduction](docs/C1_JAW_MODELING.md), [reference limits](docs/C1_JAW_REFERENCES.md) and [final manifest](docs/evidence/c1/jaw/final-touchup/manifest.json). Permitted renders/reports and exact v2 baseline sources are committed under `docs/evidence/c1/jaw/final-touchup/`. Historical v2 baseline images retain their original source identity; geometry validation uses an explicitly regenerated baseline with a distinct `.blend` hash.
+
+The final local Blender/GLB and private photographic gallery are under ignored `artifacts/c1/jaw-final/`; licensed stock photos stay in ignored `artifacts/c1/references/`. Previous evidence remains preserved. No C1 completion, merge, release, C2 or Fish Factory is authorized.
+
+## Earlier procedural checkpoint (`cc12202`)
 
 **C1 NOT ACCEPTED.** A targeted jaw reconstruction checkpoint is delivered on `dev/c1-largemouth-bass`; draft [PR #2](https://github.com/timporachin/fish.io/pull/2) remains unmerged. C0 application, simulation and tests are unchanged. Main remains at `95f63b07575cece839f21c6d4dfd6fa9056ebf86`. C2 and Fish Factory have not started.
 

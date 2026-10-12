@@ -31,8 +31,8 @@
       "sha256": "c70bb04d35c8c10cede0ff9d8486a7189f88fae42e05cb249dbde2ceb7af0168"
     },
     "gallery-command.json": {
-      "bytes": 1892,
-      "sha256": "be53776fa91d21de93662c0ba5dbe7ed5c1f945d9a1c978d1e6f7f3d475bbba7"
+      "bytes": 1884,
+      "sha256": "167215cc033bd04d4c1fa589b556ac922e06c01501bb28a9a59c5e542f276c36"
     },
     "qa/browser-qa.json": {
       "bytes": 4645,
@@ -261,8 +261,9 @@
       "sha256": "1444f56a939aade37c2da9e3cf6f43cec0f235438b380d4cc13a55fd80a4bff4"
     },
     "qa-gallery/jaw-comparison.html": {
-      "bytes": 69687654,
-      "sha256": "ff5234b00fa891e9c5bc4eb6d2c216d8d67aea6d0d636d193c07a20b1aca014b"
+      "bytes": 69687696,
+      "sha256": "ddd2962b73303e78bf3e5d47ea71ae4e9d808f86272ab20abb4a3e88901c00f8"
     }
-  }
+  },
+  "preserved_remote_touchup_checkpoint": "9d4dcb20a82a6bc1e6bcab1f23eaf1d6065e47ee"
 }

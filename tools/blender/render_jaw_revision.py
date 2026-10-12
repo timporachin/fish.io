@@ -45,6 +45,8 @@ def arguments():
     parser.add_argument("--width", type=int, default=1600)
     parser.add_argument("--height", type=int, default=1000)
     parser.add_argument("--skip-renders", action="store_true")
+    parser.add_argument("--skip-before-renders", action="store_true",
+                        help="Check rebuilt baseline geometry; use separately preserved baseline image evidence")
     parser.add_argument("--require-geometry-pass", action="store_true",
                         help="Exit nonzero if any revision structural or opening check fails")
     parser.add_argument("--after-only", action="store_true",
@@ -53,6 +55,8 @@ def arguments():
                         help="Existing matched report required by --after-only")
     parser.add_argument("--open-three-quarter", action="store_true",
                         help="Use supplemental three-quarter camera for the opening view")
+    parser.add_argument("--clay", action="store_true",
+                        help="Additional geometry-only inspection with uniform matte material")
     argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
     args = parser.parse_args(argv)
     args.views = tuple(args.views.split(","))
@@ -420,6 +424,16 @@ def run_one(label, input_path, output, args):
     if body is None or body.type != "MESH":
         raise RuntimeError(f"{input_path}: missing {BODY_NAME}")
     camera = neutral_scene(scene, args)
+    if args.clay:
+        clay = bpy.data.materials.new("QA uniform geometry inspection")
+        clay.use_nodes = True
+        shader = clay.node_tree.nodes.get("Principled BSDF")
+        shader.inputs["Base Color"].default_value = (.42,.42,.42,1)
+        shader.inputs["Roughness"].default_value = .7
+        for obj in scene.objects:
+            if obj.type == "MESH":
+                for index in range(len(obj.data.materials)):
+                    obj.data.materials[index] = clay
     hinge_x = float(body.get("jaw_hinge_x", .151))
     record = {
         "input": str(input_path.resolve()), "inputSha256": hashlib.sha256(input_path.read_bytes()).hexdigest(),
@@ -466,6 +480,9 @@ def verified_prior_baseline(args):
             raise ValueError(f"Prior baseline {key} differs from requested render setup")
     if bool(prior["render"].get("supplementalOpenThreeQuarter", False)) != args.open_three_quarter:
         raise ValueError("Prior baseline opening camera differs from requested render setup")
+    mode = "uniform matte geometry inspection" if args.clay else "authored materials"
+    if prior["render"].get("materialMode", "authored materials") != mode:
+        raise ValueError("Prior baseline material mode differs from requested render setup")
     baseline = prior["before"]
     if hashlib.sha256(args.before.read_bytes()).hexdigest() != baseline["inputSha256"]:
         raise ValueError("Preserved baseline Blender file has changed")
@@ -502,11 +519,16 @@ def main():
             "Hinge-to-front X span is a mouth-depth proxy; maximum tested opening is 25 degrees, not a biological maximum.",
         ],
     }
+    report["render"]["materialMode"] = "uniform matte geometry inspection" if args.clay else "authored materials"
     if args.after_only:
         report["before"] = verified_prior_baseline(args)
         report["baselineGalleryReport"] = str(args.baseline_report.resolve())
     else:
+        requested_skip = args.skip_renders
+        args.skip_renders = requested_skip or args.skip_before_renders
         report["before"] = run_one("before", args.before, output, args)
+        args.skip_renders = requested_skip
+        report["baselineRendersSkipped"] = args.skip_before_renders
     report["after"] = run_one("after", args.after, output, args)
     baseline_fins = report["before"]["sourceInventory"]["fins"]
     revision_fins = report["after"]["sourceInventory"]["fins"]

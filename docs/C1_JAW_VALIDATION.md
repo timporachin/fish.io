@@ -1,3 +1,44 @@
+# C1 final-touchup validation
+
+**C1 NOT ACCEPTED.** These are technical results for the frozen final touchup. They do not establish anatomical acceptance, CAD dimensional accuracy or photogrammetry scan quality. See the [independent final review](C1_JAW_FINAL_REVIEW.md) and [comparison evidence](C1_JAW_COMPARISONS.md). Draft PR #2 stays unmerged.
+
+| Check | Final result |
+| --- | --- |
+| GLB / Khronos | Zero errors, zero warnings; 13 informational messages |
+| Runtime geometry | 22,238 triangles; 15,212 exported vertices; one mesh, nine primitives and nine Three.js draw calls |
+| Maps | Five decoded embedded images: three 1024² body maps, two 512² maps, shared pectoral/iris atlas |
+| Source | 11,387 vertices; 16 authored mesh objects; connected body has 5,355 vertices and 10,706 triangles |
+| Authored length | Approximately 0.452403 m |
+| Source geometry | Closed, outward-facing and finite; no reported loose vertices, zero-area faces or winding failures |
+| Head crossings | Zero detected strict intra-upper, intra-lower and cross-jaw crossings, both at rest and at 25° |
+| Preservation | Every fin geometry fingerprint and the indexed rear-body positions at X ≤ 0.13 m match the rebuilt v2 source |
+| Aperture proxy | 3.06 mm at rest; 26.41 mm in the 25° temporary deformation |
+| Rig / animation | Zero skins, zero skinned meshes and zero clips |
+| Asset bytes | GLB 3,906,464; Blender 5,023,436 |
+| Application checks | Production build, six unit tests and two browser tests pass |
+
+The unchanged existing suites exercise corrupt GLB, unexpected skin/animation, empty mesh, split atlas, missing parts and invalid geometry cases within their implemented scope. Neither source nor runtime assertions have been relaxed. Final source, asset and image hashes are recorded in the [manifest](evidence/c1/jaw/final-touchup/manifest.json) and the linked raw reports.
+
+## Geometry cost assessment
+
+The owner's reference remains **10,976 triangles / 11 draw calls / five maps**. The final **22,238 / nine / five** is an unapproved proposal, 11,262 triangles (+102.61%) above that reference. It is only 16 triangles (0.0719%) below the previous unapproved 22,254 candidate. Four cap sections and both fan centers are removed (676 triangles), while local cheek support adds 660 triangles. This is a different allocation of almost the same overall cost, not a meaningful population-performance optimization. Cheek support addresses sparse sampling of the anatomical return; added density does not by itself establish that the resulting form is correct. No altered fin or rear-body topology is passed off as unchanged.
+
+No LOD, compression, thermal test, iPhone/Safari measurement, scan-to-mesh deviation report or calibrated dimensional tolerance exists for this candidate. The five-map full-mip RGBA8 arithmetic remains approximately 18.67 MiB, not measured GPU residency. Six final fish would contribute 133,428 triangles and 54 calls; eight would contribute 177,904 triangles and 72 calls before habitat rendering. These are arithmetic costs, not measured performance.
+
+## Evidence identities and limits
+
+The seven new primary candidate images and supplemental open three-quarter are 1600 × 1000 at 128 Cycles samples, fixed orthographic cameras and unchanged neutral lighting, without denoising. The additional uniform-material set is three matched views at 1200 × 750 and 32 samples; its baseline is freshly rendered from regenerated v2 geometry.
+
+Primary before pictures are the verbatim previous v2 after pictures, retaining their original Blender/image identities. The v2 geometry baseline was regenerated from the exact archived generator and material-source hashes for the preservation/crossing checks. Its new `.blend` metadata/file hash is distinct. `--skip-before-renders` leaves `before.renderFiles` empty in the new report; historical baseline-image provenance is separately recorded in the manifest. Do not bind historical pixels to the regenerated file hash.
+
+The strict crossing method excludes shared-vertex pairs and does not classify coplanar contacts or enclosed volumes. The fixture rotates weighted lower-jaw vertices and tests geometry at one angle; it does not validate natural maxillary rotation, premaxillary protrusion, hyoid motion, a production rig or a feeding sequence. Aperture is a selected vertex-band proxy, not a measured landmark. Four uncalibrated photographs of different fish provide form references; they cannot certify CAD accuracy or scan fidelity.
+
+Reproduce asset, runtime checks and render fixtures using [C1 modeling handoff](C1_JAW_MODELING.md). Keep C1 open for owner inspection and explicit approval; no merge, C2 or Fish Factory.
+
+## Superseded v2 validation (historical)
+
+The following retained record belongs to the preceding v2 candidate.
+
 # C1 jaw reconstruction — validation scaffold
 
 **Status: C1 NOT ACCEPTED.** The frozen v2 asset has passed the executed format, runtime and strengthened geometry checks below. Astra’s final visual recommendation is HOLD; owner visual and budget approval are pending.

@@ -11,7 +11,7 @@
     "artifacts/c1/supplied-candidate/qa-historical",
     "--embed-images",
     "--baseline-label",
-    "Before: supplied full-resolution source",
+    "Supplied full-resolution source",
     "--comparison-note",
     "Matched full-resolution supplied source and reduced candidate, followed by six rejected-procedural comparisons. Source PBR paths/connections/color spaces are repaired for comparison; the original is unchanged. The candidate adds reduced geometry/textures and fin opacity. Temporary opening uses the verified exact reduced QA mesh.",
     "--cost-note",
