@@ -9,7 +9,7 @@ Executed in `/workspace/fish.io`, cloud Debian environment, 2026-10-12 UTC. Blen
 | `npm test` | 6 C0 unit tests pass |
 | `npm run test:e2e` | 2 C0 browser tests pass, including context recovery |
 | `npm run smoke --prefix tools/blender` | C0 animated non-fish fixture exports and validates with 0 errors/warnings; corrupt GLB rejected |
-| `blender -b --python tools/blender/generate_bass.py` | Final seed-1947 Blender source, GLB and all six 1200 × 800 / 64-sample Cycles renders produced |
+| `blender --background --python-exit-code 1 --python tools/blender/generate_bass.py -- --output-dir artifacts/c1` | Final seed-1947 Blender source, GLB and all six 1200 × 800 / 64-sample Cycles renders produced |
 | `npm run test:bass --prefix tools/blender` | Final C1 export, browser and independent authored-geometry checks pass |
 | Khronos GLB validator | 0 errors, 0 warnings, 18 informational messages |
 | Actual Three.js load | 11 draws, 10,976 triangles; no clips/skins; five embedded images decoded; body color/normal/roughness PBR slots present |
@@ -18,10 +18,12 @@ Executed in `/workspace/fish.io`, cloud Debian environment, 2026-10-12 UTC. Blen
 | Negative cases | Corrupt GLB rejected by validator and loader; empty geometry, unexpected clips/skins, missing fin, loose vertex and inconsistent winding rejected |
 | Final visual review | All six views and exported-model browser screenshot inspected by root/modeler/Astra; Astra recommends changes for production realism, not acceptance |
 
-Final GLB SHA-256: `06697fb80f665ee7d2dc951698c47e50111f77bc49a5100bd03b2e1d8fe19836`.
+The final camera-only reconciliation with the concurrent game-design document regenerated all six views (five orthographic; front three-quarter perspective at 60 mm), then the full C1 suite passed again. Geometry costs remain unchanged.
 
-Final `.blend` SHA-256: `3ccdf942534aed32de90b04962c0524568aab4f2d2b3a20b648338a5b0f73e47`.
+Final GLB SHA-256: `851052321895192dad228db459a43a3787f4a9538d59b835e2b30654b46b0865`.
 
-Machine reports and render hashes are retained in [evidence/c1](evidence/c1/manifest.json); source statistics and independent validation use different boundary/nonmanifold terminology explained in [modeling notes](C1_MODELING.md). The production generator command should include `--python-exit-code 1` (the npm wrapper does); the successful final render run above also produced a complete report/artifact set checked independently.
+Final `.blend` SHA-256: `384f0c75fd6367fdfb45f6370d6c8ed96426ed38fa8cc31913dfd4d7542537f2`.
+
+Machine reports and render hashes are retained in [evidence/c1](evidence/c1/manifest.json); source statistics and independent validation use different boundary/nonmanifold terminology explained in [modeling notes](C1_MODELING.md).
 
 No physical iPhone, Safari, skinning, jaw-opening deformation, animation loop or thermal/memory endurance tests occurred. Automated validation does not prove biological accuracy, every self-intersection, realistic appearance, or achieved device budgets. The retained PNGs are evidence for one frozen candidate; generated Blender/GLB/texture binaries remain ignored and are reproducible from source. Existing GitHub CI continues to check C0; Blender/C1 asset checks ran in this cloud and are not provisioned in CI. C2 and merge remain gated on the user.

@@ -14,6 +14,8 @@ Final checks pass: independent Blender geometry validation, pinned Khronos GLB v
 
 **Stop at the C1 visual gate.** The model must not be labeled visually accepted because automated checks pass. Consult the independent review for remaining artistic/anatomical issues; C2 animation work requires the user's approval and further instruction.
 
+Draft [PR #2](https://github.com/timporachin/fish.io/pull/2) targets `main`; it remains a draft and is not merged. Main advanced during C1 to `95f63b0`, adding `docs/GAME_DESIGN.md`; that document is incorporated into this development branch and reconciled with the owner’s modeling-only C1 scope. No gameplay proposals were implemented.
+
 ## C0 delivery history (retained)
 
 

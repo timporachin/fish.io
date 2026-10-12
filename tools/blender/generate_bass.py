@@ -637,7 +637,7 @@ stats['mesh_validation']={ob.name:topology_metrics(ob) for ob in FISH}
 if stats['mesh_validation'][body.name]['boundary_edges'] or stats['mesh_validation'][body.name]['nonmanifold_edges']:
     raise RuntimeError('Body must be a closed manifold including the recessed mouth cavity')
 
-# Six orthographic studio views on a neutral blue-gray background. Camera
+# Five orthographic views and a perspective three-quarter studio view. Camera
 # placement names describe the face of the fish visible in Blender coordinates.
 world=bpy.context.scene.world
 world.color=(.14,.19,.20)
@@ -672,6 +672,8 @@ for view,position in views.items():
     if A.render_view and view!=A.render_view:
         continue
     cam.location=position
+    cam_data.type='PERSP' if view=='front_three_quarter' else 'ORTHO'
+    cam_data.lens=60
     cam.rotation_euler=(Vector((0,0,0))-cam.location).to_track_quat('-Z','Y').to_euler()
     if view in ('front','rear'):
         cam_data.ortho_scale=.38
@@ -687,6 +689,7 @@ for view,position in views.items():
         bpy.ops.render.render(write_still=True)
         stats['render_files'].append(path.name)
 cam.location=views['front_three_quarter']
+cam_data.type='PERSP'
 cam.rotation_euler=(Vector((0,0,0))-cam.location).to_track_quat('-Z','Y').to_euler()
 cam_data.ortho_scale=.54
 bpy.context.scene.render.filepath=str(OUT/'front_three_quarter.png')

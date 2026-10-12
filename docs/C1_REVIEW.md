@@ -2,21 +2,21 @@
 
 **Recommendation: REQUEST CHANGES against the requested production-quality realism standard.** This is a technically valid, reviewable modeling candidate, not a visually accepted production asset. User approval is pending. C1 remains open; C2, merging, and release are not authorized by this review.
 
-This review supersedes the preliminary 04:49 review. It covers the final coherent six-view set generated on 2026-10-12 around 04:58 UTC and the refreshed 04:59 Three.js evidence. Previously reported floating mouth rails, stacked protruding eye layers, and the multi-lobed angular tail were corrected and are not current findings.
+This review supersedes the preliminary 04:49 review. It covers the final coherent six-view set generated on 2026-10-12 around 05:07 UTC and the refreshed Three.js validation evidence. Previously reported floating mouth rails, stacked protruding eye layers, and the multi-lobed angular tail were corrected and are not current findings.
 
 ## Reviewed artifacts
 
 All six 1200 × 800, 64-sample Blender renders were inspected individually: [left](evidence/c1/left.png), [right](evidence/c1/right.png), [front](evidence/c1/front.png), [rear](evidence/c1/rear.png), [top](evidence/c1/top.png), and [front three-quarter](evidence/c1/front_three_quarter.png). The current [Three.js screenshot](evidence/c1/largemouth-bass-browser.png), generator, geometry report, and browser validation report were also inspected.
 
-The five principal cameras are orthographic and aligned to their named axes; the sixth is an elevated front three-quarter view. Anatomical left is viewed from +Y and right from -Y, with the nose +X and dorsal direction +Z in Blender. All views frame the complete fish.
+The five principal cameras are orthographic and aligned to their named axes; the sixth is an elevated front three-quarter perspective view using a 60 mm lens, satisfying the mixed orthographic/perspective evidence requirement in [GAME_DESIGN.md](GAME_DESIGN.md). Anatomical left is viewed from +Y and right from -Y, with the nose +X and dorsal direction +Z in Blender. All views frame the complete fish.
 
 The reviewed GLB is `artifacts/c1/largemouth-bass.glb`, SHA-256:
 
-`06697fb80f665ee7d2dc951698c47e50111f77bc49a5100bd03b2e1d8fe19836`
+`851052321895192dad228db459a43a3787f4a9538d59b835e2b30654b46b0865`
 
 The reviewed Blender source is `artifacts/c1/largemouth-bass.blend`, SHA-256:
 
-`3ccdf942534aed32de90b04962c0524568aab4f2d2b3a20b648338a5b0f73e47`
+`384f0c75fd6367fdfb45f6370d6c8ed96426ed38fa8cc31913dfd4d7542537f2`
 
 Hashes were checked against the actual files and agree with `artifacts/c1/browser-validation.json`. The final source contains 24 anatomical mesh objects. Export joins a temporary copy into one mesh with material primitives, preserving the separate authoring parts.
 

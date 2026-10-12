@@ -95,7 +95,7 @@
       "nonmanifold_edges": 0,
       "zero_area_faces": 0,
       "connected_components": 1,
-      "signed_volume_m3": 3.5827688569569487e-07,
+      "signed_volume_m3": 3.58276885695695e-07,
       "uv_finite": true,
       "normals_finite": true
     },
@@ -128,7 +128,7 @@
       "nonmanifold_edges": 0,
       "zero_area_faces": 0,
       "connected_components": 1,
-      "signed_volume_m3": 8.08922033380115e-10,
+      "signed_volume_m3": 8.089220333801149e-10,
       "uv_finite": true,
       "normals_finite": true
     },
@@ -161,7 +161,7 @@
       "nonmanifold_edges": 0,
       "zero_area_faces": 0,
       "connected_components": 1,
-      "signed_volume_m3": 3.5827688569569487e-07,
+      "signed_volume_m3": 3.582768856956949e-07,
       "uv_finite": true,
       "normals_finite": true
     },
@@ -183,7 +183,7 @@
       "nonmanifold_edges": 0,
       "zero_area_faces": 0,
       "connected_components": 1,
-      "signed_volume_m3": 1.1100611047818919e-07,
+      "signed_volume_m3": 1.1100611047818916e-07,
       "uv_finite": true,
       "normals_finite": true
     },
@@ -194,7 +194,7 @@
       "nonmanifold_edges": 0,
       "zero_area_faces": 0,
       "connected_components": 1,
-      "signed_volume_m3": 8.089220333801151e-10,
+      "signed_volume_m3": 8.08922033380115e-10,
       "uv_finite": true,
       "normals_finite": true
     },

@@ -2,12 +2,12 @@
   "asset": {
     "path": "artifacts/c1/largemouth-bass.glb",
     "bytes": 2585016,
-    "sha256": "06697fb80f665ee7d2dc951698c47e50111f77bc49a5100bd03b2e1d8fe19836"
+    "sha256": "851052321895192dad228db459a43a3787f4a9538d59b835e2b30654b46b0865"
   },
   "blenderAsset": {
     "path": "artifacts/c1/largemouth-bass.blend",
     "bytes": 3530732,
-    "sha256": "3ccdf942534aed32de90b04962c0524568aab4f2d2b3a20b648338a5b0f73e47"
+    "sha256": "384f0c75fd6367fdfb45f6370d6c8ed96426ed38fa8cc31913dfd4d7542537f2"
   },
   "validator": {
     "package": "gltf-validator",

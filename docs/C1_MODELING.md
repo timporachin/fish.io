@@ -4,7 +4,7 @@ Status: modeling candidate awaiting user visual approval. No C2 rig, weights, sw
 
 ## Scope and source of truth
 
-Base: `main` at `0ce0fc6143ea0b4827acd3d341f862a4c2e5090b`. Development branch: `dev/c1-largemouth-bass`. C0 application, simulation and smoke fixture are preserved. The user's C1 request explicitly moves animation development to C2; this supersedes the earlier roadmap wording.
+Initial base: `main` at `0ce0fc6143ea0b4827acd3d341f862a4c2e5090b`. The concurrent game-design document from `95f63b0` is incorporated and its mixed-camera evidence requirement is honored. Development branch: `dev/c1-largemouth-bass`. C0 application, simulation and smoke fixture are preserved. The user's C1 request explicitly moves animation development to C2; this supersedes the earlier roadmap wording.
 
 The deterministic Blender 4.3.2 Python generator is the authoring source. Generated `.blend`, GLB, textures and machine reports live under ignored `artifacts/c1/`. The six PNG reference views under `docs/evidence/c1/` are review evidence, not a substitute for the actual model. Photographic/anatomical sources and their limitations are recorded in [C1 references](C1_REFERENCES.md).
 
@@ -29,7 +29,7 @@ npm run test:bass --prefix tools/blender
 
 Run from the repository root. The generator checks Blender 4.3.2 and uses seed `1947` by default. Parameters and generated geometry/textures are reproducible; Blender file metadata is not promised byte-for-byte identical across reruns. Use the report's SHA-256 hashes to identify a specific reviewed `.blend`/GLB pair.
 
-The six views use orthographic cameras, with left/right/front/rear/top aligned to the source axes and a front three-quarter view for volume. A studio light setup is for inspection, not baked gameplay lighting. The GLB must export selected asset meshes only, with no studio cameras or lights. Render and inspect all six after any geometry, material or export change; diagnostic single-view runs are not complete approval evidence.
+Five views use orthographic cameras aligned to the source axes; the front three-quarter view uses a 60 mm perspective camera for volume. A studio light setup is for inspection, not baked gameplay lighting. The GLB must export selected asset meshes only, with no studio cameras or lights. Render and inspect all six after any geometry, material or export change; diagnostic single-view runs are not complete approval evidence.
 
 The isolated viewer at `tools/blender/viewer.html` is test tooling. The automated runner starts its own localhost server, uses the pinned Three.js loader and cloud Chromium, records a screenshot and metrics, and closes the server/browser. The shader maps must survive export and decode in the browser; checking the presence of source textures alone is insufficient.
 
@@ -58,7 +58,7 @@ The generator's `nonmanifold_edges` statistic includes ordinary boundary edges o
 
 Astra's final recommendation is **request changes for production realism**. The remaining jaw transition, fin treatment and skin/head appearance are documented in [the final review](C1_REVIEW.md). Technical validation passes; C1 is not visually accepted, and production-quality realism is not claimed as achieved. These are the six frozen views for the user's approval or requested revision.
 
-Anatomical left is +Y and right is −Y in authoring coordinates. The front three-quarter view is from +X/−Y/+Z. The profile/front/rear/top cameras are orthographic and aligned to their respective axes.
+Anatomical left is +Y and right is −Y in authoring coordinates. The front three-quarter perspective view is from +X/−Y/+Z. The profile/front/rear/top cameras are orthographic and aligned to their respective axes.
 
 | Left profile | Right profile |
 | --- | --- |
