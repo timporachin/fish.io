@@ -1,6 +1,6 @@
 # FISH.IO
 
-Fresh cloud-only C0 foundation: Three.js underwater habitat, TypeScript simulation, Vite build, Vitest, Playwright, and Blender headless GLB validation. No production fish assets exist yet.
+C0 foundation: Three.js underwater habitat, TypeScript simulation, Vite build, Vitest, Playwright, and Blender headless GLB validation. C1 adds a reproducible largemouth bass modeling candidate and isolated asset validation. User visual approval remains pending; the gameplay scene is preserved.
 
 ## Run
 
@@ -19,4 +19,4 @@ npm run smoke
 
 Browser tests use cloud `/usr/bin/chromium` by default. For another installed executable set `CHROMIUM_PATH`; CI installs the Playwright-managed Chromium. Blender smoke requires Blender 4.3.2 (Debian package `4.3.2+dfsg-2` tested). Generated outputs are ignored in `artifacts/`, `dist/`, and test report directories.
 
-See [project state](PROJECT_STATE.md), [architecture](docs/ARCHITECTURE.md), [roadmap](docs/ROADMAP.md), [asset pipeline](docs/BLENDER_PIPELINE.md), and [test evidence](docs/TEST_EVIDENCE.md). C1 requires explicit approval.
+See [project state](PROJECT_STATE.md), [architecture](docs/ARCHITECTURE.md), [roadmap](docs/ROADMAP.md), [asset pipeline](docs/BLENDER_PIPELINE.md), [C0 test evidence](docs/TEST_EVIDENCE.md), and [C1 modeling and approval](docs/C1_MODELING.md). C2 requires C1 visual approval and further authorization.

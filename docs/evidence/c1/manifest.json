@@ -1,0 +1,26 @@
+{
+  "candidate": "C1 largemouth bass, visual approval pending",
+  "base_commit": "0ce0fc6143ea0b4827acd3d341f862a4c2e5090b",
+  "branch": "dev/c1-largemouth-bass",
+  "render_engine": "Cycles CPU",
+  "render_samples": 64,
+  "resolution": [
+    1200,
+    800
+  ],
+  "coordinate_convention": "nose +X, dorsal +Z, anatomical left +Y, right -Y; exporter maps (x,y,z) to (x,z,-y)",
+  "generator_sha256": "818b8606f3e34fa8735396ef32995d04c7111e4e0c68f1f117a1fcfc5e631a47",
+  "render_sha256": {
+    "left": "b58ab74978bba8b15dd2bae3f40882410f8ae68690df82b48a590d34d6e54110",
+    "right": "8ada11ba920fb80934cb4133001894b7193136eaf2f1a0bbba422c73eef9a8d8",
+    "front": "5efbf08c06d7d84e542fca99170d04989d416088bbdcb81d11477f2406e9ceb5",
+    "rear": "e4e64e4d6aee21c4c8fa2b238c719aebfa55da74a7c18242df6a8a74bea583a5",
+    "top": "e9c79dfa6fcadd2078480e89752e1784d8b2f19f105799a523e915e1a2390aab",
+    "front_three_quarter": "5db115d4c4cfeb835dda60fff64be512f4ab077ab18ccb50896d5c5a692f6ccc"
+  },
+  "validation": {
+    "path": "artifacts/c1/largemouth-bass.glb",
+    "bytes": 2585016,
+    "sha256": "06697fb80f665ee7d2dc951698c47e50111f77bc49a5100bd03b2e1d8fe19836"
+  }
+}

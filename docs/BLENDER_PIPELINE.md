@@ -31,3 +31,23 @@ Sources checked from upstream repositories on 2026-10-12:
 - Blender add-on source: `https://raw.githubusercontent.com/blender/blender-addons/main/rigify/__init__.py`
 - Animation Nodes project README: `https://raw.githubusercontent.com/JacquesLucke/animation_nodes/master/README.md`
 - Blender glTF exporter source: `https://raw.githubusercontent.com/blender/blender/main/scripts/addons_core/io_scene_gltf2/__init__.py`
+
+
+## C1 modeling workflow
+
+The C1 entry point is `tools/blender/generate_bass.py`. It authors an unrigged largemouth bass in meters with nose +X and dorsal +Z. Generated textures, `.blend`, GLB, six reference images and reports are written to `artifacts/c1/`; those generated asset files remain ignored. Selected reference PNGs are retained in `docs/evidence/c1/` for visual PR review.
+
+Run from the repository root using Blender 4.3.2:
+
+```sh
+blender --background --python-exit-code 1 --python tools/blender/generate_bass.py -- --output-dir artifacts/c1 --seed 1947
+npm ci
+npm ci --prefix tools/blender
+npm run test:bass --prefix tools/blender
+```
+
+`--skip-renders` regenerates authoring/export artifacts without reference rendering; `--render-view left` limits a diagnostic run to one view. A release review must use the complete six-view run. `--python-exit-code 1` is required because Blender otherwise can exit successfully after a Python exception. Denoising is disabled on this Debian build because its OpenImageDenoise backend is unavailable.
+
+`test:bass` validates with the pinned Khronos validator, loads the actual embedded GLB textures in Three.js/Chromium, captures a rendered screenshot and runtime metrics, rejects a corrupt model, and independently inspects the authored Blender mesh. The asset viewer is isolated tooling; it adds no fish geometry or asset loading to the C0 gameplay scene. See [C1 modeling](C1_MODELING.md), [references](C1_REFERENCES.md), and [independent review](C1_REVIEW.md).
+
+The C1 request takes priority over the general rig-and-animation proposal above: no armature, skinning or swimming clips are included in C1. Human visual approval is required before C2 animation development. Source topology checks cannot establish deformation readiness or automatically accept visual quality.

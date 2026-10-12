@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Largemouth bass GLB validation</title>
+  <script type="importmap">
+    { "imports": { "three": "/node_modules/three/build/three.module.js" } }
+  </script>
+  <style>
+    html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #071e2a; color: #e6f3ef; font: 14px system-ui, sans-serif; }
+    canvas { display: block; width: 100%; height: 100%; }
+    #status { position: fixed; top: 12px; left: 12px; padding: 8px 11px; border-radius: 6px; background: #071e2a; }
+  </style>
+</head>
+<body>
+  <div id="status">Loading GLB…</div>
+  <script type="module">
+    import * as THREE from '/node_modules/three/build/three.module.js';
+    import { GLTFLoader } from '/node_modules/three/examples/jsm/loaders/GLTFLoader.js';
+
+    const status = document.querySelector('#status');
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+    renderer.setPixelRatio(1);
+    renderer.setSize(innerWidth, innerHeight);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    document.body.append(renderer.domElement);
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x071e2a);
+    scene.add(new THREE.HemisphereLight(0xc9e8e2, 0x263d3a, 2.0));
+    const key = new THREE.DirectionalLight(0xfff2d7, 3.0);
+    key.position.set(-2, 4, 5);
+    scene.add(key);
+    const camera = new THREE.PerspectiveCamera(35, innerWidth / innerHeight, 0.001, 100);
+    window.addEventListener('resize', () => {
+      camera.aspect = innerWidth / innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(innerWidth, innerHeight);
+      render();
+    });
+    let loaded;
+    const render = () => { if (loaded) renderer.render(scene, camera); };
+    const model = new URLSearchParams(location.search).get('model') || '/artifacts/c1/largemouth-bass.glb';
+    window.__bassState = { status: 'loading' };
+    new GLTFLoader().load(model, (gltf) => {
+      loaded = gltf;
+      scene.add(gltf.scene);
+      gltf.scene.updateMatrixWorld(true);
+      const bounds = new THREE.Box3().setFromObject(gltf.scene);
+      const size = bounds.getSize(new THREE.Vector3());
+      const center = bounds.getCenter(new THREE.Vector3());
+      const maxDimension = Math.max(size.x, size.y, size.z);
+      camera.position.set(center.x, center.y + maxDimension * 0.38, center.z + maxDimension * 2.5);
+      camera.lookAt(center);
+      camera.near = Math.max(maxDimension / 1000, 0.0001);
+      camera.far = maxDimension * 20;
+      camera.updateProjectionMatrix();
+      render();
+      const meshes = [];
+      const skinnedMeshes = [];
+      const textures = new Map();
+      gltf.scene.traverse((object) => {
+        if (object.isMesh) {
+          meshes.push(object);
+          if (object.isSkinnedMesh) skinnedMeshes.push(object);
+          for (const material of (Array.isArray(object.material) ? object.material : [object.material])) {
+            const slots = { baseColor: 'map', normal: 'normalMap', roughness: 'roughnessMap', metalness: 'metalnessMap',
+              ambientOcclusion: 'aoMap', emissive: 'emissiveMap', alpha: 'alphaMap' };
+            for (const [role, slot] of Object.entries(slots)) {
+              const texture = material?.[slot];
+              if (texture?.isTexture) {
+                if (!textures.has(texture)) textures.set(texture, new Set());
+                textures.get(texture).add(role);
+              }
+            }
+          }
+        }
+      });
+      const decodedImages = [...textures].map(([texture, roles]) => ({
+        map: texture.name || texture.userData?.name || 'texture',
+        roles: [...roles],
+        width: texture.image?.width ?? texture.source?.data?.width ?? 0,
+        height: texture.image?.height ?? texture.source?.data?.height ?? 0,
+        decoded: Boolean(texture.image?.complete || texture.image?.width || texture.source?.data?.width),
+        normalSample: roles.has('normal') ? sampleNormal(texture.image ?? texture.source?.data) : null,
+      }));
+      const info = renderer.info.render;
+      const materials = [...new Set(meshes.flatMap((mesh) => Array.isArray(mesh.material) ? mesh.material : [mesh.material]))];
+      const metrics = {
+        meshCount: meshes.length,
+        skinnedMeshCount: skinnedMeshes.length,
+        primitiveCount: meshes.reduce((sum, mesh) => sum + (Array.isArray(mesh.material) ? mesh.material.length : 1), 0),
+        drawCalls: info.calls,
+        provisionalTotalSceneDrawCallBudget: 100,
+        remainingCallsBeforeOtherSceneObjects: 100 - info.calls,
+        triangles: info.triangles,
+        animationClips: gltf.animations.length,
+        bounds: [size.x, size.y, size.z],
+        axisConvention: 'Blender authoring: nose +X, dorsal +Z; glTF export maps (x,y,z) to (x,z,-y), so dorsal is glTF +Y',
+        camera: { position: camera.position.toArray(), target: center.toArray() },
+        decodedImages,
+        materials: materials.map((material) => ({
+          name: material.name, type: material.type, color: material.color?.getHexString() ?? null,
+          roughness: material.roughness ?? null, metalness: material.metalness ?? null,
+          mapSlots: Object.entries({ baseColor: 'map', normal: 'normalMap', roughness: 'roughnessMap', metalness: 'metalnessMap',
+            ambientOcclusion: 'aoMap', emissive: 'emissiveMap' }).filter(([, slot]) => Boolean(material[slot])).map(([role]) => role),
+        })),
+      };
+      metrics.bodyPbrMaterialFound = metrics.materials.some((material) =>
+        ['baseColor', 'normal', 'roughness'].every((role) => material.mapSlots.includes(role)));
+      window.__bassState = { status: 'loaded', metrics };
+      status.textContent = `Loaded • ${metrics.triangles.toLocaleString()} triangles • ${metrics.drawCalls} draw calls`;
+      status.dataset.status = 'loaded';
+    }, undefined, (error) => {
+      const message = error?.message || String(error);
+      window.__bassState = { status: 'error', error: message };
+      status.textContent = `Load failed: ${message}`;
+      status.dataset.status = 'error';
+    });
+
+    function sampleNormal(image) {
+      if (!image) return null;
+      const width = image.width || image.videoWidth || 0;
+      const height = image.height || image.videoHeight || 0;
+      if (!width || !height) return null;
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const context = canvas.getContext('2d', { willReadFrequently: true });
+      context.drawImage(image, 0, 0, width, height);
+      const pixels = context.getImageData(0, 0, width, height).data;
+      const sum = [0, 0, 0];
+      let samples = 0;
+      for (let y = 0; y < height; y += 16) {
+        for (let x = 0; x < width; x += 16) {
+          const index = (y * width + x) * 4;
+          sum[0] += pixels[index]; sum[1] += pixels[index + 1]; sum[2] += pixels[index + 2];
+          samples++;
+        }
+      }
+      return { mean: sum.map((value) => value / samples / 255), samples };
+    }
+  </script>
+</body>
+</html>

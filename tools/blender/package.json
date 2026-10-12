@@ -3,8 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "generate:bass": "blender --background --python-exit-code 1 --python generate_bass.py -- --output-dir ../../artifacts/c1",
     "validate": "node validate_glb.mjs",
-    "smoke": "node smoke_test.mjs"
+    "smoke": "node smoke_test.mjs",
+    "test:bass": "node test_bass.mjs"
   },
   "devDependencies": {
     "gltf-validator": "2.0.0-dev.3.10"

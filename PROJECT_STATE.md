@@ -1,6 +1,21 @@
 # FISH.IO project state
 
-**Milestone: C0 complete. C1 not started; explicit approval required.**
+**C0 complete. C1 modeling candidate delivered for review; visual acceptance pending. C2 not started.**
+
+## Current C1 work
+
+Authorized on 2026-10-12, based on `main` at `0ce0fc6143ea0b4827acd3d341f862a4c2e5090b`. Development branch: `dev/c1-largemouth-bass`. No changes to C0 gameplay, simulation, rendering or application tests. No merge is authorized.
+
+Blender 4.3.2 Python generator authors a 0.455 m largemouth bass candidate, curved quad body with recessed mouth, a separate volumetric mandible and gill covers, embedded eye layers, separate spinous/soft dorsal, paired pectoral/pelvic, anal and caudal fins, and closed modeled rays. Seeded olive/broken-stripe scale textures, normal/roughness maps and olive/amber fin textures are generated and packed. The source has 24 anatomical mesh objects; a temporary joined export produces one GLB mesh with 11 material primitives. No rig, skin or clips are included.
+
+Six 1200 × 800, 64-sample Cycles reference views and the actual Three.js browser screenshot are committed under `docs/evidence/c1/`. Generated Blender/GLB/texture artifacts remain in ignored `artifacts/c1/`, reproducible from the committed generator. See [modeling and render gallery](docs/C1_MODELING.md), [references](docs/C1_REFERENCES.md), [test evidence](docs/C1_TEST_EVIDENCE.md), and [Astra review](docs/C1_REVIEW.md).
+
+Final checks pass: independent Blender geometry validation, pinned Khronos GLB validator (0 errors, 0 warnings), actual Three.js texture decoding/rendering, and corrupt/empty/animation/skin/geometry negative cases. Exported cost: 8,488 vertices, 10,976 triangles, 11 draw calls per fish, 2,585,016-byte GLB. Five embedded images: three 1024² and two 512². These checks establish technical validity; they do not establish production visual realism or user acceptance. The near-LOD 8k triangle proposal is exceeded; physical iPhone performance, LODs and deformation remain untested.
+
+**Stop at the C1 visual gate.** The model must not be labeled visually accepted because automated checks pass. Consult the independent review for remaining artistic/anatomical issues; C2 animation work requires the user's approval and further instruction.
+
+## C0 delivery history (retained)
+
 
 Fresh cloud project at `/workspace/fish.io`, based only on the initial repository README. Development branch: `dev/c0-cloud-foundation`; target: `main`.
 

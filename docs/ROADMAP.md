@@ -1,9 +1,9 @@
 # Milestone roadmap
 
 - **C0 — cloud foundation:** reproducible TypeScript/Three.js/Vite build; underwater scene; module boundaries; deterministic state; automated checks; Blender/export feasibility. Completed with limitations in PROJECT_STATE.md.
-- **C1 — production fish modeling (approval required):** select species and photographic anatomical references; implement parametric geometry/UV/PBR pipeline, deform rig and baked swim clips; review realism, silhouette, fins, eyes, scales and loop continuity; validate GLBs, import into Three.js and profile physical iPhones. No C1 work has started.
-- **C2 — simulation and habitat interaction:** refine species steering, feeding and progression using approved asset catalog; integrate interaction and save storage/migrations.
+- **C1 — largemouth bass modeling:** authorized on 2026-10-12. Implement anatomical geometry, UV/PBR textures, six reference views, geometry/export validation and isolated Three.js loading evidence. Stop for the user's visual approval; automated passes do not constitute visual acceptance. Physical iPhone performance remains to be measured.
+- **C2 — animation development (requires C1 visual approval and further authorization):** deform rig, weighting, baked swimming clips and loop/deformation review. Simulation and habitat interaction follow with approved assets: refine species steering, feeding and progression; integrate interaction and save storage/migrations.
 - **C3 — showroom and performance:** species comparison, habitat variations, LODs, texture compression and measured device quality tiers.
 - **C4 — release hardening:** device/browser matrix, accessibility checks, thermal/memory endurance, recovery, distribution and release automation.
 
-Future milestones are proposals, not authorization. C0 stops here.
+Future milestones are proposals, not authorization. C1 stops at its visual approval gate. The user's C1 request supersedes the earlier roadmap's placement of swimming clips in C1.
