@@ -1,0 +1,12 @@
+{
+  "name": "fish-io-blender-pipeline",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "validate": "node validate_glb.mjs",
+    "smoke": "node smoke_test.mjs"
+  },
+  "devDependencies": {
+    "gltf-validator": "2.0.0-dev.3.10"
+  }
+}
