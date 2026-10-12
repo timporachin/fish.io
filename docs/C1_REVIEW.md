@@ -1,6 +1,6 @@
 # C1 photographic rework — independent final review
 
-> Historical rework evidence: the measurements and six-view gallery below describe an earlier unaccepted checkpoint. The targeted jaw reconstruction is now in progress; see [PROJECT_STATE](../PROJECT_STATE.md), [jaw references](C1_JAW_REFERENCES.md) and [independent jaw review](C1_JAW_REVIEW.md). Do not attribute these earlier metrics to the current candidate.
+> Historical rework evidence: the measurements and six-view gallery below describe an earlier unaccepted checkpoint. The targeted jaw reconstruction is now in progress; see [PROJECT_STATE](../PROJECT_STATE.md), [jaw references](C1_JAW_REFERENCES.md) and [independent jaw review](C1_JAW_REVIEW.md). Do not attribute these earlier metrics or reproduction commands to the current candidate. Current handoff and commands are in [jaw modeling](C1_JAW_MODELING.md) and [jaw validation](C1_JAW_VALIDATION.md).
 
 
 **Production recommendation: HOLD / further visual refinement required.** The rework is substantially closer to the photographed largemouth bass, and the identified construction defects were corrected. It still does not support an unqualified production-realism or photorealism claim at close inspection. Owner visual approval is pending. C1 remains open; this review does not authorize C2, merging, or release.
@@ -9,7 +9,7 @@ This review supersedes the earlier review of the rejected candidate. It covers t
 
 ## Evidence and artifact identity
 
-The reviewer directly inspected the pixels of all three actual photographs in [C1_PHOTO_REFERENCES.md](C1_PHOTO_REFERENCES.md), all six final views individually—[left](evidence/c1/left.png), [right](evidence/c1/right.png), [front](evidence/c1/front.png), [rear](evidence/c1/rear.png), [top](evidence/c1/top.png), and [front three-quarter](evidence/c1/front_three_quarter.png)—and the final [Three.js screenshot](evidence/c1/largemouth-bass-browser.png). The original rejected views and the [same-lighting baseline profile](evidence/c1/before-matched-lighting/left.png), [front](evidence/c1/before-matched-lighting/front.png), and [three-quarter](evidence/c1/before-matched-lighting/front_three_quarter.png) were compared directly.
+The reviewer directly inspected the pixels of all three actual photographs in [C1_PHOTO_REFERENCES.md](C1_PHOTO_REFERENCES.md), all six final views individually—[left](evidence/c1/rework-1/left.png), [right](evidence/c1/rework-1/right.png), [front](evidence/c1/rework-1/front.png), [rear](evidence/c1/rework-1/rear.png), [top](evidence/c1/rework-1/top.png), and [front three-quarter](evidence/c1/rework-1/front_three_quarter.png)—and the final [Three.js screenshot](evidence/c1/rework-1/largemouth-bass-browser.png). The original rejected views and the [same-lighting baseline profile](evidence/c1/before-matched-lighting/left.png), [front](evidence/c1/before-matched-lighting/front.png), and [three-quarter](evidence/c1/before-matched-lighting/front_three_quarter.png) were compared directly.
 
 All final Blender images are 1200 × 800 at 128 Cycles samples. Five views are orthographic; front three-quarter is perspective with a 60 mm lens. The complete fish is framed in each image. Smaller studio lights were introduced to reduce broad grazing reflections; the rejected model was rerendered with that same lighting for the matched comparison. The original evidence is retained under `evidence/c1/before/`.
 
@@ -22,7 +22,7 @@ These SHA-256 hashes were computed from the actual files and independently match
 | `tools/blender/generate_bass.py` | `a0239183ea81be3c71844831fffdc6d20becb6d7ae09f2a85fb72ffba50f1036` |
 | `tools/blender/bass_materials.py` | `cfdd172f4de0b7632bf3e6a6b3a8eed8935ef8124de1e2c76dae274f1522ba6f` |
 
-The reviewed browser report hashes to `b37b40ec41cae2587db6bf14b73a3aeddf774d279076477fab2ae9cdbb9c6546`; its screenshot hashes to `03537e905c5d998384e265ee3d724dd66557f7f2c431eb458c5d1dc6b87b0bea`. The [evidence manifest](evidence/c1/manifest.json) records individual render hashes. Independent verification confirmed that all six committed-gallery render hashes, the runtime screenshot, both source files, the GLB and Blender source match the reviewed files and the final report. All ten copied render/report/statistics files are byte-identical to their working artifacts.
+The reviewed browser report hashes to `b37b40ec41cae2587db6bf14b73a3aeddf774d279076477fab2ae9cdbb9c6546`; its screenshot hashes to `03537e905c5d998384e265ee3d724dd66557f7f2c431eb458c5d1dc6b87b0bea`. The [evidence manifest](evidence/c1/rework-1/manifest.json) records individual render hashes. Independent verification confirmed that all six committed-gallery render hashes, the runtime screenshot, both source files, the GLB and Blender source match the reviewed files and the final report. All ten copied render/report/statistics files are byte-identical to their working artifacts.
 
 ## Confirmed improvements
 

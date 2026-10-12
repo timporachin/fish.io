@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Build a private, local C1 jaw comparison page from existing QA renders.
 
-No rendering or image copying takes place. The page links to the source files
-relative to its output location, so keep it inside the local checkout.
+No rendering or pixel editing takes place. The page can embed existing images
+for portable private review, or link them relative to its output location.
 """
 
 from __future__ import annotations
 
 import argparse
+import base64
 import html
 import json
 import os
@@ -48,6 +49,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--qa-dir", type=Path, default=ROOT / "artifacts/c1/anatomical-revision-v2/jaw-qa",
                         help="QA directory containing before/, after/, and supplemental-open/")
+    parser.add_argument("--review-note", default="", help="Explicit reviewer note for this frozen checkpoint")
+    parser.add_argument("--embed-images", action="store_true", help="Embed unaltered image bytes for a portable private HTML gallery")
     parser.add_argument("--output", type=Path, help="Output HTML; defaults to <qa-dir>/jaw-comparison.html")
     parser.add_argument("--reference-dir", type=Path, default=ROOT / "artifacts/c1/references")
     parser.add_argument("--supplemental-dir", type=Path, help="Defaults to <qa-dir>/supplemental-open")
@@ -79,16 +82,22 @@ def main() -> None:
     after_cost = read_metrics(candidate_metrics)
     esc = html.escape
 
+    def image_url(path: Path) -> str:
+        if args.embed_images:
+            mime = "image/jpeg" if path.suffix.lower() in (".jpg", ".jpeg") else "image/png"
+            return "data:" + mime + ";base64," + base64.b64encode(path.read_bytes()).decode("ascii")
+        return local_url(path, output)
+
     def figure(path: Path, label: str) -> str:
-        url = esc(local_url(path, output), quote=True)
-        return f'<figure><a href="{url}" target="_blank" rel="noopener"><img src="{url}" alt="{esc(label, quote=True)}" loading="lazy"></a><figcaption>{esc(label)}</figcaption></figure>'
+        url = esc(image_url(path), quote=True)
+        return f'<figure><a href="#" onclick="this.href=this.querySelector(&quot;img&quot;).src" download="{esc(path.name, quote=True)}"><img src="{url}" alt="{esc(label, quote=True)}" loading="lazy"></a><figcaption>{esc(label)}</figcaption></figure>'
 
     sections = []
     for key, title, note, before, after in pairs:
         photo_index = 2 if "open" in key else (1 if key == "front_mouth" else 0)
         photo_name, photo_title, photo_caption = PHOTOS[photo_index]
-        reference_url = esc(local_url(references / photo_name, output), quote=True)
-        reference = (f'<aside class="view-reference"><a href="{reference_url}" target="_blank" rel="noopener">'
+        reference_url = esc(image_url(references / photo_name), quote=True)
+        reference = (f'<aside class="view-reference"><a href="#" onclick="this.href=this.querySelector(&quot;img&quot;).src" download="{esc(photo_name, quote=True)}">'
                      f'<img src="{reference_url}" alt="{esc(photo_title, quote=True)}" loading="lazy"></a>'
                      f'<p><strong>Photographic reference · {esc(photo_title)}</strong><br>{esc(photo_caption)}</p></aside>')
         sections.append(f'<section class="comparison"><h2>{esc(title)}</h2><p>{esc(note)}</p><div class="pair">'
@@ -96,10 +105,12 @@ def main() -> None:
                         + "</div>" + reference + "</section>")
     photo_cards = []
     for name, title, caption in PHOTOS:
-        url = esc(local_url(references / name, output), quote=True)
-        photo_cards.append(f'<figure class="photo"><a href="{url}" target="_blank" rel="noopener">'
+        url = esc(image_url(references / name), quote=True)
+        photo_cards.append(f'<figure class="photo"><a href="#" onclick="this.href=this.querySelector(&quot;img&quot;).src" download="{esc(name, quote=True)}">'
                            f'<img src="{url}" alt="{esc(title, quote=True)}" loading="lazy"></a>'
                            f'<figcaption><strong>{esc(title)}</strong><br>{esc(caption)}</figcaption></figure>')
+
+    review_note = f'<div class="notice"><p>{esc(args.review_note)}</p></div>' if args.review_note else ""
 
     def metric_row(label: str, index: int) -> str:
         return (f"<tr><th>{esc(label)}</th><td>{before_cost[index]:,}</td>"
@@ -129,13 +140,14 @@ th,td {{padding:10px;border-bottom:1px solid #45534a}} th:first-child {{text-ali
 @media(max-width:760px) {{.pair,.references {{grid-template-columns:1fr}} .photo img {{height:auto}} .view-reference {{display:block}}}}
 </style></head><body>
 <header><span class="badge">C1 NOT ACCEPTED</span><h1>Adult largemouth bass · jaw review</h1>
-<p>Private local review of the saved pre-jaw checkpoint and candidate renders. Click any image for its original pixels. Rendered views share QA camera and lighting settings; the supplemental three-quarter open view is a separate camera setup.</p></header>
+<p>Private local review of the saved pre-jaw checkpoint and candidate renders. Click any image to download its original pixels. Rendered views share QA camera and lighting settings; the supplemental three-quarter open view is a separate camera setup.</p></header>
 <div class="notice"><p>These licensed photographs are for local anatomical review only. Keep the raw images and this linked gallery inside the ignored artifacts workspace; do not commit or publish the photos or this page. The 25° opening is a temporary deformation check, not an authored animation or measured biological angle. C1 remains unaccepted pending review. Any higher triangle budget is an unapproved proposal pending explicit owner approval.</p></div>
+{review_note}
 <h2>Asset cost</h2><p>Original C1 browser validation versus candidate browser validation. The cost reference is the original 10,976-triangle candidate; the before images show the later saved pre-jaw model, not that original asset. Counts load from the JSON evidence at gallery generation time. Draw calls are for one fish; maps are embedded image count.</p>
 <table><thead><tr><th>Metric</th><th>Original</th><th>Candidate</th><th>Change</th></tr></thead><tbody>
 {metric_row('Triangles', 0)}{metric_row('Draw calls', 1)}{metric_row('Maps', 2)}
 </tbody></table>
-<h2>Photographic references</h2><p>These are actual locally licensed photographs. Their perspective and pose limits matter when judging the rendered jaw; see <a href="{esc(local_url(ROOT / 'docs/C1_JAW_REFERENCES.md', output), quote=True)}">C1 jaw reference notes</a>.</p>
+<h2>Photographic references</h2><p>These are actual locally licensed photographs. Source records: <a href="https://stock.adobe.com/images/id/306335267">306335267</a>, <a href="https://stock.adobe.com/images/id/512226129">512226129</a>, <a href="https://stock.adobe.com/images/id/482505893">482505893</a>. Their perspective and pose limits matter when judging the rendered jaw; see <a href="https://github.com/timporachin/fish.io/blob/dev/c1-largemouth-bass/docs/C1_JAW_REFERENCES.md">C1 jaw reference notes</a>.</p>
 <div class="references">{''.join(photo_cards)}</div>
 <h2>Matched QA views</h2>{''.join(sections)}
 </body></html>'''

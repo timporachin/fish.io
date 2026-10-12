@@ -1,0 +1,519 @@
+{
+  "source": [
+    {
+      "path": "tools/blender/generate_bass.py",
+      "bytes": 37410,
+      "sha256": "c239936c2a37fac66e7413354c3579971948c88899ae7a93840ffeff0072986e"
+    },
+    {
+      "path": "tools/blender/bass_materials.py",
+      "bytes": 17103,
+      "sha256": "bc2cd6b1ab8248b09154cf6003c16bf41ece93aade4755cc5352c69b72568a7f"
+    }
+  ],
+  "asset": {
+    "path": "artifacts/c1/anatomical-revision-v2/largemouth-bass.glb",
+    "bytes": 3906132,
+    "sha256": "a4a2dfe6c1b7d0210ca4a7ac1b293f8e28a9f51f1a003c65380eeed3d9170ea0"
+  },
+  "blenderAsset": {
+    "path": "artifacts/c1/anatomical-revision-v2/largemouth-bass.blend",
+    "bytes": 5026060,
+    "sha256": "ab420964c487658ebb7223a0cbf068844f74f6f9dc3b457908891e70fe511fa2"
+  },
+  "validator": {
+    "package": "gltf-validator",
+    "version": "2.0.0-dev.3.10",
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 13,
+    "numHints": 0
+  },
+  "structure": {
+    "nodes": 1,
+    "meshes": 1,
+    "primitives": 9,
+    "vertices": 15203,
+    "triangles": 22254,
+    "materials": 9,
+    "embeddedImages": 5,
+    "sharedPectoralIrisAtlasImage": 3
+  },
+  "browser": {
+    "meshCount": 9,
+    "skinnedMeshCount": 0,
+    "primitiveCount": 9,
+    "drawCalls": 9,
+    "provisionalTotalSceneDrawCallBudget": 100,
+    "remainingCallsBeforeOtherSceneObjects": 91,
+    "triangles": 22254,
+    "animationClips": 0,
+    "bounds": [
+      0.45250755548477173,
+      0.19262044876813889,
+      0.14389846473932266
+    ],
+    "axisConvention": "Blender authoring: nose +X, dorsal +Z; glTF export maps (x,y,z) to (x,z,-y), so dorsal is glTF +Y",
+    "camera": {
+      "position": [
+        -0.015553772449493408,
+        0.18188268080353737,
+        1.1312573961913586
+      ],
+      "target": [
+        -0.015553772449493408,
+        0.009929809719324112,
+        -0.000011492520570755005
+      ]
+    },
+    "decodedImages": [
+      {
+        "map": "bass-scale-olive",
+        "roles": [
+          "baseColor"
+        ],
+        "width": 1024,
+        "height": 1024,
+        "decoded": true,
+        "normalSample": null,
+        "alphaSample": {
+          "region": [
+            0,
+            0,
+            1024,
+            1024
+          ],
+          "mean": 1,
+          "nonZeroMean": 1,
+          "nonZeroFraction": 1,
+          "min": 1,
+          "max": 1,
+          "samples": 16384,
+          "nonZeroSamples": 16384
+        },
+        "pectoralAlphaSample": null,
+        "irisTileSample": null
+      },
+      {
+        "map": "bass-scale-normal",
+        "roles": [
+          "normal"
+        ],
+        "width": 1024,
+        "height": 1024,
+        "decoded": true,
+        "normalSample": {
+          "mean": [
+            0.499951171875,
+            0.5006874234068628,
+            1
+          ],
+          "samples": 4096
+        },
+        "alphaSample": null,
+        "pectoralAlphaSample": null,
+        "irisTileSample": null
+      },
+      {
+        "map": "bass-scale-roughness",
+        "roles": [
+          "roughness",
+          "metalness"
+        ],
+        "width": 1024,
+        "height": 1024,
+        "decoded": true,
+        "normalSample": null,
+        "alphaSample": null,
+        "pectoralAlphaSample": null,
+        "irisTileSample": null
+      },
+      {
+        "map": "bass-pectoral-iris-atlas",
+        "roles": [
+          "baseColor"
+        ],
+        "width": 512,
+        "height": 512,
+        "decoded": true,
+        "normalSample": null,
+        "alphaSample": {
+          "region": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "mean": 0.5048588771445983,
+          "nonZeroMean": 0.6213647718702748,
+          "nonZeroFraction": 0.8125,
+          "min": 0,
+          "max": 1,
+          "samples": 4096,
+          "nonZeroSamples": 3328
+        },
+        "pectoralAlphaSample": {
+          "region": [
+            0,
+            128,
+            512,
+            512
+          ],
+          "mean": 0.5898118361928013,
+          "nonZeroMean": 0.5898118361928013,
+          "nonZeroFraction": 1,
+          "min": 0.44313725490196076,
+          "max": 0.9607843137254902,
+          "samples": 3072,
+          "nonZeroSamples": 3072
+        },
+        "irisTileSample": {
+          "region": [
+            0,
+            0,
+            128,
+            128
+          ],
+          "innerMean": [
+            0.07173023055375977,
+            0.08191122602887285,
+            0.03892480068950646
+          ],
+          "goldRingMean": [
+            0.19615970740627883,
+            0.1869247180737585,
+            0.07509905516610767
+          ],
+          "innerSamples": 364,
+          "goldRingSamples": 386,
+          "minSampledAlpha": 1
+        }
+      },
+      {
+        "map": "bass-fin-olive",
+        "roles": [
+          "baseColor"
+        ],
+        "width": 512,
+        "height": 512,
+        "decoded": true,
+        "normalSample": null,
+        "alphaSample": {
+          "region": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "mean": 0.620818014705874,
+          "nonZeroMean": 0.620818014705874,
+          "nonZeroFraction": 1,
+          "min": 0.47058823529411764,
+          "max": 0.9882352941176471,
+          "samples": 4096,
+          "nonZeroSamples": 4096
+        },
+        "pectoralAlphaSample": null,
+        "irisTileSample": null
+      }
+    ],
+    "materialUvBounds": [
+      {
+        "material": "Bass skin - scale and broken lateral stripe",
+        "min": [
+          0,
+          0
+        ],
+        "max": [
+          0.9990234375,
+          1.3035714626312256
+        ],
+        "indexedVertices": 29478
+      },
+      {
+        "material": "Mouth cavity tissue",
+        "min": [
+          0.8567774891853333,
+          0.3035714030265808
+        ],
+        "max": [
+          0.9990234375,
+          1.3035714626312256
+        ],
+        "indexedVertices": 2688
+      },
+      {
+        "material": "Eye rim gold olive",
+        "min": [
+          0,
+          0
+        ],
+        "max": [
+          1,
+          1
+        ],
+        "indexedVertices": 3168
+      },
+      {
+        "material": "Bronze iris - narrow gold pupil border",
+        "min": [
+          0.0009766254806891084,
+          0.0009765625
+        ],
+        "max": [
+          0.2490234076976776,
+          0.2490234375
+        ],
+        "indexedVertices": 3168
+      },
+      {
+        "material": "Black pupil",
+        "min": [
+          0,
+          0
+        ],
+        "max": [
+          1,
+          1
+        ],
+        "indexedVertices": 3168
+      },
+      {
+        "material": "Bass fin membranes",
+        "min": [
+          0,
+          0
+        ],
+        "max": [
+          1,
+          1
+        ],
+        "indexedVertices": 10872
+      },
+      {
+        "material": "Amber pectoral membrane",
+        "min": [
+          0.0009765625,
+          0.2509765625
+        ],
+        "max": [
+          0.9990234375,
+          0.9990234375
+        ],
+        "indexedVertices": 3576
+      },
+      {
+        "material": "Olive fin rays",
+        "min": [
+          0,
+          0
+        ],
+        "max": [
+          1,
+          1
+        ],
+        "indexedVertices": 8412
+      },
+      {
+        "material": "Amber pectoral rays",
+        "min": [
+          0,
+          0
+        ],
+        "max": [
+          1,
+          1
+        ],
+        "indexedVertices": 2232
+      }
+    ],
+    "materials": [
+      {
+        "name": "Bass skin - scale and broken lateral stripe",
+        "type": "MeshPhysicalMaterial",
+        "color": "ffffff",
+        "roughness": 1,
+        "metalness": 0,
+        "transparent": false,
+        "opacity": 1,
+        "alphaTest": 0,
+        "clearcoat": 0.019999999552965164,
+        "clearcoatRoughness": 0.23999999463558197,
+        "side": "double",
+        "blending": 1,
+        "baseColorImage": "bass-scale-olive",
+        "mapSlots": [
+          "baseColor",
+          "normal",
+          "roughness",
+          "metalness"
+        ]
+      },
+      {
+        "name": "Mouth cavity tissue",
+        "type": "MeshStandardMaterial",
+        "color": "594038",
+        "roughness": 0.47999998927116394,
+        "metalness": 0,
+        "transparent": false,
+        "opacity": 1,
+        "alphaTest": 0,
+        "clearcoat": 0,
+        "clearcoatRoughness": null,
+        "side": "double",
+        "blending": 1,
+        "baseColorImage": null,
+        "mapSlots": []
+      },
+      {
+        "name": "Eye rim gold olive",
+        "type": "MeshPhysicalMaterial",
+        "color": "3c482c",
+        "roughness": 0.5,
+        "metalness": 0,
+        "transparent": false,
+        "opacity": 1,
+        "alphaTest": 0,
+        "clearcoat": 0,
+        "clearcoatRoughness": 0,
+        "side": "double",
+        "blending": 1,
+        "baseColorImage": null,
+        "mapSlots": []
+      },
+      {
+        "name": "Bronze iris - narrow gold pupil border",
+        "type": "MeshPhysicalMaterial",
+        "color": "ffffff",
+        "roughness": 0.25,
+        "metalness": 0,
+        "transparent": false,
+        "opacity": 1,
+        "alphaTest": 0,
+        "clearcoat": 0,
+        "clearcoatRoughness": 0,
+        "side": "double",
+        "blending": 1,
+        "baseColorImage": "bass-pectoral-iris-atlas",
+        "mapSlots": [
+          "baseColor"
+        ]
+      },
+      {
+        "name": "Black pupil",
+        "type": "MeshPhysicalMaterial",
+        "color": "0a1619",
+        "roughness": 0.10000000149011612,
+        "metalness": 0,
+        "transparent": false,
+        "opacity": 1,
+        "alphaTest": 0,
+        "clearcoat": 0,
+        "clearcoatRoughness": 0,
+        "side": "double",
+        "blending": 1,
+        "baseColorImage": null,
+        "mapSlots": []
+      },
+      {
+        "name": "Bass fin membranes",
+        "type": "MeshPhysicalMaterial",
+        "color": "ffffff",
+        "roughness": 0.41999998688697815,
+        "metalness": 0,
+        "transparent": true,
+        "opacity": 1,
+        "alphaTest": 0,
+        "clearcoat": 0,
+        "clearcoatRoughness": 0,
+        "side": "front",
+        "blending": 1,
+        "baseColorImage": "bass-fin-olive",
+        "mapSlots": [
+          "baseColor"
+        ]
+      },
+      {
+        "name": "Amber pectoral membrane",
+        "type": "MeshPhysicalMaterial",
+        "color": "ffffff",
+        "roughness": 0.4000000059604645,
+        "metalness": 0,
+        "transparent": true,
+        "opacity": 1,
+        "alphaTest": 0,
+        "clearcoat": 0,
+        "clearcoatRoughness": 0,
+        "side": "front",
+        "blending": 1,
+        "baseColorImage": "bass-pectoral-iris-atlas",
+        "mapSlots": [
+          "baseColor"
+        ]
+      },
+      {
+        "name": "Olive fin rays",
+        "type": "MeshPhysicalMaterial",
+        "color": "3f482f",
+        "roughness": 0.6000000238418579,
+        "metalness": 0,
+        "transparent": false,
+        "opacity": 1,
+        "alphaTest": 0,
+        "clearcoat": 0,
+        "clearcoatRoughness": 0,
+        "side": "double",
+        "blending": 1,
+        "baseColorImage": null,
+        "mapSlots": []
+      },
+      {
+        "name": "Amber pectoral rays",
+        "type": "MeshPhysicalMaterial",
+        "color": "45482e",
+        "roughness": 0.6000000238418579,
+        "metalness": 0,
+        "transparent": false,
+        "opacity": 1,
+        "alphaTest": 0,
+        "clearcoat": 0,
+        "clearcoatRoughness": 0,
+        "side": "double",
+        "blending": 1,
+        "baseColorImage": null,
+        "mapSlots": []
+      }
+    ],
+    "bodyPbrMaterialFound": true,
+    "bodyPbrClearcoatMaterials": [
+      {
+        "name": "Bass skin - scale and broken lateral stripe",
+        "type": "MeshPhysicalMaterial",
+        "clearcoat": 0.019999999552965164,
+        "clearcoatRoughness": 0.23999999463558197,
+        "roughness": 1
+      }
+    ],
+    "transparentMaterialCount": 2,
+    "transparentMeshCount": 2,
+    "clearcoatMaterials": [
+      {
+        "name": "Bass skin - scale and broken lateral stripe",
+        "type": "MeshPhysicalMaterial",
+        "clearcoat": 0.019999999552965164,
+        "clearcoatRoughness": 0.23999999463558197
+      }
+    ],
+    "screenshot": "artifacts/c1/anatomical-revision-v2/largemouth-bass-browser.png",
+    "negativeLoaderError": "Unexpected token '\u0000', \"\u0000lTF\u0002\u0000\u0000\u0000T�\"... is not valid JSON"
+  },
+  "geometryReport": "artifacts/c1/anatomical-revision-v2/blender-geometry-validation.json",
+  "negativeCases": [
+    "corrupt GLB rejected by validator",
+    "unexpected animation rejected",
+    "unexpected skin rejected",
+    "empty mesh rejected",
+    "split atlas rejected",
+    "corrupt GLB rejected by Three.js loader"
+  ]
+}

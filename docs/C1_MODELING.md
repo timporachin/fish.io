@@ -1,6 +1,6 @@
 # C1 — largemouth bass modeling rework
 
-> Historical rework evidence: the measurements and six-view gallery below describe an earlier unaccepted checkpoint. The targeted jaw reconstruction is now in progress; see [PROJECT_STATE](../PROJECT_STATE.md), [jaw references](C1_JAW_REFERENCES.md) and [independent jaw review](C1_JAW_REVIEW.md). Do not attribute these earlier metrics to the current candidate.
+> Historical rework evidence: the measurements and six-view gallery below describe an earlier unaccepted checkpoint. The targeted jaw reconstruction is now in progress; see [PROJECT_STATE](../PROJECT_STATE.md), [jaw references](C1_JAW_REFERENCES.md) and [independent jaw review](C1_JAW_REVIEW.md). Do not attribute these earlier metrics or reproduction commands to the current candidate. Current handoff and commands are in [jaw modeling](C1_JAW_MODELING.md) and [jaw validation](C1_JAW_VALIDATION.md).
 
 
 Status: revised C1 candidate delivered for inspection. The owner's earlier C1 candidate was rejected against the requested production realism standard. The independent reviewer recommends **HOLD for further visual refinement**, and user visual approval is pending. C1 is open; C2 rigging, weights, swim clips and gameplay integration have not started.
@@ -78,14 +78,14 @@ Anatomical left is +Y and right is −Y in authoring coordinates. The front thre
 
 | Left profile | Right profile |
 | --- | --- |
-| [![Left profile](evidence/c1/left.png)](evidence/c1/left.png) | [![Right profile](evidence/c1/right.png)](evidence/c1/right.png) |
+| [![Left profile](evidence/c1/rework-1/left.png)](evidence/c1/rework-1/left.png) | [![Right profile](evidence/c1/rework-1/right.png)](evidence/c1/rework-1/right.png) |
 
 | Front | Rear |
 | --- | --- |
-| [![Front](evidence/c1/front.png)](evidence/c1/front.png) | [![Rear](evidence/c1/rear.png)](evidence/c1/rear.png) |
+| [![Front](evidence/c1/rework-1/front.png)](evidence/c1/rework-1/front.png) | [![Rear](evidence/c1/rework-1/rear.png)](evidence/c1/rework-1/rear.png) |
 
 | Top | Front three-quarter |
 | --- | --- |
-| [![Top](evidence/c1/top.png)](evidence/c1/top.png) | [![Front three-quarter](evidence/c1/front_three_quarter.png)](evidence/c1/front_three_quarter.png) |
+| [![Top](evidence/c1/rework-1/top.png)](evidence/c1/rework-1/top.png) | [![Front three-quarter](evidence/c1/rework-1/front_three_quarter.png)](evidence/c1/rework-1/front_three_quarter.png) |
 
-[Three.js exported-model screenshot](evidence/c1/largemouth-bass-browser.png) · [Current manifest](evidence/c1/manifest.json) · [Browser validation](evidence/c1/browser-validation.json) · [Independent Blender geometry validation](evidence/c1/blender-geometry-validation.json)
+[Three.js exported-model screenshot](evidence/c1/rework-1/largemouth-bass-browser.png) · [Current manifest](evidence/c1/rework-1/manifest.json) · [Browser validation](evidence/c1/rework-1/browser-validation.json) · [Independent Blender geometry validation](evidence/c1/rework-1/blender-geometry-validation.json)
