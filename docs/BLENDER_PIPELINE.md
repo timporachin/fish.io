@@ -1,0 +1,33 @@
+# Blender to GLB pipeline
+
+## Toolchain evidence
+
+The headless executable available in this workspace reports `Blender 4.3.2` (`blender --version`). The smoke fixture exports using Blender's bundled `bpy.ops.export_scene.gltf` operator and produced a valid animated binary glTF (GLB). This verifies the installed exporter path end to end. The exporter logged that its optional Draco library is unavailable; compression is not enabled, and the file exported and validated without Draco.
+
+GLB validation is pinned to npm package `gltf-validator@2.0.0-dev.3.10` in this directory's package manifest and lockfile. Install deterministically with `npm ci`; run `npm run smoke` to export, inspect, and validate the fixture. The generated GLBs are written under root `artifacts/`, which is ignored by Git. To validate a model directly, run `npm run validate -- ../../artifacts/model.glb` from `tools/blender`.
+
+The smoke fixture is intentionally a blue cube and a moving amber sphere (`Validation_Cube`, `Validation_Animated_Beacon`), with translation and rotation keyframes. It is not fish geometry. The smoke check verifies the GLB header, both node names, at least one animation channel, and zero glTF validation errors. Its negative check corrupts the GLB magic and confirms the validator exits unsuccessfully.
+
+## Production fish asset pipeline
+
+Keep generation deterministic and reviewable: accept a seed and explicit species/size parameters, create geometry and a rig in Blender Python, bake the intended animation into a named Action, export selected asset objects and the active action as GLB, then run the pinned validator. Avoid hand-authored GUI state as an input to generation. Store reusable generator scripts and compact parameter data in source control; put generated `.blend` previews and `.glb` outputs in ignored `artifacts/`.
+
+A practical first rig can use a small deforming armature with a root, several spine joints, head, and tail chain, plus separate fin chains for dorsal, pectoral, pelvic, and caudal motion where useful. Weight the body smoothly across the spine and tail. Keep bone names stable and use a deliberate rest pose. Bake procedural oscillation to sampled keyframes in a named looping action before export; include a short period with matching first and last pose. glTF animation carries node/bone transforms and morph weights, but does not carry Blender constraints, drivers, Geometry Nodes logic, or arbitrary simulation state. Baking makes playback portable in ordinary glTF runtimes.
+
+Use Blender authoring coordinates consistently: define the fish's nose along local +X, dorsal direction +Z, and keep the origin near the body center. Apply object transforms before skinning/export, use meters, and let Blender's glTF exporter perform the glTF coordinate conversion. Use one material per visual region where possible, UVs for detailed markings, and keep names stable. Prefer a single skinned mesh and armature per fish asset unless separate materials/parts provide a clear benefit. Export a separate GLB for each reusable fish asset, rather than scene lighting/cameras or aquarium environment content.
+
+For varied populations, derive meshes and markings from a stable seed plus explicit parameters (body length/depth, head profile, fin proportions, palette, markings). Start with a compact parameterized mesh generator and shared armature topology; add mesh variants only when parameters cannot express a meaningful species difference. Validate representative output for each topology/material/animation path, and re-import a release candidate in Blender or the target runtime to check pose, scale, orientation, material appearance, and loop continuity.
+
+## Extension assessment
+
+The direct Blender Python API and official glTF exporter are the production baseline: they are already present in Blender 4.3.2 and the headless GLB smoke export works. The exporter is the required boundary because it writes portable glTF data.
+
+Rigify is an official Blender add-on for generating control rigs from building-block components. Its source metadata at `blender/blender-addons/rigify/__init__.py` describes automatic rigging and declares Blender 4.0 compatibility in the fetched upstream source. It may help an artist create a complex animator-facing control rig, but its generated controls and constraints still need a simpler deform skeleton and baked animation for GLB. A fish's continuous body bend is also a specialized rig; for this pipeline a small custom deform armature is easier to keep deterministic and export-ready. No Rigify dependency is needed for headless generation.
+
+Animation Nodes describes itself upstream as a node-based visual scripting system aimed at motion graphics. It adds an external add-on dependency and does not remove the need to bake its output to standard glTF animation channels. It is not a good runtime interchange dependency for this fish asset workflow. Blender's built-in Python and armature tools cover deterministic procedural geometry and animation without requiring extra GUI or add-on installation.
+
+Sources checked from upstream repositories on 2026-10-12:
+
+- Blender add-on source: `https://raw.githubusercontent.com/blender/blender-addons/main/rigify/__init__.py`
+- Animation Nodes project README: `https://raw.githubusercontent.com/JacquesLucke/animation_nodes/master/README.md`
+- Blender glTF exporter source: `https://raw.githubusercontent.com/blender/blender/main/scripts/addons_core/io_scene_gltf2/__init__.py`
