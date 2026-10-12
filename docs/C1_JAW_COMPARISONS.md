@@ -1,3 +1,101 @@
+# C1 final-touchup comparisons — NOT ACCEPTED
+
+**The final touchup has not achieved the requested anatomy or CAD/photogrammetry standard.** Astra's independent final-image inspection identifies angular upper and lower tip defects, an unresolved maxillary return and oral-cavity defects. Technical checks pass; this does not establish a visual improvement over v2. Inspect the [independent final review](C1_JAW_FINAL_REVIEW.md) and [validation/budget report](C1_JAW_VALIDATION.md). PR #2 remains draft and unmerged.
+
+Before is the preceding **22,254-triangle v2**, not the original 10,976-triangle reference. After is the frozen **22,238-triangle final attempt**, with the whole higher budget unapproved. The eight color pairs use unchanged fixed orthographic cameras, neutral lighting, 1600 × 1000 pixels and 128 Cycles samples without denoising. Before color images are verbatim historical v2 pixels with their original source identities; the QA baseline geometry was explicitly regenerated from the exact v2 code and has a distinct file hash. See [final manifest and lineage](evidence/c1/jaw/final-touchup/manifest.json).
+
+The private local gallery at `artifacts/c1/jaw-final/jaw-qa/jaw-comparison.html` embeds the documented real photographs beside the comparisons. Licensed stock photographs remain local and are not published. Reference source links and pose limits are in [C1_JAW_REFERENCES.md](C1_JAW_REFERENCES.md). CAD dimensional accuracy is unverified, and the procedural asset is not a photogrammetry scan.
+
+## Full-body lateral
+
+| Previous v2 (NOT ACCEPTED) | Final attempt (NOT ACCEPTED) |
+| --- | --- |
+| [![V2 Full-body lateral](evidence/c1/jaw/after/full_body_lateral.png)](evidence/c1/jaw/after/full_body_lateral.png) | [![Final Full-body lateral](evidence/c1/jaw/final-touchup/after/full_body_lateral.png)](evidence/c1/jaw/final-touchup/after/full_body_lateral.png) |
+
+Photographic guide: [actual bass source 306335267](https://stock.adobe.com/images/id/306335267).
+
+## Left mouth profile
+
+| Previous v2 (NOT ACCEPTED) | Final attempt (NOT ACCEPTED) |
+| --- | --- |
+| [![V2 Left mouth profile](evidence/c1/jaw/after/close_left_mouth.png)](evidence/c1/jaw/after/close_left_mouth.png) | [![Final Left mouth profile](evidence/c1/jaw/final-touchup/after/close_left_mouth.png)](evidence/c1/jaw/final-touchup/after/close_left_mouth.png) |
+
+Photographic guide: [actual bass source 306335267](https://stock.adobe.com/images/id/306335267).
+
+## Right mouth profile
+
+| Previous v2 (NOT ACCEPTED) | Final attempt (NOT ACCEPTED) |
+| --- | --- |
+| [![V2 Right mouth profile](evidence/c1/jaw/after/close_right_mouth.png)](evidence/c1/jaw/after/close_right_mouth.png) | [![Final Right mouth profile](evidence/c1/jaw/final-touchup/after/close_right_mouth.png)](evidence/c1/jaw/final-touchup/after/close_right_mouth.png) |
+
+Photographic guide: [actual bass source 306335267](https://stock.adobe.com/images/id/306335267).
+
+## Front mouth
+
+| Previous v2 (NOT ACCEPTED) | Final attempt (NOT ACCEPTED) |
+| --- | --- |
+| [![V2 Front mouth](evidence/c1/jaw/after/front_mouth.png)](evidence/c1/jaw/after/front_mouth.png) | [![Final Front mouth](evidence/c1/jaw/final-touchup/after/front_mouth.png)](evidence/c1/jaw/final-touchup/after/front_mouth.png) |
+
+Photographic guide: [actual bass source 512226129](https://stock.adobe.com/images/id/512226129).
+
+## Top snout and jaw
+
+| Previous v2 (NOT ACCEPTED) | Final attempt (NOT ACCEPTED) |
+| --- | --- |
+| [![V2 Top snout and jaw](evidence/c1/jaw/after/top_snout_jaw.png)](evidence/c1/jaw/after/top_snout_jaw.png) | [![Final Top snout and jaw](evidence/c1/jaw/final-touchup/after/top_snout_jaw.png)](evidence/c1/jaw/final-touchup/after/top_snout_jaw.png) |
+
+Photographic guide: [actual bass source 306335267](https://stock.adobe.com/images/id/306335267).
+
+## Front three-quarter head
+
+| Previous v2 (NOT ACCEPTED) | Final attempt (NOT ACCEPTED) |
+| --- | --- |
+| [![V2 Front three-quarter head](evidence/c1/jaw/after/front_three_quarter_head.png)](evidence/c1/jaw/after/front_three_quarter_head.png) | [![Final Front three-quarter head](evidence/c1/jaw/final-touchup/after/front_three_quarter_head.png)](evidence/c1/jaw/final-touchup/after/front_three_quarter_head.png) |
+
+Photographic guide: [actual bass source 306335267](https://stock.adobe.com/images/id/306335267).
+
+## Temporary 25° opening
+
+| Previous v2 (NOT ACCEPTED) | Final attempt (NOT ACCEPTED) |
+| --- | --- |
+| [![V2 Temporary 25° opening](evidence/c1/jaw/after/jaw_open_25deg.png)](evidence/c1/jaw/after/jaw_open_25deg.png) | [![Final Temporary 25° opening](evidence/c1/jaw/final-touchup/after/jaw_open_25deg.png)](evidence/c1/jaw/final-touchup/after/jaw_open_25deg.png) |
+
+Photographic guide: [actual bass source 482505893](https://stock.adobe.com/images/id/482505893).
+
+## Supplemental open three-quarter
+
+| Previous v2 | Final attempt |
+| --- | --- |
+| [![V2 open three-quarter](evidence/c1/jaw/supplemental-open/after/jaw_open_25deg.png)](evidence/c1/jaw/supplemental-open/after/jaw_open_25deg.png) | [![Final open three-quarter](evidence/c1/jaw/final-touchup/supplemental-open/after/jaw_open_25deg.png)](evidence/c1/jaw/final-touchup/supplemental-open/after/jaw_open_25deg.png) |
+
+Stock 482505893 shows a hand-forced gape; its angle is not a resting-pose or natural-motion target.
+
+## Uniform-material geometry comparisons
+
+These additional matched views use identical neutral lighting and uniform matte material on both meshes, 1200 × 750 pixels and 32 samples. Both sides are freshly rendered from the stated rebuilt baseline and frozen candidate. They expose the actual surface without skin maps.
+
+### Side surface
+
+| Rebuilt v2 | Frozen final attempt |
+| --- | --- |
+| [![V2 Side surface](evidence/c1/jaw/final-touchup/clay/before/close_right_mouth.png)](evidence/c1/jaw/final-touchup/clay/before/close_right_mouth.png) | [![Final Side surface](evidence/c1/jaw/final-touchup/clay/after/close_right_mouth.png)](evidence/c1/jaw/final-touchup/clay/after/close_right_mouth.png) |
+
+### Three-quarter surface
+
+| Rebuilt v2 | Frozen final attempt |
+| --- | --- |
+| [![V2 Three-quarter surface](evidence/c1/jaw/final-touchup/clay/before/front_three_quarter_head.png)](evidence/c1/jaw/final-touchup/clay/before/front_three_quarter_head.png) | [![Final Three-quarter surface](evidence/c1/jaw/final-touchup/clay/after/front_three_quarter_head.png)](evidence/c1/jaw/final-touchup/clay/after/front_three_quarter_head.png) |
+
+### Open oral surface
+
+| Rebuilt v2 | Frozen final attempt |
+| --- | --- |
+| [![V2 Open oral surface](evidence/c1/jaw/final-touchup/clay/before/jaw_open_25deg.png)](evidence/c1/jaw/final-touchup/clay/before/jaw_open_25deg.png) | [![Final Open oral surface](evidence/c1/jaw/final-touchup/clay/after/jaw_open_25deg.png)](evidence/c1/jaw/final-touchup/clay/after/jaw_open_25deg.png) |
+
+## Superseded v2 comparisons (historical)
+
+The following record compares v2 against its earlier pre-jaw baseline.
+
 # C1 jaw reconstruction — matched comparison gallery
 
 **C1 NOT ACCEPTED. Astra recommends HOLD.** The mesh repairs detected folds and contains genuine lip/jaw volume and a recessed cavity, but the upper rim, maxillary terminal and lower oral tip remain anatomically unresolved. See [independent review](C1_JAW_REVIEW.md) and [validation/budget report](C1_JAW_VALIDATION.md).

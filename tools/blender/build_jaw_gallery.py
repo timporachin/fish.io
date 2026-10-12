@@ -50,6 +50,8 @@ def main() -> None:
     parser.add_argument("--qa-dir", type=Path, default=ROOT / "artifacts/c1/anatomical-revision-v2/jaw-qa",
                         help="QA directory containing before/, after/, and supplemental-open/")
     parser.add_argument("--review-note", default="", help="Explicit reviewer note for this frozen checkpoint")
+    parser.add_argument("--baseline-label", default="Saved checkpoint", help="Actual source identity of before pictures")
+    parser.add_argument("--baseline-cost-label", default="Original reference", help="Identity of supplied baseline cost report")
     parser.add_argument("--embed-images", action="store_true", help="Embed unaltered image bytes for a portable private HTML gallery")
     parser.add_argument("--output", type=Path, help="Output HTML; defaults to <qa-dir>/jaw-comparison.html")
     parser.add_argument("--reference-dir", type=Path, default=ROOT / "artifacts/c1/references")
@@ -101,7 +103,7 @@ def main() -> None:
                      f'<img src="{reference_url}" alt="{esc(photo_title, quote=True)}" loading="lazy"></a>'
                      f'<p><strong>Photographic reference · {esc(photo_title)}</strong><br>{esc(photo_caption)}</p></aside>')
         sections.append(f'<section class="comparison"><h2>{esc(title)}</h2><p>{esc(note)}</p><div class="pair">'
-                        + figure(before, "Before · saved pre-jaw checkpoint") + figure(after, "Candidate")
+                        + figure(before, "Before · " + args.baseline_label) + figure(after, "Candidate")
                         + "</div>" + reference + "</section>")
     photo_cards = []
     for name, title, caption in PHOTOS:
@@ -140,11 +142,11 @@ th,td {{padding:10px;border-bottom:1px solid #45534a}} th:first-child {{text-ali
 @media(max-width:760px) {{.pair,.references {{grid-template-columns:1fr}} .photo img {{height:auto}} .view-reference {{display:block}}}}
 </style></head><body>
 <header><span class="badge">C1 NOT ACCEPTED</span><h1>Adult largemouth bass · jaw review</h1>
-<p>Private local review of the saved pre-jaw checkpoint and candidate renders. Click any image to download its original pixels. Rendered views share QA camera and lighting settings; the supplemental three-quarter open view is a separate camera setup.</p></header>
+<p>Private local review of {esc(args.baseline_label)} and the frozen candidate. Click any image to download its original pixels. Rendered views share QA camera and lighting settings; the supplemental three-quarter open view is a separate camera setup.</p></header>
 <div class="notice"><p>These licensed photographs are for local anatomical review only. Keep the raw images and this linked gallery inside the ignored artifacts workspace; do not commit or publish the photos or this page. The 25° opening is a temporary deformation check, not an authored animation or measured biological angle. C1 remains unaccepted pending review. Any higher triangle budget is an unapproved proposal pending explicit owner approval.</p></div>
 {review_note}
-<h2>Asset cost</h2><p>Original C1 browser validation versus candidate browser validation. The cost reference is the original 10,976-triangle candidate; the before images show the later saved pre-jaw model, not that original asset. Counts load from the JSON evidence at gallery generation time. Draw calls are for one fish; maps are embedded image count.</p>
-<table><thead><tr><th>Metric</th><th>Original</th><th>Candidate</th><th>Change</th></tr></thead><tbody>
+<h2>Asset cost</h2><p>{esc(args.baseline_cost_label)} versus frozen candidate. The owner's original reference remains 10,976 triangles, 11 calls and five maps. Counts load from the supplied JSON evidence. Draw calls are for one fish; maps are embedded image count. Any higher budget remains unapproved.</p>
+<table><thead><tr><th>Metric</th><th>{esc(args.baseline_cost_label)}</th><th>Candidate</th><th>Change</th></tr></thead><tbody>
 {metric_row('Triangles', 0)}{metric_row('Draw calls', 1)}{metric_row('Maps', 2)}
 </tbody></table>
 <h2>Photographic references</h2><p>These are actual locally licensed photographs. Source records: <a href="https://stock.adobe.com/images/id/306335267">306335267</a>, <a href="https://stock.adobe.com/images/id/512226129">512226129</a>, <a href="https://stock.adobe.com/images/id/482505893">482505893</a>. Their perspective and pose limits matter when judging the rendered jaw; see <a href="https://github.com/timporachin/fish.io/blob/dev/c1-largemouth-bass/docs/C1_JAW_REFERENCES.md">C1 jaw reference notes</a>.</p>
@@ -154,7 +156,7 @@ th,td {{padding:10px;border-bottom:1px solid #45534a}} th:first-child {{text-ali
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(page, encoding="utf-8")
     print(f"Wrote private local gallery: {output}")
-    print(f"Original: {before_cost}; candidate: {after_cost}")
+    print(f"{args.baseline_cost_label}: {before_cost}; candidate: {after_cost}")
 
 
 if __name__ == "__main__":

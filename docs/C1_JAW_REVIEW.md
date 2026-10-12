@@ -1,3 +1,15 @@
+# Latest C1 decision — final touchup remains NOT ACCEPTED
+
+**The final attempt has not achieved the requested anatomical quality.** The independent [Astra final review](C1_JAW_FINAL_REVIEW.md) inspects the actual frozen final renders, including uniform-material views, against the documented real photographs and the previous candidate. Upper-tip stepping, lower-tip notching, maxillary-return and cavity defects remain. A smaller tube and passing mesh checks do not establish a blanket improvement over v2, CAD-grade accuracy or photogrammetry scan quality.
+
+The updated [comparison set](C1_JAW_COMPARISONS.md), [technical results](C1_JAW_VALIDATION.md) and [final evidence manifest](evidence/c1/jaw/final-touchup/manifest.json) identify the frozen candidate and its baseline lineage. Final cost is 22,238 triangles / nine draw calls / five maps: only 16 triangles below the unapproved 22,254 proposal, still 11,262 above the owner's 10,976 reference. The increased budget is not approved.
+
+This is the owner's last authorized touchup attempt. Keep C1 open and PR #2 draft and unmerged. Stop for owner visual inspection and explicit approval. Do not describe the anatomical correction as complete; do not begin C2 or Fish Factory.
+
+## Previous v2 review (preserved evidence and acceptance criteria)
+
+The following independent HOLD review covers the preceding v2, with its original artifact/image identities.
+
 # C1 jaw reconstruction — independent review
 
 **Final independent recommendation: HOLD — the requested anatomical reconstruction remains incomplete.** The frozen second-pass candidate fixes the detected jaw self-crossings, replaces the folded anterior edge with a continuous rounded rim and retains a substantial lower jaw with a recessed oral cavity. Its muzzle, maxillary termination and lower oral tip still look constructed in the final close-ups. Technical validity and improvement do not establish photographic realism or owner acceptance. C1 remains open; C2, FishFactory, merge and release are outside this review.
