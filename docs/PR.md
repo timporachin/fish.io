@@ -1,6 +1,8 @@
 # C0: initialize cloud rendering and simulation foundation
 
-Base: `main`. Head: `dev/c0-cloud-foundation`.
+Draft PR: https://github.com/timporachin/fish.io/pull/1
+
+Base: `main`. Head: `dev/c0-cloud-foundation`. Implementation commit: `dfbdf44`. Branch pushed successfully.
 
 The previously empty project now builds a Three.js underwater habitat with landscape controls, modular seeded fixed-tick simulation and validated JSON state. Adds strict TypeScript/Vite setup, pinned locked dependencies, Vitest/Playwright checks and CI. Documents a realistic fish/rig asset pipeline and verifies Blender 4.3.2 headless animated GLB export using a non-fish fixture.
 

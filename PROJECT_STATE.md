@@ -22,4 +22,4 @@ No iPhone hardware or Safari device testing occurred. Scene is a rendering found
 
 ## Delivery
 
-Local development-branch commit and remote PR outcome are recorded in the final response and docs/PR.md. Stop after C0.
+Implementation committed as `dfbdf44` and pushed to `dev/c0-cloud-foundation`. Draft [PR #1](https://github.com/timporachin/fish.io/pull/1) targets `main`. Working tree clean after delivery documentation commit. Stop after C0.
