@@ -2,21 +2,21 @@
   "species": "Micropterus salmoides",
   "seed": 1947,
   "blender": "4.3.2",
-  "vertices": 5794,
-  "triangles": 10976,
-  "mesh_objects": 24,
-  "materials": 11,
+  "vertices": 7435,
+  "triangles": 14326,
+  "mesh_objects": 18,
+  "materials": 10,
   "bounds_min_m": [
-    -0.24514950811862946,
-    -0.07103858888149261,
-    -0.10054050385951996
+    -0.2418205440044403,
+    -0.056002937257289886,
+    -0.09639335423707962
   ],
   "bounds_max_m": [
-    0.20999999344348907,
-    0.0710371732711792,
-    0.10849038511514664
+    0.2101999968290329,
+    0.056006185710430145,
+    0.11415629088878632
   ],
-  "length_m": 0.45514950156211853,
+  "length_m": 0.4520205408334732,
   "textures": [
     {
       "name": "BassScaleOlive_1024",
@@ -56,35 +56,13 @@
   ],
   "mesh_validation": {
     "Body_quadrilateral_loft": {
-      "vertices": 1980,
-      "triangles": 3956,
+      "vertices": 3311,
+      "triangles": 6618,
       "boundary_edges": 0,
       "nonmanifold_edges": 0,
       "zero_area_faces": 0,
       "connected_components": 1,
-      "signed_volume_m3": 0.0020335861012005757,
-      "uv_finite": true,
-      "normals_finite": true
-    },
-    "Mouth_cavity_right": {
-      "vertices": 14,
-      "triangles": 12,
-      "boundary_edges": 14,
-      "nonmanifold_edges": 14,
-      "zero_area_faces": 0,
-      "connected_components": 1,
-      "signed_volume_m3": null,
-      "uv_finite": true,
-      "normals_finite": true
-    },
-    "Operculum_plate_right": {
-      "vertices": 145,
-      "triangles": 252,
-      "boundary_edges": 36,
-      "nonmanifold_edges": 36,
-      "zero_area_faces": 0,
-      "connected_components": 1,
-      "signed_volume_m3": null,
+      "signed_volume_m3": 0.0022518629230925398,
       "uv_finite": true,
       "normals_finite": true
     },
@@ -95,7 +73,7 @@
       "nonmanifold_edges": 0,
       "zero_area_faces": 0,
       "connected_components": 1,
-      "signed_volume_m3": 3.58276885695695e-07,
+      "signed_volume_m3": 4.106450043091e-07,
       "uv_finite": true,
       "normals_finite": true
     },
@@ -106,7 +84,7 @@
       "nonmanifold_edges": 0,
       "zero_area_faces": 0,
       "connected_components": 1,
-      "signed_volume_m3": 3.2889814043242225e-07,
+      "signed_volume_m3": 4.1403371644972356e-07,
       "uv_finite": true,
       "normals_finite": true
     },
@@ -117,7 +95,7 @@
       "nonmanifold_edges": 0,
       "zero_area_faces": 0,
       "connected_components": 1,
-      "signed_volume_m3": 1.1100611047818916e-07,
+      "signed_volume_m3": 1.1703710507526425e-07,
       "uv_finite": true,
       "normals_finite": true
     },
@@ -128,29 +106,7 @@
       "nonmanifold_edges": 0,
       "zero_area_faces": 0,
       "connected_components": 1,
-      "signed_volume_m3": 8.089220333801149e-10,
-      "uv_finite": true,
-      "normals_finite": true
-    },
-    "Mouth_cavity_left": {
-      "vertices": 14,
-      "triangles": 12,
-      "boundary_edges": 14,
-      "nonmanifold_edges": 14,
-      "zero_area_faces": 0,
-      "connected_components": 1,
-      "signed_volume_m3": null,
-      "uv_finite": true,
-      "normals_finite": true
-    },
-    "Operculum_plate_left": {
-      "vertices": 145,
-      "triangles": 252,
-      "boundary_edges": 36,
-      "nonmanifold_edges": 36,
-      "zero_area_faces": 0,
-      "connected_components": 1,
-      "signed_volume_m3": null,
+      "signed_volume_m3": 2.6870765368343953e-10,
       "uv_finite": true,
       "normals_finite": true
     },
@@ -161,7 +117,7 @@
       "nonmanifold_edges": 0,
       "zero_area_faces": 0,
       "connected_components": 1,
-      "signed_volume_m3": 3.582768856956949e-07,
+      "signed_volume_m3": 4.1064500430910003e-07,
       "uv_finite": true,
       "normals_finite": true
     },
@@ -172,7 +128,7 @@
       "nonmanifold_edges": 0,
       "zero_area_faces": 0,
       "connected_components": 1,
-      "signed_volume_m3": 3.288981404324223e-07,
+      "signed_volume_m3": 4.140337164497235e-07,
       "uv_finite": true,
       "normals_finite": true
     },
@@ -183,7 +139,7 @@
       "nonmanifold_edges": 0,
       "zero_area_faces": 0,
       "connected_components": 1,
-      "signed_volume_m3": 1.1100611047818916e-07,
+      "signed_volume_m3": 1.1703710507526428e-07,
       "uv_finite": true,
       "normals_finite": true
     },
@@ -194,29 +150,7 @@
       "nonmanifold_edges": 0,
       "zero_area_faces": 0,
       "connected_components": 1,
-      "signed_volume_m3": 8.08922033380115e-10,
-      "uv_finite": true,
-      "normals_finite": true
-    },
-    "Lower_mandible_volumetric": {
-      "vertices": 306,
-      "triangles": 608,
-      "boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "zero_area_faces": 0,
-      "connected_components": 1,
-      "signed_volume_m3": 7.024747326954524e-06,
-      "uv_finite": true,
-      "normals_finite": true
-    },
-    "Upper_mouth_lip_arc": {
-      "vertices": 102,
-      "triangles": 192,
-      "boundary_edges": 12,
-      "nonmanifold_edges": 12,
-      "zero_area_faces": 0,
-      "connected_components": 1,
-      "signed_volume_m3": null,
+      "signed_volume_m3": 2.6870765368343953e-10,
       "uv_finite": true,
       "normals_finite": true
     },
@@ -227,95 +161,95 @@
       "nonmanifold_edges": 0,
       "zero_area_faces": 0,
       "connected_components": 1,
-      "signed_volume_m3": 4.915244396047773e-06,
+      "signed_volume_m3": 1.658403193234472e-06,
       "uv_finite": true,
       "normals_finite": true
     },
     "Dorsal_soft_14_rays": {
-      "vertices": 112,
-      "triangles": 220,
+      "vertices": 216,
+      "triangles": 428,
       "boundary_edges": 0,
       "nonmanifold_edges": 0,
       "zero_area_faces": 0,
       "connected_components": 1,
-      "signed_volume_m3": 3.5201372623909957e-06,
+      "signed_volume_m3": 1.5582753663401864e-06,
       "uv_finite": true,
       "normals_finite": true
     },
     "Anal_fin": {
-      "vertices": 96,
-      "triangles": 188,
+      "vertices": 184,
+      "triangles": 364,
       "boundary_edges": 0,
       "nonmanifold_edges": 0,
       "zero_area_faces": 0,
       "connected_components": 1,
-      "signed_volume_m3": 3.279422238319184e-06,
+      "signed_volume_m3": 1.2768953730781787e-06,
       "uv_finite": true,
       "normals_finite": true
     },
     "Caudal_rounded_emarginate": {
+      "vertices": 328,
+      "triangles": 652,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 1.8139112976892008e-06,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Pectoral_right": {
+      "vertices": 200,
+      "triangles": 396,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 5.244340446944727e-07,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Pelvic_right": {
       "vertices": 168,
       "triangles": 332,
       "boundary_edges": 0,
       "nonmanifold_edges": 0,
       "zero_area_faces": 0,
       "connected_components": 1,
-      "signed_volume_m3": 7.328088928469779e-06,
-      "uv_finite": true,
-      "normals_finite": true
-    },
-    "Pectoral_right": {
-      "vertices": 104,
-      "triangles": 204,
-      "boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "zero_area_faces": 0,
-      "connected_components": 1,
-      "signed_volume_m3": 1.6896662913838257e-06,
-      "uv_finite": true,
-      "normals_finite": true
-    },
-    "Pelvic_right": {
-      "vertices": 88,
-      "triangles": 172,
-      "boundary_edges": 0,
-      "nonmanifold_edges": 0,
-      "zero_area_faces": 0,
-      "connected_components": 1,
-      "signed_volume_m3": 6.662916223310247e-07,
+      "signed_volume_m3": 2.2049698010235072e-07,
       "uv_finite": true,
       "normals_finite": true
     },
     "Pectoral_left": {
-      "vertices": 104,
-      "triangles": 204,
+      "vertices": 200,
+      "triangles": 396,
       "boundary_edges": 0,
       "nonmanifold_edges": 0,
       "zero_area_faces": 0,
       "connected_components": 1,
-      "signed_volume_m3": 1.6896662528040186e-06,
+      "signed_volume_m3": 5.245333066329014e-07,
       "uv_finite": true,
       "normals_finite": true
     },
     "Pelvic_left": {
-      "vertices": 88,
-      "triangles": 172,
+      "vertices": 168,
+      "triangles": 332,
       "boundary_edges": 0,
       "nonmanifold_edges": 0,
       "zero_area_faces": 0,
       "connected_components": 1,
-      "signed_volume_m3": 7.729553783579191e-07,
+      "signed_volume_m3": 2.2047881241589548e-07,
       "uv_finite": true,
       "normals_finite": true
     },
     "Fin_rays_combined": {
-      "vertices": 1680,
-      "triangles": 2940,
+      "vertices": 2012,
+      "triangles": 3548,
       "boundary_edges": 0,
       "nonmanifold_edges": 0,
       "zero_area_faces": 0,
-      "connected_components": 105,
-      "signed_volume_m3": 1.0181027014665343e-06,
+      "connected_components": 119,
+      "signed_volume_m3": 1.8836476351440077e-07,
       "uv_finite": true,
       "normals_finite": true
     }

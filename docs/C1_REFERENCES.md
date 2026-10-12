@@ -13,6 +13,8 @@ Research checked 2026-10-12 for a largemouth bass reference model (*Micropterus 
 
 ## Photographic and visual references
 
+The rejected first candidate's access limitations below are historical. During the rework, three actual Adobe Stock photographs were licensed and their pixels inspected for head, jaw, fin and skin landmarks. See [the photographic reference ledger](C1_PHOTO_REFERENCES.md) for provenance, observations and limits; stock pixels were not copied into generated textures.
+
 - [USFWS *Micropterus salmoides* photograph](https://www.fws.gov/media/micropterus-salmoides-1) — official media record credits Matthew Patterson/USFWS, gives a 2016 creation date, and explicitly marks the image **Public Domain**. Original listed at 4288 × 2848. Direct image download returned HTTP 403 in this session, so I could not inspect the pixels or make a local copy.
 - [USGS commissioned largemouth bass illustration](https://www.usgs.gov/media/images/largemouth-bass-micropterus-salmoides-0) — credited as an illustration by Duane Raver commissioned by USFWS; the USGS page marks it **Public Domain: Commissioned by USFWS**. Useful as a labeled-shape reference, not a photograph.
 - [DFO photo gallery](https://www.dfo-mpo.gc.ca/species-especes/profiles-profils/largemouthbass-achigangrandebouche-eng.html) — includes views of the jaw behind the eye, dorsal notch, flank bars, and juvenile pattern. Page text establishes the captions; the page does not state an image reuse license, so treat these as view-only reference links.

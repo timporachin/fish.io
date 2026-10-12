@@ -1,0 +1,73 @@
+{
+  "candidate": "C1 photographic rework, owner visual approval pending; Astra production HOLD",
+  "base_commit": "0ce0fc6143ea0b4827acd3d341f862a4c2e5090b",
+  "incorporated_main_commit": "95f63b07575cece839f21c6d4dfd6fa9056ebf86",
+  "rejected_baseline_commit": "035700de138c53c59a7c2e9bb5283754d1eb4521",
+  "branch": "dev/c1-largemouth-bass",
+  "render_engine": "Cycles CPU",
+  "render_samples": 128,
+  "resolution": [
+    1200,
+    800
+  ],
+  "coordinate_convention": "nose +X, dorsal +Z, anatomical left +Y, right -Y; exporter maps (x,y,z) to (x,z,-y)",
+  "generator_sha256": "a0239183ea81be3c71844831fffdc6d20becb6d7ae09f2a85fb72ffba50f1036",
+  "materials_sha256": "cfdd172f4de0b7632bf3e6a6b3a8eed8935ef8124de1e2c76dae274f1522ba6f",
+  "source": [
+    {
+      "path": "tools/blender/generate_bass.py",
+      "bytes": 28562,
+      "sha256": "a0239183ea81be3c71844831fffdc6d20becb6d7ae09f2a85fb72ffba50f1036"
+    },
+    {
+      "path": "tools/blender/bass_materials.py",
+      "bytes": 10819,
+      "sha256": "cfdd172f4de0b7632bf3e6a6b3a8eed8935ef8124de1e2c76dae274f1522ba6f"
+    }
+  ],
+  "render_sha256": {
+    "left": "0e8c35014770240f61f64d93d237f51a23ee45dc83caf6a2d5310d7f9c53bbf8",
+    "right": "0997b79e9acab4ece4797b0b3ba14c3d022d6fbec267900575cb5c7da1115273",
+    "front": "6fa8317d02f6e5989cd78ee6656a607514a56469559c7d975e8750637da0551c",
+    "rear": "fe33fa9eb73009257565f5ced66f3ea88fb46479a51e6c6b352cf8447212325a",
+    "top": "89d60319e2ba717aa28495aec7a2e702b9cbfd04ab7c621a629d2c180fb4d84d",
+    "front_three_quarter": "5bc1d4b67f4228e9b22c8a623e085610ab7f8312082836da953476c02d3184bd"
+  },
+  "browser_screenshot_sha256": "03537e905c5d998384e265ee3d724dd66557f7f2c431eb458c5d1dc6b87b0bea",
+  "validation": {
+    "path": "artifacts/c1/largemouth-bass.glb",
+    "bytes": 3513480,
+    "sha256": "ed28f05b0114ebcb7f92079d698f4edcdee7cd47f3e656158ac88d9d19cc9371"
+  },
+  "blender_asset": {
+    "path": "artifacts/c1/largemouth-bass.blend",
+    "bytes": 4478332,
+    "sha256": "54f7f280127d3571509a624c02d364d92e1e7772c173945be998f39b9a1c942c"
+  },
+  "camera_projections": {
+    "left": "orthographic",
+    "right": "orthographic",
+    "front": "orthographic",
+    "rear": "orthographic",
+    "top": "orthographic",
+    "front_three_quarter": "perspective, 60 mm"
+  },
+  "lights": {
+    "key": {
+      "watts": 12,
+      "diameter_m": 0.3
+    },
+    "fill": {
+      "watts": 6,
+      "diameter_m": 0.3
+    },
+    "top": {
+      "watts": 5,
+      "diameter_m": 0.25
+    }
+  },
+  "original_rejected_gallery": "before/manifest.json",
+  "matched_lighting_baseline": "before-matched-lighting/manifest.json",
+  "visually_accepted": false,
+  "C2_started": false
+}

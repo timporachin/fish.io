@@ -1,0 +1,227 @@
+{
+  "asset": {
+    "path": "artifacts/c1/largemouth-bass.glb",
+    "bytes": 2585016,
+    "sha256": "851052321895192dad228db459a43a3787f4a9538d59b835e2b30654b46b0865"
+  },
+  "blenderAsset": {
+    "path": "artifacts/c1/largemouth-bass.blend",
+    "bytes": 3530732,
+    "sha256": "384f0c75fd6367fdfb45f6370d6c8ed96426ed38fa8cc31913dfd4d7542537f2"
+  },
+  "validator": {
+    "package": "gltf-validator",
+    "version": "2.0.0-dev.3.10",
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 18,
+    "numHints": 0
+  },
+  "structure": {
+    "nodes": 1,
+    "meshes": 1,
+    "primitives": 11,
+    "vertices": 8488,
+    "triangles": 10976,
+    "materials": 11,
+    "embeddedImages": 5
+  },
+  "browser": {
+    "meshCount": 11,
+    "skinnedMeshCount": 0,
+    "primitiveCount": 11,
+    "drawCalls": 11,
+    "provisionalTotalSceneDrawCallBudget": 100,
+    "remainingCallsBeforeOtherSceneObjects": 89,
+    "triangles": 10976,
+    "animationClips": 0,
+    "bounds": [
+      0.45514950156211853,
+      0.2090308889746666,
+      0.14207576215267181
+    ],
+    "axisConvention": "Blender authoring: nose +X, dorsal +Z; glTF export maps (x,y,z) to (x,z,-y), so dorsal is glTF +Y",
+    "camera": {
+      "position": [
+        -0.01757475733757019,
+        0.17693175122141838,
+        1.137874461710453
+      ],
+      "target": [
+        -0.01757475733757019,
+        0.003974940627813339,
+        7.078051567077637e-7
+      ]
+    },
+    "decodedImages": [
+      {
+        "map": "bass-scale-olive",
+        "roles": [
+          "baseColor"
+        ],
+        "width": 1024,
+        "height": 1024,
+        "decoded": true,
+        "normalSample": null
+      },
+      {
+        "map": "bass-scale-normal",
+        "roles": [
+          "normal"
+        ],
+        "width": 1024,
+        "height": 1024,
+        "decoded": true,
+        "normalSample": {
+          "mean": [
+            0.5000277650122549,
+            0.5000402113970588,
+            0.9999521292892157
+          ],
+          "samples": 4096
+        }
+      },
+      {
+        "map": "bass-scale-roughness",
+        "roles": [
+          "roughness",
+          "metalness"
+        ],
+        "width": 1024,
+        "height": 1024,
+        "decoded": true,
+        "normalSample": null
+      },
+      {
+        "map": "bass-fin-olive",
+        "roles": [
+          "baseColor"
+        ],
+        "width": 512,
+        "height": 512,
+        "decoded": true,
+        "normalSample": null
+      },
+      {
+        "map": "bass-pectoral-amber",
+        "roles": [
+          "baseColor"
+        ],
+        "width": 512,
+        "height": 512,
+        "decoded": true,
+        "normalSample": null
+      }
+    ],
+    "materials": [
+      {
+        "name": "Bass skin - scale and broken lateral stripe",
+        "type": "MeshStandardMaterial",
+        "color": "ffffff",
+        "roughness": 1,
+        "metalness": 0,
+        "mapSlots": [
+          "baseColor",
+          "normal",
+          "roughness",
+          "metalness"
+        ]
+      },
+      {
+        "name": "Mouth cavity charcoal olive",
+        "type": "MeshStandardMaterial",
+        "color": "3f463c",
+        "roughness": 0.8600000143051147,
+        "metalness": 0,
+        "mapSlots": []
+      },
+      {
+        "name": "Eye rim gold olive",
+        "type": "MeshStandardMaterial",
+        "color": "657650",
+        "roughness": 0.5799999833106995,
+        "metalness": 0,
+        "mapSlots": []
+      },
+      {
+        "name": "Amber iris",
+        "type": "MeshStandardMaterial",
+        "color": "766545",
+        "roughness": 0.3400000035762787,
+        "metalness": 0.11999999731779099,
+        "mapSlots": []
+      },
+      {
+        "name": "Black pupil",
+        "type": "MeshStandardMaterial",
+        "color": "1d2421",
+        "roughness": 0.07999999821186066,
+        "metalness": 0,
+        "mapSlots": []
+      },
+      {
+        "name": "Eye reflection",
+        "type": "MeshStandardMaterial",
+        "color": "f7f8ef",
+        "roughness": 0.09000000357627869,
+        "metalness": 0,
+        "mapSlots": []
+      },
+      {
+        "name": "Fleshy lip",
+        "type": "MeshStandardMaterial",
+        "color": "798969",
+        "roughness": 0.75,
+        "metalness": 0,
+        "mapSlots": []
+      },
+      {
+        "name": "Bass fin membranes",
+        "type": "MeshStandardMaterial",
+        "color": "ffffff",
+        "roughness": 0.7799999713897705,
+        "metalness": 0,
+        "mapSlots": [
+          "baseColor"
+        ]
+      },
+      {
+        "name": "Amber pectoral membrane",
+        "type": "MeshStandardMaterial",
+        "color": "ffffff",
+        "roughness": 0.7400000095367432,
+        "metalness": 0,
+        "mapSlots": [
+          "baseColor"
+        ]
+      },
+      {
+        "name": "Olive fin rays",
+        "type": "MeshStandardMaterial",
+        "color": "959e84",
+        "roughness": 0.6700000166893005,
+        "metalness": 0,
+        "mapSlots": []
+      },
+      {
+        "name": "Amber pectoral rays",
+        "type": "MeshStandardMaterial",
+        "color": "6f614b",
+        "roughness": 0.7799999713897705,
+        "metalness": 0,
+        "mapSlots": []
+      }
+    ],
+    "bodyPbrMaterialFound": true,
+    "screenshot": "artifacts/c1/largemouth-bass-browser.png",
+    "negativeLoaderError": "Unexpected token '\u0000', \"\u0000lTF\u0002\u0000\u0000\u0000�q\"... is not valid JSON"
+  },
+  "geometryReport": "artifacts/c1/blender-geometry-validation.json",
+  "negativeCases": [
+    "corrupt GLB rejected by validator",
+    "unexpected animation rejected",
+    "unexpected skin rejected",
+    "empty mesh rejected",
+    "corrupt GLB rejected by Three.js loader"
+  ]
+}

@@ -11,6 +11,7 @@ import { runBassBrowserChecks } from './test_bass_browser.mjs';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const repo = path.resolve(here, '../..');
 const input = path.resolve(process.argv[2] || path.join(repo, 'artifacts/c1/largemouth-bass.glb'));
+const EXPECTED_EMBEDDED_IMAGE_COUNT = 5;
 
 function parseGlb(bytes, label = input) {
   assert.equal(bytes.toString('ascii', 0, 4), 'glTF', `${label}: bad GLB magic`);
@@ -27,6 +28,7 @@ function inspectDocument(document, label = input) {
   assert.ok((document.scenes?.length ?? 0) > 0, `${label}: no scene`);
   assert.equal(document.animations?.length ?? 0, 0, `${label}: fish asset should not contain animation clips`);
   assert.equal(document.skins?.length ?? 0, 0, `${label}: C1 model should not contain skins`);
+  assert.ok(!(document.nodes ?? []).some((node) => node.skin !== undefined), `${label}: a node unexpectedly references a skin`);
   assert.equal(document.cameras?.length ?? 0, 0, `${label}: fish asset should not include cameras`);
   assert.ok(!(document.nodes ?? []).some((node) => node.camera !== undefined || node.extensions?.KHR_lights_punctual),
     `${label}: fish asset should not include cameras or lights`);
@@ -41,6 +43,8 @@ function inspectDocument(document, label = input) {
       assert.equal(primitive.mode ?? 4, 4, `${label}: expected triangle-list primitives`);
       const positionIndex = primitive.attributes?.POSITION;
       assert.ok(Number.isInteger(positionIndex), `${label}: primitive has no POSITION accessor`);
+      assert.ok(primitive.attributes?.JOINTS_0 === undefined && primitive.attributes?.WEIGHTS_0 === undefined,
+        `${label}: C1 model should not contain skinning vertex attributes`);
       const vertexCount = document.accessors?.[positionIndex]?.count ?? 0;
       const indexCount = primitive.indices === undefined
         ? vertexCount
@@ -51,8 +55,23 @@ function inspectDocument(document, label = input) {
   }
   assert.ok(primitives > 0 && vertices > 0 && triangles > 0, `${label}: empty mesh geometry`);
   assert.ok((document.materials?.length ?? 0) > 0, `${label}: no materials`);
+  assert.equal(document.images?.length ?? 0, EXPECTED_EMBEDDED_IMAGE_COUNT,
+    `${label}: expected three body maps, one fin map, and one shared pectoral/iris atlas`);
+  const materialByName = (name) => document.materials.find((material) => material.name === name);
+  const iris = materialByName('Bronze iris - narrow gold pupil border');
+  const pectoral = materialByName('Amber pectoral membrane');
+  assert.ok(iris && pectoral, `${label}: missing atlas iris or pectoral material`);
+  const irisTexture = iris.pbrMetallicRoughness?.baseColorTexture?.index;
+  const pectoralTexture = pectoral.pbrMetallicRoughness?.baseColorTexture?.index;
+  assert.ok(Number.isInteger(irisTexture) && Number.isInteger(pectoralTexture),
+    `${label}: iris and pectoral must each reference a base-color atlas texture`);
+  const atlasImageIndex = document.textures?.[irisTexture]?.source;
+  assert.ok(Number.isInteger(atlasImageIndex) && document.images?.[atlasImageIndex] &&
+    document.textures?.[pectoralTexture]?.source === atlasImageIndex,
+    `${label}: iris and pectoral texture samplers do not resolve to the same embedded atlas image`);
   return { nodes: document.nodes?.length ?? 0, meshes: document.meshes.length, primitives, vertices, triangles,
-    materials: document.materials?.length ?? 0, embeddedImages: document.images?.length ?? 0 };
+    materials: document.materials?.length ?? 0, embeddedImages: document.images?.length ?? 0,
+    sharedPectoralIrisAtlasImage: atlasImageIndex };
 }
 
 async function validate(bytes, uri) {
@@ -89,7 +108,13 @@ try {
 assert.throws(() => inspectDocument({ ...document, animations: [{ channels: [], samplers: [] }] }, 'negative-animation-case'), /should not contain animation/);
 assert.throws(() => inspectDocument({ ...document, skins: [{ joints: [0] }] }, 'negative-skin-case'), /should not contain skins/);
 assert.throws(() => inspectDocument({ ...document, meshes: [] }, 'negative-empty-mesh-case'), /no meshes/);
-console.log('NEGATIVE_CASES_OK corrupt container, unexpected animation, unexpected skin, and empty mesh rejected');
+const pectoralTextureIndex = document.materials.find(({ name }) => name === 'Amber pectoral membrane')
+  .pbrMetallicRoughness.baseColorTexture.index;
+const wrongAtlasTextures = document.textures.map((texture, index) => index === pectoralTextureIndex
+  ? { ...texture, source: (texture.source + 1) % document.images.length } : texture);
+assert.throws(() => inspectDocument({ ...document, textures: wrongAtlasTextures }, 'negative-atlas-case'),
+  /do not resolve to the same embedded atlas image/);
+console.log('NEGATIVE_CASES_OK corrupt container, unexpected animation, unexpected skin, empty mesh, and split atlas rejected');
 
 const browser = await runBassBrowserChecks({ repo, input, invalidBytes: corrupt });
 const blendInput = input.replace(/\.glb$/i, '.blend');
@@ -110,6 +135,10 @@ assert.ok(fs.existsSync(geometryReportPath), 'Independent Blender geometry valid
 const geometry = JSON.parse(fs.readFileSync(geometryReportPath, 'utf8'));
 assert.equal(geometry.failures.length, 0, 'Independent Blender geometry report contains failures');
 const evidence = {
+  source: ['tools/blender/generate_bass.py', 'tools/blender/bass_materials.py'].map((relativePath) => {
+    const sourceBytes = fs.readFileSync(path.join(repo, relativePath));
+    return { path: relativePath, bytes: sourceBytes.length, sha256: createHash('sha256').update(sourceBytes).digest('hex') };
+  }),
   asset: {
     path: path.relative(repo, input),
     bytes: fs.statSync(input).size,
@@ -125,8 +154,8 @@ const evidence = {
   browser,
   geometryReport: path.relative(repo, geometryReportPath),
   negativeCases: ['corrupt GLB rejected by validator', 'unexpected animation rejected', 'unexpected skin rejected',
-    'empty mesh rejected', 'corrupt GLB rejected by Three.js loader'],
+    'empty mesh rejected', 'split atlas rejected', 'corrupt GLB rejected by Three.js loader'],
 };
-const evidencePath = path.join(repo, 'artifacts/c1/browser-validation.json');
+const evidencePath = path.join(path.dirname(input), 'browser-validation.json');
 fs.writeFileSync(evidencePath, `${JSON.stringify(evidence, null, 2)}\n`);
 console.log(`VALIDATION_EVIDENCE ${path.relative(repo, evidencePath)}`);

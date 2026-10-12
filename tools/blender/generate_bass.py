@@ -20,7 +20,7 @@ def args():
     p = argparse.ArgumentParser()
     p.add_argument('--seed', type=int, default=1947)
     p.add_argument('--output', '--output-dir', dest='output', default='artifacts/c1')
-    p.add_argument('--render-samples', type=int, default=64)
+    p.add_argument('--render-samples', type=int, default=128)
     p.add_argument('--skip-renders', action='store_true')
     p.add_argument('--render-view', choices=('left','right','front','rear','top','front_three_quarter'))
     return p.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else [])
@@ -41,143 +41,9 @@ for datablocks in (bpy.data.materials, bpy.data.images, bpy.data.meshes, bpy.dat
 
 FISH = []
 
-def smooth_mat(name, rgb, roughness=.65, metallic=0.0):
-    m = bpy.data.materials.new(name)
-    m.diffuse_color = (*rgb, 1)
-    m.use_nodes = True
-    b = m.node_tree.nodes.get('Principled BSDF')
-    b.inputs['Base Color'].default_value = (*rgb, 1)
-    b.inputs['Roughness'].default_value = roughness
-    b.inputs['Metallic'].default_value = metallic
-    return m
-
-
-def noise(h, w, gh, gw, rng):
-    lattice = rng.random((gh + 1, gw + 1), dtype=np.float32)
-    yi = np.linspace(0, gh, h, endpoint=False, dtype=np.float32)
-    xi = np.linspace(0, gw, w, endpoint=False, dtype=np.float32)
-    y0 = yi.astype(np.int32); x0 = xi.astype(np.int32)
-    fy = yi - y0; fx = xi - x0
-    fy = fy * fy * (3 - 2 * fy); fx = fx * fx * (3 - 2 * fx)
-    a = lattice[y0[:, None], x0[None, :]]
-    b = lattice[y0[:, None] + 1, x0[None, :]]
-    c = lattice[y0[:, None], x0[None, :] + 1]
-    d = lattice[y0[:, None] + 1, x0[None, :] + 1]
-    return (a * (1 - fy[:, None]) + b * fy[:, None]) * (1 - fx[None, :]) + (c * (1 - fy[:, None]) + d * fy[:, None]) * fx[None, :]
-
-
-def save_image(name, rgba, path, noncolor=False):
-    h, w, _ = rgba.shape
-    img = bpy.data.images.new(name, width=w, height=h, alpha=True)
-    if noncolor:
-        img.colorspace_settings.name='Non-Color'
-    img.filepath_raw = str(path)
-    img.file_format = 'PNG'
-    # Blender image buffer starts at lower left, same as UV v=0.
-    img.pixels.foreach_set(np.ascontiguousarray(rgba.reshape(-1)).tolist())
-    img.save()
-    img.pack()
-    return img
-
-
-def textured_mat(name, image, roughness=.72):
-    m = smooth_mat(name, (.35, .40, .23), roughness)
-    nodes = m.node_tree.nodes
-    tex = nodes.new('ShaderNodeTexImage')
-    tex.image = image
-    tex.interpolation = 'Linear'
-    m.node_tree.links.new(tex.outputs['Color'], nodes.get('Principled BSDF').inputs['Base Color'])
-    return m
-
-# Circumferential v=0 is dorsal midline. The lateral pigment band sits on
-# each flank near cos(theta)=0.18; belly lies around v=0.5.
-H = W = 1024
-rng = np.random.default_rng(A.seed)
-u = np.linspace(0, 1, W, endpoint=False, dtype=np.float32)[None, :]
-v = np.linspace(0, 1, H, endpoint=False, dtype=np.float32)[:, None]
-c = np.cos(v * 2 * math.pi)
-coarse = noise(H, W, 18, 45, rng) - .5
-fine = noise(H, W, 90, 170, rng) - .5
-olive = np.array([.16, .23, .085], dtype=np.float32)
-green = np.array([.28, .36, .16], dtype=np.float32)
-cream = np.array([.67, .65, .46], dtype=np.float32)
-upper = np.clip((c + .05) * 1.2, 0, 1)
-belly = np.clip((-c - .15) * 1.45, 0, 1)
-base = green[None, None, :] * (1 - upper[..., None]) + olive[None, None, :] * upper[..., None]
-base = base * (1 - belly[..., None]) + cream[None, None, :] * belly[..., None]
-base = np.broadcast_to(base, (H, W, 3)).copy()
-# Fine overlapping crescent boundaries, staggered between scale rows.
-lx = np.mod(u*70 + np.floor(v*50)*.5, 1)-.5
-ly = np.mod(v*50,1)
-arc = .55+.32*np.sqrt(np.clip(1-(lx/.55)**2,0,1))
-crescent = np.exp(-((ly-arc)/.035)**2)
-scale_light = np.exp(-((ly-(arc-.09))/.065)**2)
-scale_visibility = np.clip(1-np.abs(c),0,1)
-base *= (1-.045*crescent[...,None]*scale_visibility[...,None])
-base += .012*scale_light[...,None]*scale_visibility[...,None]
-# Largemouth bass have a blotched rather than a ruler-straight lateral stripe.
-stripe_center = .18 + .055 * np.sin(u * 31) + .033 * (noise(1, W, 1, 26, rng)[0:1, :] - .5)
-stripe = np.exp(-((c - stripe_center) / (.105 + .035 * np.sin(u * 51) ** 2)) ** 2)
-segment = .43 + .57 * np.clip((noise(H, W, 12, 65, rng) - .32) * 3.2, 0, 1)
-stripe *= segment * (u > .07) * (u < .65)
-base *= (1 - .66 * stripe[..., None])
-# Scattered olive blotches above/below the band and small flecks in scales.
-blotch = np.clip((coarse + .065) * 2.8, 0, 1) * np.exp(-((c - .34) / .43) ** 2)
-base *= (1 - .20 * blotch[..., None])
-base += (.10 * coarse + .045 * fine)[..., None]
-base = np.clip(base, .025, .92)
-rgba = np.concatenate((base, np.ones((H, W, 1), dtype=np.float32)), axis=2)
-body_img = save_image('BassScaleOlive_1024', rgba, OUT / 'bass-scale-olive.png')
-BODY_MAT = textured_mat('Bass skin - scale and broken lateral stripe', body_img)
-height = .12*crescent*scale_visibility + .035*scale_light*scale_visibility + .02*fine
-dv, du = np.gradient(height)
-nx = -du * 2.0; ny = -dv * 2.0; nz = np.ones_like(nx)
-normal_length = np.sqrt(nx*nx+ny*ny+nz*nz)
-normal_rgb = np.stack((.5+.5*nx/normal_length,.5+.5*ny/normal_length,
-                       .5+.5*nz/normal_length),axis=2).astype(np.float32)
-normal_img = save_image('BassScaleNormal_1024',
-                        np.concatenate((normal_rgb,np.ones((H,W,1),dtype=np.float32)),axis=2),
-                        OUT/'bass-scale-normal.png',noncolor=True)
-rough = np.clip(.48-.045*crescent*scale_visibility+.025*fine,.38,.58)
-rough_img = save_image('BassScaleRoughness_1024',
-                       np.concatenate((np.repeat(rough[...,None],3,axis=2),
-                                       np.ones((H,W,1),dtype=np.float32)),axis=2),
-                       OUT/'bass-scale-roughness.png',noncolor=True)
-nodes=BODY_MAT.node_tree.nodes
-bsdf=nodes.get('Principled BSDF')
-ntex=nodes.new('ShaderNodeTexImage'); ntex.image=normal_img
-nmap=nodes.new('ShaderNodeNormalMap'); nmap.inputs['Strength'].default_value=.46
-BODY_MAT.node_tree.links.new(ntex.outputs['Color'],nmap.inputs['Color'])
-BODY_MAT.node_tree.links.new(nmap.outputs['Normal'],bsdf.inputs['Normal'])
-rtex=nodes.new('ShaderNodeTexImage'); rtex.image=rough_img
-BODY_MAT.node_tree.links.new(rtex.outputs['Color'],bsdf.inputs['Roughness'])
-
-# Fin pigment/ray base texture. Mesh rays are also modeled for silhouette and grazing light.
-fw = fh = 512
-fu = np.linspace(0, 1, fw, endpoint=False, dtype=np.float32)[None, :]
-fv = np.linspace(0, 1, fh, endpoint=False, dtype=np.float32)[:, None]
-fn = noise(fh, fw, 40, 40, rng) - .5
-bands = .5 + .5 * np.sin(fv * 43 + 2.3 * np.sin(fu * 15))
-fin_col = np.broadcast_to(np.array([.40, .43, .30], dtype=np.float32), (fh, fw, 3)).copy()
-fin_col *= (1 - .075 * bands[..., None] * fv[..., None])
-fin_col += .035 * fn[..., None]
-fin_col *= (1-.16*np.exp(-((np.mod(fu*25,1)-.5)/.08)**2)[...,None])
-fin_rgba = np.concatenate((np.clip(fin_col, 0, 1), np.ones((fh, fw, 1), dtype=np.float32)), axis=2)
-fin_img = save_image('BassFinOlive_512', fin_rgba, OUT / 'bass-fin-olive.png')
-pectoral_col=np.clip(fin_col*np.array([.55,.40,.27],dtype=np.float32),0,1)
-pectoral_img=save_image('BassPectoralAmber_512',
-                        np.concatenate((pectoral_col,np.ones((fh,fw,1),dtype=np.float32)),axis=2),
-                        OUT/'bass-pectoral-amber.png')
-FIN_MAT = textured_mat('Bass fin membranes', fin_img, .78)
-FIN_RAY = smooth_mat('Olive fin rays', (.30, .34, .23), .67)
-PECTORAL_RAY = smooth_mat('Amber pectoral rays', (.16, .12, .07), .78)
-MOUTH = smooth_mat('Mouth cavity charcoal olive', (.050, .061, .045), .86)
-LIP = smooth_mat('Fleshy lip', (.19, .25, .14), .75)
-IRIS = smooth_mat('Amber iris', (.18, .13, .060), .34, .12)
-PUPIL = smooth_mat('Black pupil', (.012, .018, .015), .08)
-EYE_RIM = smooth_mat('Eye rim gold olive', (.13, .18, .08), .58)
-EYE_HILITE = smooth_mat('Eye reflection', (.93, .94, .86), .09)
-PECTORAL_MAT = textured_mat('Amber pectoral membrane', pectoral_img, .74)
+# Physically scaled original maps calibrated against the three real photos.
+sys.path.insert(0,str(Path(__file__).resolve().parent))
+from bass_materials import build_materials
 
 
 def mesh(name, verts, faces, mat, uvs=None, smooth=True):
@@ -200,14 +66,17 @@ def mesh(name, verts, faces, mat, uvs=None, smooth=True):
 
 # Measured-looking loft: max depth near forward midbody, stout head and narrow peduncle.
 PROFILE = [
-    (-.177, .011, .010, .000), (-.164, .018, .014, .000),
-    (-.142, .032, .022, .001), (-.113, .047, .030, .002),
-    (-.078, .058, .037, .003), (-.039, .064, .041, .004),
-    (.000, .065, .042, .004), (.037, .062, .041, .005),
-    (.074, .056, .038, .005), (.111, .048, .034, .006),
-    (.145, .039, .029, .006), (.175, .030, .023, .006),
-    (.195, .022, .027, .006), (.207, .017, .025, .005)
+    (-.184, .019, .0028, .000), (-.176, .023, .010, .000),
+    (-.164, .024, .014, .000), (-.142, .031, .022, .001),
+    (-.113, .040, .028, .002),
+    (-.078, .046, .032, .003), (-.039, .056, .038, .004),
+    (.000, .063, .043, .004), (.037, .068, .045, .005),
+    (.074, .068, .043, .005), (.111, .061, .039, .006),
+    (.145, .047, .033, .006), (.175, .034, .027, .006),
+    (.195, .025, .028, .006), (.207, .014, .029, .005)
 ]
+
+globals().update(build_materials(OUT,A.seed,PROFILE))
 
 def shape(x):
     x = min(max(x, PROFILE[0][0]), PROFILE[-1][0])
@@ -236,60 +105,279 @@ def surface_y(x, z, side):
     q = max(0, 1 - ((z - zc) / max(h, 1e-5)) ** 2)
     return side * w * math.sqrt(q)
 
-# Body mesh has closed longitudinal rings and 40 sides. The texture seam is
-# per-face UV data: no doubled/coincident mesh vertices or open seam edges.
-NX, NR = 51, 36
-xs = np.linspace(PROFILE[0][0], PROFILE[-1][0], NX)
-verts = []
-for x in xs:
-    h, w, zc = shape(float(x))
+# The torso is a single skin that bifurcates into an upper skull and a
+# continuous lower mandible behind the eye. The two branches share a rear
+# hinge; their inner palate/tongue faces open into the mouth towards the lip.
+NR, SPLIT, BRIDGE = 56, 17, 12
+HINGE = .151
+TRUNK_X = np.unique(np.concatenate((np.linspace(PROFILE[0][0], HINGE, 39),
+                                    np.arange(.078,HINGE,.003))))
+HEAD_X = np.linspace(HINGE, .207, 17)
+# The corner lies behind/below the eye; the bite rises across a broad, blunt
+# muzzle. The small resting gape is real space between two skinned surfaces.
+mouth_marks=((HINGE,-.0087),(.161,-.0083),(.171,-.0068),
+             (.181,-.0040),(.191,-.0004),(.200,.0027),(.207,.0038))
+
+def mouth_height(x):
+    return float(np.interp(x,[p[0] for p in mouth_marks],[p[1] for p in mouth_marks]))
+
+def mouth_gape(x):
+    # A rounded commissure opens faster than a triangular vanishing slit,
+    # then settles to a narrow, relaxed anterior bite.
+    t=max(0,min(1,(x-HINGE)/(.207-HINGE)))
+    return .0019*t**.85
+
+OUTER_OPERCULUM = ((-.040,.124),(-.028,.106),(-.010,.096),
+                   (.008,.098),(.022,.116),(.033,.135))
+PREOPERCULUM = ((-.039,.155),(-.035,.140),(-.018,.130),
+                (.008,.138),(.030,.145))
+
+def cranial_curve_x(z, points):
+    if z<=points[0][0]: return points[0][1]
+    if z>=points[-1][0]: return points[-1][1]
+    for i in range(len(points)-1):
+        za,xa=points[i]; zb,xb=points[i+1]
+        if za<=z<=zb:
+            t=(z-za)/(zb-za)
+            before=points[max(0,i-1)]; after=points[min(len(points)-1,i+2)]
+            ma=(xb-before[1])/(zb-before[0])
+            mb=(after[1]-xa)/(after[0]-za)
+            return ((2*t**3-3*t*t+1)*xa+(t**3-2*t*t+t)*(zb-za)*ma+
+                    (-2*t**3+3*t*t)*xb+(t**3-t*t)*(zb-za)*mb)
+    return points[-1][1]
+
+def smooth01(t):
+    t=max(0,min(1,t))
+    return t*t*(3-2*t)
+
+def raw_lateral_width(x,z):
+    h,w,zc=shape(x)
+    radial=max(0,1-((z-zc)/h)**2)
+    plane=.23*math.exp(-((x-.137)/.050)**2)
+    return w*radial**((1-plane)/2)
+
+def cranial_plane_y(x,z,base):
+    outer_x=cranial_curve_x(z,OUTER_OPERCULUM)
+    inner_x=cranial_curve_x(z,PREOPERCULUM)
+    span=max(.012,inner_x-outer_x)
+    across=(x-outer_x)/span
+    vertical=smooth01((z+.045)/.018)*(1-smooth01((z-.018)/.020))
+    outer_fade=.003/span
+    blend=.85*smooth01(across/outer_fade)*(1-smooth01((across-.75)/.25))*vertical
+    # An actual lateral plane anchored to the differently sized torso and
+    # anterior skull sections. The rear bony cover sits slightly proud.
+    outer_y=raw_lateral_width(outer_x,z)+.0030
+    inner_y=raw_lateral_width(inner_x,z)+.0003
+    target=outer_y+(inner_y-outer_y)*max(0,min(1,across))
+    return base*(1-blend)+target*blend
+
+def cheek_relief(x,z):
+    # One low oblong maxillary form follows the side of the upper jaw. A
+    # rounded rear terminal sits aft of the eye; the opposite end fades into
+    # the upper lip. Its supported lower turn stays above the mouth corner.
+    rear=smooth01((x-.135)/.010)
+    front=1-smooth01((x-.181)/.013)
+    plate_span=rear*front
+    maxilla_z=mouth_height(max(x,HINGE))+.012
+    halfwidth=.0095*(1-.28*smooth01((x-.175)/.016))
+    across=(z-maxilla_z)/halfwidth
+    maxilla=.0046*plate_span*smooth01((1-abs(across))/.36)
+    maxilla_edge=(-.00125*plate_span
+                  *math.exp(-((across+.92)/.20)**2))
+    orbital_r=math.sqrt(((x-.169)/.0118)**2+((z-.024)/.0106)**2)
+    orbit=-.0024*math.exp(-(orbital_r/.72)**2)+.0012*math.exp(-((orbital_r-1)/.30)**2)
+    return orbit+maxilla+maxilla_edge
+
+def skin_point(x,theta,z_override=None,lower=False):
+    h,w,zc=shape(x)
+    z=zc+h*math.cos(theta) if z_override is None else z_override
+    s=math.sin(theta)
+    plane=.23*math.exp(-((x-.137)/.050)**2)
+    width=cranial_plane_y(x,z,w*abs(s)**(1-plane))
+    y=math.copysign(width,s)
+    y+=math.copysign(cheek_relief(x,z)*abs(s)**2,y)
+    if z_override is None:
+        # Lift the skin into the median-fin insertions. The rounded shoulders
+        # fade across the back/belly and into the adjoining body, so the fin
+        # does not start at a straight intersection of two unrelated sheets.
+        top_mask=smooth01((x+.126)/.022)*(1-smooth01((x-.082)/.026))
+        bottom_mask=smooth01((x+.153)/.019)*(1-smooth01((x+.062)/.018))
+        if z>zc:
+            z+=.0015*top_mask*math.exp(-(y/.013)**2)
+        else:
+            z-=.0012*bottom_mask*math.exp(-(y/.010)**2)
+    r=max(0,min(1,(x-.175)/.032))
+    xx=x-(.0085 if lower else .0078)*r*math.sin(theta)**2
+    if lower:
+        # Set the ventral chin back from its rounded forward lip. Without
+        # this, the underside and cap center sit almost in the same plane.
+        xx+=.0018*r-.0035*r*max(0,-math.cos(theta))**4
+    return (xx,y,z)
+
+verts=[]; faces=[]; uvs=[]; face_mats=[]; face_regions=[]; jaw_weights=[]
+def append_face(ids, texcoords, material=0, region=0):
+    # A UV of exactly 1 repeats to column 0 (the caudal texture) on glTF
+    # samplers. Keep the terminal snout inside the final head texel instead.
+    head_u_limit=1-1/W
+    faces.append(tuple(ids)); uvs.append(tuple((min(u,head_u_limit),v) for u,v in texcoords))
+    face_mats.append(material); face_regions.append(region)
+
+for x in TRUNK_X:
     for k in range(NR):
-        a = 2 * math.pi * k / NR
-        nose_round=max(0,(float(x)-.175)/(.207-.175))*.006*math.sin(a)**2
-        verts.append((float(x)-nose_round, w * math.sin(a), zc + h * math.cos(a)))
-faces = []; uvs = []
-for i in range(NX - 1):
-    for k in range(NR):
-        a = i * NR + k; b = (i + 1) * NR + k
-        faces.append((a, b, (i + 1) * NR + (k + 1) % NR, i * NR + (k + 1) % NR))
-        u0 = i / (NX - 1); u1 = (i + 1) / (NX - 1)
-        v0 = k / NR; v1 = (k + 1) / NR
-        uvs.append(((u0, v0), (u1, v0), (u1, v1), (u0, v1)))
-faces.append(tuple(range(NR)))
-uvs.append(tuple((0, k / NR) for k in range(NR)))
-# The blunt head ends in a narrow recessed slit, rather than tapering all the
-# way to the mouth. A small front annulus connects the snout to the aperture.
-aperture_start=len(verts)
-for k in range(NR):
-    a=2*math.pi*k/NR
-    verts.append((.208-.006*math.sin(a)**2,.024*math.sin(a),.007+.004*math.cos(a)))
-for k in range(NR):
-    kn=(k+1)%NR; outer=(NX-1)*NR
-    faces.append((outer+k,aperture_start+k,aperture_start+kn,outer+kn))
-    uvs.append(((.99,k/NR),(1,k/NR),(1,(k+1)/NR),(.99,(k+1)/NR)))
-# Inward-curving cavity lining from the aperture rim to a dark throat.
-inner_start=len(verts)
-for x,h,w,zc in ((.196,.004,.021,.007),(.182,.003,.014,.006),(.175,.0012,.0015,.006)):
-    for k in range(NR):
-        a=2*math.pi*k/NR
-        verts.append((x,w*math.sin(a),zc+h*math.cos(a)))
-cavity_face_start=len(faces)
-for r in range(3):
-    outer=aperture_start if r==0 else inner_start+(r-1)*NR
-    inner=inner_start+r*NR
+        verts.append(skin_point(float(x),2*math.pi*k/NR)); jaw_weights.append(0.0)
+for i in range(len(TRUNK_X)-1):
     for k in range(NR):
         kn=(k+1)%NR
-        faces.append((outer+k,inner+k,inner+kn,outer+kn))
-        uvs.append(((1-r*.04,k/NR),(1-(r+1)*.04,k/NR),
-                    (1-(r+1)*.04,(k+1)/NR),(1-r*.04,(k+1)/NR)))
-faces.append(tuple(inner_start+2*NR+k for k in reversed(range(NR))))
-uvs.append(tuple((.88,k/NR) for k in reversed(range(NR))))
-body = mesh('Body_quadrilateral_loft', verts, faces, BODY_MAT, uvs)
+        u0=(float(TRUNK_X[i])-PROFILE[0][0])/(PROFILE[-1][0]-PROFILE[0][0])
+        u1=(float(TRUNK_X[i+1])-PROFILE[0][0])/(PROFILE[-1][0]-PROFILE[0][0])
+        append_face((i*NR+k,(i+1)*NR+k,(i+1)*NR+kn,i*NR+kn),
+                    ((u0,k/NR),(u1,k/NR),(u1,(k+1)/NR),(u0,(k+1)/NR)))
+append_face(tuple(range(NR)),tuple((0,k/NR) for k in range(NR)))
+
+upper_keys=list(range(-SPLIT,SPLIT+1))
+lower_keys=list(range(SPLIT,NR-SPLIT+1))
+branch_rings={'upper':[],'lower':[]}
+branch_uvs={'upper':[],'lower':[]}
+# Extra lateral samples round the lip-to-palate turn on both sides. They are
+# shared at the hinge, keeping one closed body while giving each oral surface
+# enough actual geometry to roll in three dimensions.
+inner_fracs=(.97,.90,.79,.64,.46,.25,0,-.25,-.46,-.64,-.79,-.90,-.97)
+for i,x_raw in enumerate(HEAD_X):
+    x=float(x_raw); h,w,zc=shape(x)
+    base_edge=zc+h*math.cos(2*math.pi*SPLIT/NR)
+    target=mouth_height(x); gap=mouth_gape(x)
+    if i==0: target=base_edge; gap=0
+    bridge=[]
+    edge_width=abs(skin_point(x,2*math.pi*SPLIT/NR)[1])
+    if i==0:
+        for frac in inner_fracs:
+            y=edge_width*frac
+            bridge.append(len(verts)); verts.append((x,y,target)); jaw_weights.append(0.0)
+    for part,keys in (('upper',upper_keys),('lower',lower_keys)):
+        ring=[]; ring_uv=[]
+        for key in keys:
+            k=key%NR; a=2*math.pi*key/NR
+            if i==0:
+                vi=(len(TRUNK_X)-1)*NR+k
+            else:
+                baseline=zc+h*math.cos(a)
+                if part=='upper':
+                    influence=(1-math.cos(a))/(1-math.cos(2*math.pi*SPLIT/NR))
+                    desired=target+gap*.5
+                else:
+                    influence=(1+math.cos(a))/(1+math.cos(2*math.pi*SPLIT/NR))
+                    desired=target-gap*.5
+                z=baseline+(desired-base_edge)*influence
+                # Roll the outer skin into a fleshy premaxillary and dentary
+                # lip. This acts on the last few circumferential skin loops,
+                # with its greatest volume just outside the oral edge.
+                from_lip=min(abs(key+SPLIT),abs(key-SPLIT)) if part=='upper' else min(abs(key-SPLIT),abs(key-(NR-SPLIT)))
+                lip=math.exp(-(from_lip/3.1)**2)*smooth01((x-HINGE)/.020)
+                # Keep the bite edge itself nearly closed; the thickening
+                # peaks in the neighboring skin loop instead of opening it.
+                shoulder=lip*(1-math.exp(-(from_lip/.95)**2))
+                z+=(.0018 if part=='upper' else -.0032)*shoulder
+                px,py,pz=skin_point(x,a,z,part=='lower')
+                px+=.0034*lip
+                py+=math.copysign(.0009*lip,py)
+                vi=len(verts); verts.append((px,py,pz))
+                jaw_weights.append(smooth01((x-HINGE)/.030) if part=='lower' else 0.0)
+            ring.append(vi); ring_uv.append(((x-PROFILE[0][0])/(PROFILE[-1][0]-PROFILE[0][0]),key/NR))
+        for j in (range(len(inner_fracs)) if part=='upper' else range(len(inner_fracs)-1,-1,-1)):
+            if i==0:
+                vi=bridge[j]
+            else:
+                frac=inner_fracs[j]
+                y=edge_width*frac
+                arch=max(0,1-(y/edge_width)**2)
+                oral_t=max(0,min(1,(x-HINGE)/(.207-HINGE)))
+                # The roof and floor deepen behind the rolled anterior rim;
+                # carrying maximum depth to the cap made a broad flat scoop.
+                bow=(.0050*math.sin(math.pi*oral_t)**1.4+.00015*oral_t)*arch
+                # Behind the horseshoe-shaped lip, a recessed roof and floor
+                # carry the cavity aft to the common hinge. A tighter lateral
+                # turn makes the oral edge a rounded lip instead of a sheet.
+                lip_front=smooth01((x-.189)/.018)
+                # Do not push the first cavity section through the shared
+                # hinge plane: that would cross the upper/lower branch fan.
+                inset=min(.0055,.35*(x-HINGE))
+                bridge_x=x-inset*arch*(1-.82*lip_front)-.0015*arch*lip_front
+                inner_roll=(.0020*math.exp(-((abs(frac)-.79)/.15)**2)
+                            *(1-.85*lip_front))
+                # Both halves follow one raised anterior U across the face;
+                # the common lift bends the bite without widening its gap.
+                bite_arch=.0024*smooth01((x-.177)/.030)*arch
+                z=target+bite_arch+(gap*.5+.0006*arch+inner_roll+bow)*(1 if part=='upper' else -1)
+                vi=len(verts); verts.append((bridge_x,y,z))
+                jaw_weights.append(smooth01((x-HINGE)/.030) if part=='lower' else 0.0)
+            ring.append(vi)
+            ring_uv.append(((x-PROFILE[0][0])/(PROFILE[-1][0]-PROFILE[0][0]),.5+(1-inner_fracs[j])*.06))
+        branch_rings[part].append(ring)
+        branch_uvs[part].append(ring_uv)
+
+for part in ('upper','lower'):
+    rings=branch_rings[part]; uv_rings=branch_uvs[part]
+    outside_count=len(upper_keys if part=='upper' else lower_keys)
+    for i in range(len(rings)-1):
+        for j in range(len(rings[i])):
+            jn=(j+1)%len(rings[i]); m=1 if j>=outside_count-1 else 0
+            append_face((rings[i][j],rings[i+1][j],rings[i+1][jn],rings[i][jn]),
+                        (uv_rings[i][j],uv_rings[i+1][j],uv_rings[i+1][jn],uv_rings[i][jn]),m,
+                        1 if part=='upper' else 2)
+    # Round the snout and chin forward through concentric cross-sections.
+    # A single wide triangle fan made a planar diamond across the lower lip.
+    # These rings keep the aperture unchanged while turning the skin smoothly
+    # around each jaw's closed end.
+    last=rings[-1]; last_uv=uv_rings[-1]
+    final_x=float(HEAD_X[-1]); h,w,zc=shape(final_x)
+    # The frontal cap belongs to the lip perimeter, not the midpoint of the
+    # entire skull/chin cross-section. Opposing centers leave a natural small
+    # resting bite while the outer loops carry the full jaw mass behind it.
+    center_z=mouth_height(final_x)+.0024+(.0020 if part=='upper' else -.0020)
+    center_x=final_x+(.0032 if part=='upper' else .0037)
+    center_v=0.0 if part=='upper' else .5
+    boundary,boundary_uv=last,last_uv
+    # A short forward rail clears the last cheek/lip section before the
+    # concentric turn. Contracting immediately beside the tapering head
+    # drove the upper outer wall through the palate near both mouth corners.
+    for scale in (1.0,.80,.58,.34,.15):
+        next_ring=[]; next_uv=[]
+        for vi,(u,v) in zip(boundary,boundary_uv):
+            px,py,pz=verts[vi]
+            # All cap sections advance in X as coherent planes. Interpolating
+            # each irregular palate vertex from its own X made neighboring
+            # sections overtake one another and fold the anterior lip.
+            nx=final_x+.0007+(center_x-final_x-.0007)*math.sqrt(1-scale*scale)
+            next_ring.append(len(verts))
+            verts.append((nx,py*scale,center_z+(pz-center_z)*scale))
+            jaw_weights.append(1.0 if part=='lower' else 0.0)
+            next_uv.append((u*scale+(1-scale),v*scale+center_v*(1-scale)))
+        for j in range(len(last)):
+            jn=(j+1)%len(last)
+            append_face((last[j],next_ring[j],next_ring[jn],last[jn]),
+                        (last_uv[j],next_uv[j],next_uv[jn],last_uv[jn]),0,
+                        1 if part=='upper' else 2)
+        last,last_uv=next_ring,next_uv
+    center=len(verts); verts.append((center_x,0,center_z))
+    jaw_weights.append(1.0 if part=='lower' else 0.0)
+    for j in range(len(last)):
+        jn=(j+1)%len(last)
+        append_face((center,last[jn],last[j]),((1,center_v),last_uv[jn],last_uv[j]),0,
+                    1 if part=='upper' else 2)
+
+body=mesh('Body_quadrilateral_loft',verts,faces,BODY_MAT,uvs)
 body.data.materials.append(MOUTH)
-for poly in list(body.data.polygons)[cavity_face_start:]: poly.material_index=1
+for poly,idx in zip(body.data.polygons,face_mats): poly.material_index=idx
+region_attr=body.data.attributes.new(name='anatomical_region',type='INT',domain='FACE')
+for datum,region in zip(region_attr.data,face_regions): datum.value=region
+jaw_attr=body.data.attributes.new(name='jaw_open_weight',type='FLOAT',domain='POINT')
+for datum,weight in zip(jaw_attr.data,jaw_weights): datum.value=weight
+body['jaw_hinge_x']=HINGE
+body['jaw_hinge_y']=0.0
+body['jaw_hinge_z']=mouth_height(HINGE)
+body['jaw_open_axis']='Y'
 
-
-def uv_sphere(name, loc, scale, material, segments=12, rings=6):
+def uv_sphere(name, loc, scale, material, segments=24, rings=12):
     bpy.ops.mesh.primitive_uv_sphere_add(segments=segments, ring_count=rings, location=loc)
     ob = bpy.context.object
     ob.name = name
@@ -300,194 +388,167 @@ def uv_sphere(name, loc, scale, material, segments=12, rings=6):
     FISH.append(ob)
     return ob
 
-# A narrow open-looking cavity on both cheeks: terminal mouth line runs back
-# to the jaw hinge, which sits posterior to the eye's rear rim.
+# The eye nests into the continuous sculpted cheek on each side.
 for side, label in ((-1, 'right'), (1, 'left')):
-    slit = [( .202,.003),(.192,.000),(.169,-.005),(.145,-.010),(.119,-.016),(.094,-.020),(.079,-.021)]
-    upper = [(x, z + .0013) for i, (x,z) in enumerate(slit)]
-    lower = [(x, z - .0013) for i, (x,z) in enumerate(slit)]
-    vv = [(x, surface_y(x,z,side) + side*.00025, z) for x,z in upper + lower]
-    ff = [(i, i+1, 7+i+1, 7+i) for i in range(6)]
-    mesh(f'Mouth_cavity_{label}', vv, ff, MOUTH, [((0,0),(1,0),(1,1),(0,1))]*6)
-    # Posterior bony operculum is a separate curved plate, with exposed dark seam.
-    outline_control=[(.112,.021),(.095,.042),(.060,.049),(.029,.032),(.014,.007),(.023,-.026),(.052,-.045),(.083,-.034),(.105,-.015)]
-    outline=[]
-    for i in range(len(outline_control)):
-        p0=outline_control[(i-1)%len(outline_control)]
-        p1=outline_control[i]
-        p2=outline_control[(i+1)%len(outline_control)]
-        p3=outline_control[(i+2)%len(outline_control)]
-        for q in range(4):
-            t=q/4
-            outline.append(tuple(.5*((2*p1[k])+(-p0[k]+p2[k])*t+
-                       (2*p0[k]-5*p1[k]+4*p2[k]-p3[k])*t*t+
-                       (-p0[k]+3*p1[k]-3*p2[k]+p3[k])*t*t*t) for k in (0,1)))
-    center=(.061,.002)
-    gv=[(center[0],surface_y(center[0],center[1],side)+side*.00065,center[1])]
-    for radius in (.25,.50,.75,1.0):
-        for ox,oz in outline:
-            x=center[0]*(1-radius)+ox*radius; z=center[1]*(1-radius)+oz*radius
-            gv.append((x,surface_y(x,z,side)+side*.00065,z))
-    gf=[]
-    for i in range(len(outline)):
-        gf.append((0,1+i,1+(i+1)%len(outline)))
-    for ring in range(3):
-        off=1+ring*len(outline); nxt=off+len(outline)
-        for i in range(len(outline)):
-            j=(i+1)%len(outline)
-            gf.append((off+i,nxt+i,nxt+j,off+j))
-    if side==1:
-        gf=[tuple(reversed(face)) for face in gf]
-    guv=[]
-    for face in gf:
-        coords=[]
-        for vi in face:
-            x,y,z=gv[vi]; h,w,zc=shape(x)
-            theta=math.atan2(y/max(w,1e-5), (z-zc)/max(h,1e-5))%(2*math.pi)
-            coords.append(((x-PROFILE[0][0])/(PROFILE[-1][0]-PROFILE[0][0]),theta/(2*math.pi)))
-        guv.append(tuple(coords))
-    mesh(f'Operculum_plate_{label}',gv,gf,BODY_MAT,guv)
-    # Eye is proud of cheek; iris and pupil are layered hemispheric spheres.
-    ex,ez=.125,.029
-    ey=abs(surface_y(ex,ez,side))
-    uv_sphere(f'Eye_orbit_{label}',(ex,side*(ey-.0005),ez),(.0080,.0015,.0080),EYE_RIM)
-    uv_sphere(f'Iris_{label}',(ex,side*(ey+.0008),ez),(.0072,.0017,.0072),IRIS)
-    uv_sphere(f'Pupil_{label}',(ex+.0006,side*(ey+.0020),ez),(.0052,.0011,.0052),PUPIL)
-    uv_sphere(f'Corneal_glint_{label}',(ex+.0026,side*(ey+.0029),ez+.0023),(.00085,.0003,.00085),EYE_HILITE,12,6)
+    ex,ez=.169,.024
+    ey=surface_y(ex,ez,side)
+    step=.001
+    dx=(surface_y(ex+step,ez,side)-surface_y(ex-step,ez,side))/(2*step)
+    dz=(surface_y(ex,ez+step,side)-surface_y(ex,ez-step,side))/(2*step)
+    outward=Vector((-side*dx,side,-side*dz)).normalized()
+    eye_base=Vector((ex,ey,ez))
+    # A thin local-Y dome follows the actual skin normal on both sides.
+    # Keep the pupil in front of the iris and the iris in front of the rim.
+    eye_rotation=outward.to_track_quat('Y','Z')
+    for eye_name,depth,offset,eye_size,eye_mat in (
+        (f'Eye_orbit_{label}',-.0004,(0,0,0),(.0092,.0011,.0092),EYE_RIM),
+        (f'Iris_{label}',.0006,(0,0,0),(.0086,.0013,.0086),IRIS),
+        (f'Pupil_{label}',.0018,(.0004,0,0),(.0056,.0008,.0056),PUPIL)):
+        eye=uv_sphere(eye_name,eye_base+outward*depth+Vector(offset),eye_size,eye_mat)
+        if eye_name.startswith('Iris_'):
+            iris_uv=eye.data.uv_layers.active or eye.data.uv_layers.new(name='UVMap')
+            for loop in eye.data.loops:
+                co=eye.data.vertices[loop.vertex_index].co
+                iu=.5+.5*co.x/.0086; iv=.5+.5*co.z/.0086
+                iris_uv.data[loop.index].uv=((.5+127*iu)/512,(384.5+127*iv)/512)
+        eye.rotation_euler=eye_rotation.to_euler()
 
-# Lower mandible is a narrow U-shaped curved shell following the ventral head,
-# not a solid cylinder in front of the chin. Its upper edges run behind the eye
-# and its thin projecting anterior rim forms the lower edge of the mouth.
-jaw_xs=(.079,.095,.115,.135,.155,.175,.195,.207,.210)
-mouthline=((.079,-.021),(.145,-.010),(.195,.001),(.207,.007),(.210,.007))
-J=16; I=len(jaw_xs); half=(J+1)*I
-jv=[]; juv=[]; jf=[]
-for layer in (0,1):
-    for x in jaw_xs:
-        if x>.207:
-            alpha=math.pi/2; h=.005; w=.024; zc=.007
-        else:
-            h,w,zc=shape(x)
-            zm=float(np.interp(x,[p[0] for p in mouthline],[p[1] for p in mouthline]))
-            alpha=math.acos(max(-.95,min(.95,(zm-zc)/h)))
-        for j in range(J+1):
-            theta=alpha+(2*math.pi-2*alpha)*j/J
-            blend=max(0,min(1,(x-.079)/.025)); blend=blend*blend*(3-2*blend)
-            factor=(1.001+blend*.023) if layer==0 else (1.000+blend*.001)
-            round_t=max(0,min(1,(x-.175)/(.207-.175)))
-            xx=x-.006*round_t*math.sin(theta)**2
-            if layer==1 and x>.207:
-                xx-=.0005
-            jv.append((xx,w*factor*math.sin(theta),zc+h*factor*math.cos(theta)))
-            juv.append(((x-PROFILE[0][0])/(PROFILE[-1][0]-PROFILE[0][0]),theta/(2*math.pi)))
-def jo(i,j): return i*(J+1)+j
-def ji(i,j): return half+i*(J+1)+j
-for i in range(I-1):
-    for j in range(J):
-        jf.append((jo(i,j),jo(i+1,j),jo(i+1,j+1),jo(i,j+1)))
-        jf.append((ji(i,j+1),ji(i+1,j+1),ji(i+1,j),ji(i,j)))
-    jf.append((jo(i,0),ji(i,0),ji(i+1,0),jo(i+1,0)))
-    jf.append((jo(i,J),jo(i+1,J),ji(i+1,J),ji(i,J)))
-for j in range(J):
-    jf.append((jo(0,j+1),jo(0,j),ji(0,j),ji(0,j+1)))
-    jf.append((jo(I-1,j),jo(I-1,j+1),ji(I-1,j+1),ji(I-1,j)))
-mesh('Lower_mandible_volumetric',jv,jf,BODY_MAT,[tuple(juv[k] for k in f) for f in jf])
-
-# Fleshy annular lip surrounds a recessed, genuinely open-looking cavity.
-rv=[];rf=[]
-for i in range(17):
-    a=-math.pi/2+math.pi*i/16
-    for j in range(6):
-        b=2*math.pi*j/6
-        rv.append((.207-.006*math.sin(a)**2+.00075*math.cos(b),
-                   (.024+.00075*math.sin(b))*math.sin(a),
-                   .007+(.004+.00075*math.sin(b))*math.cos(a)))
-for i in range(16):
-    for j in range(6):
-        rf.append((i*6+j,(i+1)*6+j,(i+1)*6+(j+1)%6,i*6+(j+1)%6))
-mesh('Upper_mouth_lip_arc',rv,rf,LIP)
-
-# Fish membranes are two close quilted surfaces with real outer silhouette.
-# Each ray is a single beveled polyline, merged into one mesh after generation.
+# The membrane follows gently curved rays; a shallow dip between rays avoids
+# ruler-straight sheets without the repeated saw teeth of the first model.
 ray_curves=[]
 
-def fin_grid(name, bases, tips, material=FIN_MAT, ray_step=1, thick=.00055):
+def fin_grid(name, bases, tips, material=FIN_MAT, ray_step=1, thick=.00022):
     assert len(bases)==len(tips)
-    ray_bases=list(bases); ray_tips=list(tips)
-    if name.startswith('Dorsal_spiny'):
-        scalloped_bases=[]; scalloped_tips=[]
-        for i in range(len(bases)-1):
-            scalloped_bases.append(bases[i]); scalloped_tips.append(tips[i])
-            scalloped_bases.append(tuple((bases[i][k]+bases[i+1][k])*.5 for k in range(3)))
-            scalloped_tips.append(tuple((tips[i][k]+tips[i+1][k])*.5-(.005 if k==2 else 0) for k in range(3)))
-        scalloped_bases.append(bases[-1]); scalloped_tips.append(tips[-1])
-        bases=scalloped_bases; tips=scalloped_tips
-    n=len(bases); ts=(0,.33,.66,1)
-    vs=[]; fs=[]; uv=[]
-    for sign in (-1,1):
-        for i,(b,t) in enumerate(zip(bases,tips)):
-            for q in ts:
-                # Cambered membrane gives the fins an organic surface and edge light.
-                camber=(.0006 if name.endswith('_left') else -.0006 if name.endswith('_right') else .0013)
-                midpoint=math.sin(q*math.pi)*camber
-                vs.append(tuple(b[k]*(1-q)+t[k]*q + (sign*thick if k==1 else 0) + (midpoint if k==1 else 0) for k in range(3)))
+    source_bases=[Vector(p) for p in bases]
+    source_tips=[Vector(p) for p in tips]
+    scallop=.0022 if name.startswith('Dorsal_spiny') else .00055
+    interp_b=[]; interp_t=[]; ribs=[]; phases=[]
+    for i in range(len(bases)-1):
+        interp_b.append(source_bases[i]); interp_t.append(source_tips[i])
+        ribs.append(.25); phases.append(.73*i+.2*math.sin(i*1.7))
+        mid_b=(source_bases[i]+source_bases[i+1])*.5
+        mid_t=(source_tips[i]+source_tips[i+1])*.5
+        inward=(mid_b-mid_t).normalized()
+        interp_b.append(mid_b); interp_t.append(mid_t+inward*scallop*(.88+.18*math.sin(i*2.3)))
+        ribs.append(-.85+.12*math.sin(i*2.1)); phases.append(.73*(i+.5))
+    interp_b.append(source_bases[-1]); interp_t.append(source_tips[-1])
+    ribs.append(.25); phases.append(.73*(len(bases)-1))
+    n=len(interp_b); ts=(0,.08,.20,.42,.70,1)
     stride=n*len(ts)
-    for side_idx in (0,1):
+    vs=[]; fs=[]; uv=[]
+    pair_sign=1 if name.endswith('_left') else -1 if name.endswith('_right') else 0
+    curve_x=.0019 if 'Dorsal' in name else -.0016 if name.startswith('Anal') else .0008
+    # Thickness follows the actual fan normal. A paired fin lies obliquely
+    # against the flank; offsetting only in Y made a square, glued-on hinge.
+    normals=[]
+    for i,(b,t) in enumerate(zip(interp_b,interp_t)):
+        lo=max(0,i-1); hi=min(n-1,i+1)
+        lateral=interp_t[hi]-interp_t[lo]
+        normal=(t-b).cross(lateral)
+        if normal.length<1e-8:
+            normal=Vector((0,pair_sign or 1,0))
+        else:
+            normal.normalize()
+        if normal.y*(pair_sign or 1)<0: normal.negate()
+        normals.append(normal)
+    def point(b,t,q,side,rib,phase,normal):
+        bend=math.sin(math.pi*q)
+        # The first fifth stays inside the skin and swells into a rounded
+        # root; the membrane grows out of it and thins towards the margin.
+        span_q=q**(1.22 if pair_sign==0 else 1.43)
+        p=b.lerp(t,span_q)
+        p.x+=curve_x*bend*(1+.23*math.sin(b.x*390))+.0007*math.sin(phase+q*2.1)*bend
+        p.z+=.00045*math.cos(phase+q*1.3)*bend
+        median_camber=(.00125+.00028*math.sin(b.x*270))*bend if pair_sign==0 else 0
+        slack_size=.00012 if name.startswith('Caudal') else .00065
+        membrane_slack=(pair_sign if pair_sign else 1)*slack_size*rib*bend
+        if name.startswith('Caudal'):
+            # Embed the caudal shaft well ahead of the body tip. Its root is
+            # oval in section, narrowing in Y towards dorsal/ventral rays.
+            oval=math.sqrt(max(.25,1-.75*(b.z/.016)**2))
+            root_thickness=.010*oval*(1-q)**3
+        elif pair_sign==0:
+            # The skin itself supplies the broad median root. Keep its
+            # emerging edge close to the body's smooth dorsal/ventral tangent.
+            root_thickness=.0020*(1-q)**8+.0008*math.exp(-((q-.34)/.16)**2)
+        else:
+            root_thickness=.0043*(1-q)**3
+        half_thickness=thick+root_thickness
+        p.y+=median_camber+pair_sign*.0011*bend+membrane_slack
+        p+=normal*(half_thickness if side==1 else -half_thickness)
+        return p
+    for side in (0,1):
+        for b,t,rib,phase,normal in zip(interp_b,interp_t,ribs,phases,normals):
+            for q in ts:
+                vs.append(tuple(point(b,t,q,side,rib,phase,normal)))
+    for side in (0,1):
         for i in range(n-1):
             for j in range(len(ts)-1):
-                a=side_idx*stride+i*len(ts)+j
-                face=(a,a+4,a+5,a+1) if side_idx==0 else (a+1,a+5,a+4,a)
+                a=side*stride+i*len(ts)+j
+                b=a+len(ts)
+                face=(a,b,b+1,a+1) if side==0 else (a+1,b+1,b,a)
                 fs.append(face)
-                uvpoints=[(i/(n-1),ts[j]),((i+1)/(n-1),ts[j]),
-                          ((i+1)/(n-1),ts[j+1]),(i/(n-1),ts[j+1])]
-                uv.append(tuple(uvpoints) if side_idx==0 else
-                          (uvpoints[3],uvpoints[2],uvpoints[1],uvpoints[0]))
+                uvpoints=((i/(n-1),ts[j]),((i+1)/(n-1),ts[j]),
+                          ((i+1)/(n-1),ts[j+1]),(i/(n-1),ts[j+1]))
+                uv.append(uvpoints if side==0 else tuple(reversed(uvpoints)))
     for i in range(n-1):
-        a=i*4+3; b=(i+1)*4+3
+        a=i*len(ts)+len(ts)-1; b=(i+1)*len(ts)+len(ts)-1
         fs.append((a,b,b+stride,a+stride)); uv.append(((0,0),(1,0),(1,1),(0,1)))
-        a=i*4; b=(i+1)*4
+        a=i*len(ts); b=(i+1)*len(ts)
         fs.append((a,a+stride,b+stride,b)); uv.append(((0,0),(0,1),(1,1),(1,0)))
     for i in (0,n-1):
-        for j in range(3):
-            a=i*4+j
+        for j in range(len(ts)-1):
+            a=i*len(ts)+j
             fs.append((a,a+1,a+1+stride,a+stride))
             uv.append(((0,0),(1,0),(1,1),(0,1)))
     ob=mesh(name,vs,fs,material,uv)
-    for i in range(0,len(ray_bases),ray_step):
-        b=Vector(ray_bases[i]); t=Vector(ray_tips[i]); d=t-b
-        if d.length>.006:
-            side_offset=(.0018 if name.endswith('_left') else -.0018 if name.endswith('_right') else .0)
-            points=[b+d*q+Vector((0,side_offset*math.sin(q*math.pi),0)) for q in (0,.33,.67,1)]
-            ray_curves.append((name+f'_ray{i}',points,.00028 if 'Caudal' not in name else .00036))
+    if name.startswith('Pectoral_'):
+        for loop in ob.data.uv_layers.active.data:
+            loop.uv=((.5+511*loop.uv.x)/512,(.5+383*loop.uv.y)/512)
+    for i in range(0,len(source_bases),ray_step):
+        b=source_bases[i]; t=source_tips[i]
+        if (t-b).length<=.006: continue
+        outer=1 if pair_sign>=0 else 0
+        phase=.73*i+.2*math.sin(i*1.7)
+        normal=normals[2*i]
+        points=[point(b,t,q,outer,.25,phase,normal) for q in (0,.25,.50,.75,1)]
+        radius=.00024 if name.startswith('Dorsal_spiny') else .00018 if name.startswith('Caudal') else .00014
+        ray_curves.append((name+f'_ray{i}',points,radius))
+        if name.startswith(('Dorsal_soft','Anal','Pectoral','Pelvic')) and i<len(source_bases)-1:
+            # Soft rays bifurcate only near the margin, as in the photograph.
+            neighboring=source_tips[i+1]-t
+            branch=[point(b,t,q,outer,.25,phase,normal)+neighboring*max(0,(q-.66)/.34)*.24
+                    for q in (.66,.83,1)]
+            ray_curves.append((name+f'_branch{i}',branch,radius*.68))
     return ob
 
 # Dorsal fins: ten spines and a separately lobed soft portion; membranes meet at
 # a low notch while remaining anatomically continuous at the base.
-spiny_x=np.linspace(.054,-.077,10)
-spiny_height=[.018,.027,.035,.039,.041,.042,.040,.035,.028,.010]
+spiny_x=np.linspace(.091,-.035,10)
+spiny_height=[.011,.021,.028,.034,.033,.038,.036,.030,.022,.006]
 spiny_b=[];spiny_t=[]
 for x,dh in zip(spiny_x,spiny_height):
     h,w,zc=shape(float(x)); z=zc+h*.96
-    spiny_b.append((float(x),0,z-.003))
+    spiny_b.append((float(x),0,z-.006))
     spiny_t.append((float(x)-.003,0,z+dh))
 fin_grid('Dorsal_spiny_10_spines',spiny_b,spiny_t)
-soft_x=np.linspace(-.077,-.148,14)
-soft_height=[.014,.022,.033,.041,.047,.051,.053,.052,.050,.047,.041,.033,.022,.009]
+soft_x=np.linspace(-.035,-.119,14)
+soft_height=[.008,.019,.032,.044,.050,.053,.054,.052,.048,.041,.034,.025,.015,.006]
 soft_b=[];soft_t=[]
 for x,dh in zip(soft_x,soft_height):
     h,w,zc=shape(float(x)); z=zc+h*.96
-    soft_b.append((float(x),0,z-.003))
-    soft_t.append((float(x)-.012*dh/.06,0,z+dh))
+    soft_b.append((float(x),0,z-.006))
+    soft_t.append((float(x)-.020*dh/.06,0,z+dh))
 fin_grid('Dorsal_soft_14_rays',soft_b,soft_t)
 
 # Anal fin beneath the rear third of the fish.
-ax=np.linspace(-.078,-.151,12)
-anal_h=[.013,.029,.044,.052,.052,.049,.044,.038,.032,.025,.018,.009]
+ax=np.linspace(-.066,-.145,12)
+anal_h=[.009,.021,.035,.044,.047,.046,.043,.037,.030,.023,.015,.006]
 ab=[];at=[]
 for x,dh in zip(ax,anal_h):
     h,w,zc=shape(float(x)); z=zc-h*.97
-    ab.append((float(x),0,z+.002))
-    at.append((float(x)-.012*dh/.052,0,z-dh))
+    ab.append((float(x),0,z+.005))
+    at.append((float(x)-.017*dh/.052,0,z-dh))
 fin_grid('Anal_fin',ab,at)
 
 # Rounded, shallow-emarginate caudal fan. Its trailing boundary sweeps out
@@ -495,35 +556,47 @@ fin_grid('Anal_fin',ab,at)
 theta=np.linspace(-math.pi/2,math.pi/2,21)
 cb=[];ct=[]
 for a in theta:
-    z=.010*math.sin(a)
-    cb.append((-.176,0,z))
-    depth=.069*math.sin(a)
+    z=.016*math.sin(a)
+    cb.append((-.166,0,z))
+    depth=.052*math.sin(a)
     az=abs(depth)
-    trailing=-.245+.003*(1-min(az/.04,1))**2+.033*max((az-.04)/.029,0)**2
+    trailing=-.237-.005*math.exp(-((az/.052-.65)/.28)**2)
+    if az/.052>.95:
+        edge=(az/.052-.95)/.05
+        depth-=math.copysign(.0006*edge,depth)
+        trailing+=.004*edge
     ct.append((trailing,0,depth))
-fin_grid('Caudal_rounded_emarginate',cb,ct,ray_step=1)
+fin_grid('Caudal_rounded_emarginate',cb,ct,ray_step=2)
 
 # Broad mobile paired pectorals sweep back from opercula; pelvic fins sit below.
 for side,label in ((-1,'right'),(1,'left')):
     n=13; pb=[];pt=[]
-    origin=Vector((.050,surface_y(.050,-.007,side)+side*.0005,-.007))
-    reach=Vector((-.80,side*.45,-.30)).normalized()
-    spread=Vector((-.35,0,.94)).normalized()
+    origin=Vector((.082,surface_y(.082,-.009,side)-side*.0055,-.009))
+    reach=Vector((-.85,side*.53,-.10)).normalized()
+    spread=Vector((-.15,side*.18,.97)).normalized()
     for i in range(n):
         a=i/(n-1)
         phi=-math.pi/3+2*math.pi/3*a
-        base=origin+spread*(.003*math.sin(phi))
-        tip=origin+reach*(.066*math.cos(phi))+spread*(.024*math.sin(phi))
+        base=origin+spread*(.005*math.sin(phi))
+        # The covered attachment is a short oval: its middle appears first,
+        # while the two ends emerge from under the cheek skin more gradually.
+        rim_fraction=(math.sin(phi)/math.sin(math.pi/3))**2
+        base.x+=.003*(1-rim_fraction)
+        base.y=surface_y(base.x,base.z,side)-side*(.0055+.002*rim_fraction)
+        tip=origin+reach*(.051+.015*math.cos(phi))+spread*(.024*math.sin(phi))
         pb.append(tuple(base)); pt.append(tuple(tip))
-    fin_grid(f'Pectoral_{label}',pb,pt,material=PECTORAL_MAT,ray_step=1)
+    fin_grid(f'Pectoral_{label}',pb,pt,material=PECTORAL_MAT,ray_step=2)
     vb=[];vt=[]
+    px=.060; ph,pw,pzc=shape(px)
+    pelvic_origin=Vector((px,side*.008,pzc-ph*.94))
+    pelvic_reach=Vector((-1,side*.50,-.35)).normalized()
+    pelvic_spread=Vector((-.25,side*.15,.96)).normalized()
     for i in range(11):
-        a=i/10
-        x=.005-.025*a
-        h,w,zc=shape(x); z=zc-h*.94
-        vb.append((x,side*.012,z))
-        vt.append((-.030-.030*math.sin(a*math.pi),side*.040, -.087+.012*a))
-    fin_grid(f'Pelvic_{label}',vb,vt,ray_step=1)
+        phi=-math.pi/4+math.pi/2*i/10
+        vb.append(tuple(pelvic_origin+pelvic_spread*(.002*math.sin(phi))))
+        vt.append(tuple(pelvic_origin+pelvic_reach*(.047*math.cos(phi))+
+                        pelvic_spread*(.014*math.sin(phi))))
+    fin_grid(f'Pelvic_{label}',vb,vt,ray_step=2)
 
 # Convert and join rays into one export object to avoid one draw call per ray.
 for name,points,radius in ray_curves:
@@ -545,7 +618,7 @@ for name,points,radius in ray_curves:
     bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces))
     bm.to_mesh(ob.data); bm.free(); ob.data.update()
     FISH.append(ob)
-ray_objects=[ob for ob in FISH if '_ray' in ob.name and ob.name.rsplit('_ray',1)[-1].isdigit()]
+ray_objects=[ob for ob in FISH if any(tag in ob.name and ob.name.rsplit(tag,1)[-1].isdigit() for tag in ('_ray','_branch'))]
 FISH=[ob for ob in FISH if ob not in ray_objects]
 bpy.ops.object.select_all(action='DESELECT')
 for ob in ray_objects: ob.select_set(True)
@@ -605,6 +678,7 @@ stats={'species':'Micropterus salmoides','seed':A.seed,'blender':bpy.app.version
                    {'name':rough_img.name,'width':W,'height':H},
                    {'name':fin_img.name,'width':fw,'height':fh},
                    {'name':pectoral_img.name,'width':fw,'height':fh}],
+       'iris_atlas_region_pixels':{'image':pectoral_img.name,'x':0,'y':384,'width':128,'height':128},
        'rigged':False,'animated':False,
        'render_files':[]}
 
@@ -652,8 +726,8 @@ bpy.context.scene.render.resolution_percentage=100
 bpy.context.scene.render.image_settings.file_format='PNG'
 bpy.context.scene.render.film_transparent=False
 bpy.context.scene.view_settings.view_transform='AgX'
-# Two large softboxes reveal the scales, head planes, and translucent-looking fins.
-for name,loc,power,size in [('key',(.3,-.55,.5),20,1.0),('fill',(-.4,.38,.25),10,.8),('top',(.0,.0,.60),12,.7)]:
+# Compact studio softboxes reveal scale glints without washing out the dorsum.
+for name,loc,power,size in [('key',(.3,-.55,.5),12,.30),('fill',(-.4,.38,.25),6,.30),('top',(.0,.0,.60),5,.25)]:
     data=bpy.data.lights.new(name,'AREA'); data.energy=power; data.shape='DISK'; data.size=size
     ob=bpy.data.objects.new(name,data); bpy.context.collection.objects.link(ob); ob.location=loc
     ob.rotation_euler=(Vector((0,0,0))-ob.location).to_track_quat('-Z','Y').to_euler()

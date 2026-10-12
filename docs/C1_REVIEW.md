@@ -1,60 +1,65 @@
-# C1 final independent review
+# C1 photographic rework — independent final review
 
-**Recommendation: REQUEST CHANGES against the requested production-quality realism standard.** This is a technically valid, reviewable modeling candidate, not a visually accepted production asset. User approval is pending. C1 remains open; C2, merging, and release are not authorized by this review.
+> Historical rework evidence: the measurements and six-view gallery below describe an earlier unaccepted checkpoint. The targeted jaw reconstruction is now in progress; see [PROJECT_STATE](../PROJECT_STATE.md), [jaw references](C1_JAW_REFERENCES.md) and [independent jaw review](C1_JAW_REVIEW.md). Do not attribute these earlier metrics to the current candidate.
 
-This review supersedes the preliminary 04:49 review. It covers the final coherent six-view set generated on 2026-10-12 around 05:07 UTC and the refreshed Three.js validation evidence. Previously reported floating mouth rails, stacked protruding eye layers, and the multi-lobed angular tail were corrected and are not current findings.
 
-## Reviewed artifacts
+**Production recommendation: HOLD / further visual refinement required.** The rework is substantially closer to the photographed largemouth bass, and the identified construction defects were corrected. It still does not support an unqualified production-realism or photorealism claim at close inspection. Owner visual approval is pending. C1 remains open; this review does not authorize C2, merging, or release.
 
-All six 1200 × 800, 64-sample Blender renders were inspected individually: [left](evidence/c1/left.png), [right](evidence/c1/right.png), [front](evidence/c1/front.png), [rear](evidence/c1/rear.png), [top](evidence/c1/top.png), and [front three-quarter](evidence/c1/front_three_quarter.png). The current [Three.js screenshot](evidence/c1/largemouth-bass-browser.png), generator, geometry report, and browser validation report were also inspected.
+This review supersedes the earlier review of the rejected candidate. It covers the complete 128-sample render set generated on 2026-10-12 at approximately 12:39–12:40 UTC and the matching final Three.js validation. Intermediate renders and tests are not the reviewed deliverable.
 
-The five principal cameras are orthographic and aligned to their named axes; the sixth is an elevated front three-quarter perspective view using a 60 mm lens, satisfying the mixed orthographic/perspective evidence requirement in [GAME_DESIGN.md](GAME_DESIGN.md). Anatomical left is viewed from +Y and right from -Y, with the nose +X and dorsal direction +Z in Blender. All views frame the complete fish.
+## Evidence and artifact identity
 
-The reviewed GLB is `artifacts/c1/largemouth-bass.glb`, SHA-256:
+The reviewer directly inspected the pixels of all three actual photographs in [C1_PHOTO_REFERENCES.md](C1_PHOTO_REFERENCES.md), all six final views individually—[left](evidence/c1/left.png), [right](evidence/c1/right.png), [front](evidence/c1/front.png), [rear](evidence/c1/rear.png), [top](evidence/c1/top.png), and [front three-quarter](evidence/c1/front_three_quarter.png)—and the final [Three.js screenshot](evidence/c1/largemouth-bass-browser.png). The original rejected views and the [same-lighting baseline profile](evidence/c1/before-matched-lighting/left.png), [front](evidence/c1/before-matched-lighting/front.png), and [three-quarter](evidence/c1/before-matched-lighting/front_three_quarter.png) were compared directly.
 
-`851052321895192dad228db459a43a3787f4a9538d59b835e2b30654b46b0865`
+All final Blender images are 1200 × 800 at 128 Cycles samples. Five views are orthographic; front three-quarter is perspective with a 60 mm lens. The complete fish is framed in each image. Smaller studio lights were introduced to reduce broad grazing reflections; the rejected model was rerendered with that same lighting for the matched comparison. The original evidence is retained under `evidence/c1/before/`.
 
-The reviewed Blender source is `artifacts/c1/largemouth-bass.blend`, SHA-256:
+These SHA-256 hashes were computed from the actual files and independently matched against `artifacts/c1/browser-validation.json`:
 
-`384f0c75fd6367fdfb45f6370d6c8ed96426ed38fa8cc31913dfd4d7542537f2`
+| Artifact | SHA-256 |
+| --- | --- |
+| `artifacts/c1/largemouth-bass.glb` | `ed28f05b0114ebcb7f92079d698f4edcdee7cd47f3e656158ac88d9d19cc9371` |
+| `artifacts/c1/largemouth-bass.blend` | `54f7f280127d3571509a624c02d364d92e1e7772c173945be998f39b9a1c942c` |
+| `tools/blender/generate_bass.py` | `a0239183ea81be3c71844831fffdc6d20becb6d7ae09f2a85fb72ffba50f1036` |
+| `tools/blender/bass_materials.py` | `cfdd172f4de0b7632bf3e6a6b3a8eed8935ef8124de1e2c76dae274f1522ba6f` |
 
-Hashes were checked against the actual files and agree with `artifacts/c1/browser-validation.json`. The final source contains 24 anatomical mesh objects. Export joins a temporary copy into one mesh with material primitives, preserving the separate authoring parts.
+The reviewed browser report hashes to `b37b40ec41cae2587db6bf14b73a3aeddf774d279076477fab2ae9cdbb9c6546`; its screenshot hashes to `03537e905c5d998384e265ee3d724dd66557f7f2c431eb458c5d1dc6b87b0bea`. The [evidence manifest](evidence/c1/manifest.json) records individual render hashes. Independent verification confirmed that all six committed-gallery render hashes, the runtime screenshot, both source files, the GLB and Blender source match the reviewed files and the final report. All ten copied render/report/statistics files are byte-identical to their working artifacts.
 
-## Remaining visual findings
+## Confirmed improvements
 
-| Priority | Current evidence | Required refinement |
+- **Photographic proportions:** Head length, forward eye position, mouth-corner location and forward shoulder depth are substantially closer to the full-profile photograph. These are approximate image-derived proportions, not exact biological measurements.
+- **Continuous head construction:** A single connected body branches into upper and lower jaws. The former separate straight jaw strip and large elliptical gill badge are gone. The mouth has a broad raised-center seam, a projecting rounded lower lip and an integrated opercular groove.
+- **Corrected artifacts:** The forehead UV stripe, over-pinched muzzle, thick eye washer, excessively deep caudal notch, folded pelvic surfaces and pale angular lip panel were corrected. The lip fold was verified in clay, fixed geometrically with convex cap rings, then checked again without textures. A separate terminal-U wrapping error was corrected to remove the cap's radial shader bands.
+- **Skin and fins:** Dark olive dorsum, pale ventrum, irregular lateral blotches, individual gold/olive scale variation and regionally varied roughness replace the earlier cloudy surface. Fin membranes have actual exported alpha, curved fans and less conspicuous ray highlights. The caudal outline is shallower and more coherent.
+
+## Remaining realism findings
+
+| Priority | Final visual evidence | Refinement needed for the requested standard |
 | --- | --- | --- |
-| High | **Jaw and cheek transitions remain visibly constructed from overlapping surfaces.** Left, right, and three-quarter views show an abrupt light lower-jaw border, stepped rear edge, and discontinuous dark mouth seam. The frontal mouth is cleaner, but the cheek/maxilla transitions do not yet read as continuous anatomical tissue. | Fit the lower jaw and upper maxilla to a shared anatomical mouth boundary, blend the rear mandibular transition into the cheek, and remove visible step/intersection edges. Verify in the side and three-quarter views as well as front. |
-| High | **Fin shape and material still read as stylized rigid sheets.** The dorsal spine membrane has a regular sawtooth outline and prominent straight ray relief; the soft dorsal and anal fins are uniformly rounded sheets. Pelvic fins retain angular folds visible from front, rear, and side. Pectorals are now coherent radial fans, but remain opaque and leaf-like. | Refine species-specific outlines, soften membrane curvature and ray relief, and rebuild the pelvic fan surfaces to remove sharp folds. Use more convincing regional membrane shading and, where appropriate for the runtime budget, controlled translucency. |
-| Medium | **Skin and head realism remain below the requested photographic standard.** Olive coloration, pale belly, and the broken lateral band are present. However, broad cloudy mottling dominates the scale pattern; the cheek/gill cover reads as a separate plate, and the smooth tapered head lacks convincing bony and fleshy transitions around the maxilla and operculum. | Refine head planes against matched photographs and improve regional scale definition, color variation, and wet-skin roughness. Judge the exported material in runtime lighting as well as the studio setup. |
+| High | **Head planes remain simplified.** The side and three-quarter head reads as a broad smooth rounded surface. The cheek/maxilla and operculum have relief, but their distinct anatomical planes remain weak compared with the actual close head photograph. The rounded lip and uniform iris also retain a constructed appearance in the frontal close-up. | Resolve the oblique maxillary plate below and behind the eye, its transition into the cheek, and the opercular volume/rim against the photographed head. Use those specific landmarks to shape the surface; adding general noise or larger bumps will not establish the missing anatomy. Refine iris and surrounding tissue variation at the same inspection scale. |
+| Medium | **The scale field remains visibly procedural at close range.** Randomized pigment and gold centers improve the result, but repeated scalloped cells and regular rows remain conspicuous across the flank and belly. The head has less convincing regional surface detail than the photographed fish. | Refine regional scale size, overlap and directional flow, reduce the repeated scallop appearance, and introduce finer irregular head-plate texture while preserving the lateral marking and restrained wet response. |
+| Medium | **Fin surfaces remain regular.** Transparency, curvature and ray shading are improved, but the soft dorsal, anal and paired fins still read as comparatively uniform membrane sheets with orderly radiating ribs. | Refine local membrane variation, finer branching striations and subtle curvature around rays. The full-profile reference folds its anterior dorsal and clips the tail edge, so it cannot by itself establish exact standing-dorsal or caudal-edge shape. |
 
-The top view confirms that floating side rails are gone and the terminal outline is rounded. Front/rear views confirm improved eye integration and coherent pectoral fans. The caudal outline is substantially improved. These corrections remove earlier defects, but the remaining findings above prevent a production-realism recommendation.
+No remaining forehead stripe, central lip fold or floating jaw rail is being reported. The outstanding findings concern the requested visual standard, not a repetition of corrected defects. The runtime screenshot shows the same underlying appearance; its smaller on-screen fish does not establish close-up realism.
 
-## Technical results
+## Technical result and limits
 
 | Property | Final measured result |
 | --- | --- |
-| Blender version | 4.3.2 |
-| GLB size | 2,585,016 bytes |
-| Khronos validator | 0 errors, 0 warnings, 18 informational messages |
-| Exported geometry | 10,976 triangles; 8,488 vertices |
-| Exported structure | 1 mesh; 11 material primitives |
-| Three.js draw calls | 11 for the fish alone |
-| Embedded images | 5, all decoded successfully |
-| Texture sizes | Three 1024 × 1024 skin maps; two 512 × 512 fin maps |
-| Runtime skinning/animation | 0 skinned meshes; 0 animation clips |
-| Authored fish length | Approximately 0.455 m |
+| Blender | 4.3.2 |
+| GLB size | 3,513,480 bytes |
+| Khronos validator | 0 errors, 0 warnings, 16 informational messages |
+| Export geometry | 14,326 triangles; 11,028 vertices |
+| Source geometry | 7,435 vertices; 18 anatomical mesh objects |
+| Export structure / runtime calls | 1 GLB mesh, 10 material primitives; 10 Three.js draw calls |
+| Embedded textures | Five decoded successfully: three 1024² skin maps and two 512² fin maps |
+| Fin transparency | Two transparent materials; observed alpha ranges approximately 0.48–0.70 and 0.45–0.67 |
+| Authored length | Approximately 0.452 m |
+| Skinning / animation | 0 skinned meshes; 0 clips |
 
-The body material exports base color, tangent-space normal, and packed roughness/metalness maps. Independent Blender validation reports no failures for the checked finite geometry/UVs, loose or zero-area geometry, unexpected boundaries, and winding/manifold properties. The body is a closed volume. Selected facial plates and lip surfaces have explicitly allowed open boundaries. Negative cases cover corrupt GLB, unexpected animation/skin, empty mesh, missing fin, loose vertex, and inconsistent winding.
+The independent Blender report has no failures for its finite geometry/UV, loose geometry, zero-area face, winding, closed-volume and anatomical-part checks. The body is one closed connected component, with distinct upper/lower jaw face regions. Negative cases reject corrupt GLB, unexpected skin/animation, empty mesh, loose vertices, inconsistent winding, missing fin and missing jaw regions. The actual GLB loads, decodes its images and renders in Three.js. Closed fin membranes use outward-facing surfaces with backface culling, avoiding the earlier redundant transparent rendering passes; their surfaces remain visible in the final screenshot.
 
-Structural passes do **not** establish anatomical accuracy, detect all self-intersections or poorly fitted surfaces, or prove realistic shading. The isolated Three.js screenshot confirms successful loading and visible rendering, with the same stylized appearance seen in the studio references.
-
-## Animation and mobile limits
-
-Longitudinal body loops and separate authoring parts provide a basis for later rig development. No skinning, weights, jaw/fin deformation, or swimming loop has been tested. “Prepared for rig development” is supportable; proven animation readiness is not.
-
-The asset exceeds the provisional approximately 8k near-LOD triangle target. Eleven draw calls per fish use eleven percent of the provisional 100-call whole-scene budget before other scene content. LODs, compression, population rendering, GPU timing, memory, and thermal behavior are unqualified. No physical iPhone or Safari testing occurred; cloud Chromium/SwiftShader evidence is not a device-performance result.
+These checks do not detect every self-intersection, establish anatomy or prove deformation. Longitudinal topology and semantic jaw regions provide a starting point for rig development; no weights, jaw motion, fin deformation or swimming loop were tested. The approximately 8k near-LOD proposal is exceeded. Ten calls per fish, population cost, LODs, compression, memory, thermal behavior and physical iPhone/Safari performance remain unqualified.
 
 ## Approval gate
 
-The final candidate is ready for the user's inspection, but this review recommends further C1 visual refinement before acceptance as a production-quality realistic largemouth bass. User approval remains pending and is separate from the technical export pass. Do not describe the asset as approved, photorealistic, production-ready, or proven optimized for iPhone. Do not begin C2 from automated tests or this review.
+This is a substantial photographic rework and a technically valid candidate. **The independent review still withholds a production-realism recommendation for the reasons above.** Owner inspection and explicit visual approval remain necessary; automated passes and improvement over a rejected baseline do not satisfy that gate. Do not mark C1 complete, call the model visually accepted or production-ready, merge the draft PR, or begin C2 on the basis of this review.

@@ -1,0 +1,257 @@
+{
+  "species": "Micropterus salmoides",
+  "seed": 1947,
+  "blender": "4.3.2",
+  "vertices": 7435,
+  "triangles": 14326,
+  "mesh_objects": 18,
+  "materials": 10,
+  "bounds_min_m": [
+    -0.2418205440044403,
+    -0.056002937257289886,
+    -0.09639335423707962
+  ],
+  "bounds_max_m": [
+    0.2101999968290329,
+    0.056006185710430145,
+    0.11415629088878632
+  ],
+  "length_m": 0.4520205408334732,
+  "textures": [
+    {
+      "name": "BassScaleOlive_1024",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "name": "BassScaleNormal_1024",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "name": "BassScaleRoughness_1024",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "name": "BassFinOlive_512",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "BassPectoralAmber_512",
+      "width": 512,
+      "height": 512
+    }
+  ],
+  "rigged": false,
+  "animated": false,
+  "render_files": [
+    "left.png",
+    "right.png",
+    "front.png",
+    "rear.png",
+    "top.png",
+    "front_three_quarter.png"
+  ],
+  "mesh_validation": {
+    "Body_quadrilateral_loft": {
+      "vertices": 3311,
+      "triangles": 6618,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 0.0022518629230925398,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Eye_orbit_right": {
+      "vertices": 62,
+      "triangles": 120,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 4.106450043091e-07,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Iris_right": {
+      "vertices": 62,
+      "triangles": 120,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 4.1403371644972356e-07,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Pupil_right": {
+      "vertices": 62,
+      "triangles": 120,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 1.1703710507526425e-07,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Corneal_glint_right": {
+      "vertices": 62,
+      "triangles": 120,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 2.6870765368343953e-10,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Eye_orbit_left": {
+      "vertices": 62,
+      "triangles": 120,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 4.1064500430910003e-07,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Iris_left": {
+      "vertices": 62,
+      "triangles": 120,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 4.140337164497235e-07,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Pupil_left": {
+      "vertices": 62,
+      "triangles": 120,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 1.1703710507526428e-07,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Corneal_glint_left": {
+      "vertices": 62,
+      "triangles": 120,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 2.6870765368343953e-10,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Dorsal_spiny_10_spines": {
+      "vertices": 152,
+      "triangles": 300,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 1.658403193234472e-06,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Dorsal_soft_14_rays": {
+      "vertices": 216,
+      "triangles": 428,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 1.5582753663401864e-06,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Anal_fin": {
+      "vertices": 184,
+      "triangles": 364,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 1.2768953730781787e-06,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Caudal_rounded_emarginate": {
+      "vertices": 328,
+      "triangles": 652,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 1.8139112976892008e-06,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Pectoral_right": {
+      "vertices": 200,
+      "triangles": 396,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 5.244340446944727e-07,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Pelvic_right": {
+      "vertices": 168,
+      "triangles": 332,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 2.2049698010235072e-07,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Pectoral_left": {
+      "vertices": 200,
+      "triangles": 396,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 5.245333066329014e-07,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Pelvic_left": {
+      "vertices": 168,
+      "triangles": 332,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 2.2047881241589548e-07,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Fin_rays_combined": {
+      "vertices": 2012,
+      "triangles": 3548,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 119,
+      "signed_volume_m3": 1.8836476351440077e-07,
+      "uv_finite": true,
+      "normals_finite": true
+    }
+  }
+}

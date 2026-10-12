@@ -1,29 +1,42 @@
 # C1 executed verification evidence
 
-Executed in `/workspace/fish.io`, cloud Debian environment, 2026-10-12 UTC. Blender 4.3.2; Node 24.19.0; npm 11.9.0; pinned Three.js 0.180.0, Playwright 1.56.1 and gltf-validator 2.0.0-dev.3.10. Chromium uses SwiftShader, not an iPhone GPU.
+> Historical rework evidence: the measurements and six-view gallery below describe an earlier unaccepted checkpoint. The targeted jaw reconstruction is now in progress; see [PROJECT_STATE](../PROJECT_STATE.md), [jaw references](C1_JAW_REFERENCES.md) and [independent jaw review](C1_JAW_REVIEW.md). Do not attribute these earlier metrics to the current candidate.
 
-| Check | Executed result |
+
+Executed in `/workspace/fish.io` on 2026-10-12 UTC with Blender 4.3.2, Node 24.19.0, npm 11.9.0, Three.js 0.180.0, Playwright 1.56.1, and `gltf-validator` 2.0.0-dev.3.10. The browser proof used Chromium with SwiftShader, not an iPhone GPU.
+
+The C0 checks were rerun against the existing app after the C1 rework. They pass without edits to the main app:
+
+| Check | Result |
 | --- | --- |
-| `npm ci` and `npm ci --prefix tools/blender` | Locked installations pass |
-| `npm run build` | Strict TypeScript / Vite production build passes; C0 app preserved |
-| `npm test` | 6 C0 unit tests pass |
-| `npm run test:e2e` | 2 C0 browser tests pass, including context recovery |
-| `npm run smoke --prefix tools/blender` | C0 animated non-fish fixture exports and validates with 0 errors/warnings; corrupt GLB rejected |
-| `blender --background --python-exit-code 1 --python tools/blender/generate_bass.py -- --output-dir artifacts/c1` | Final seed-1947 Blender source, GLB and all six 1200 × 800 / 64-sample Cycles renders produced |
-| `npm run test:bass --prefix tools/blender` | Final C1 export, browser and independent authored-geometry checks pass |
-| Khronos GLB validator | 0 errors, 0 warnings, 18 informational messages |
-| Actual Three.js load | 11 draws, 10,976 triangles; no clips/skins; five embedded images decoded; body color/normal/roughness PBR slots present |
-| Normal-image serialized pixel check | 4,096 sampled pixels; mean channels ~[0.50003, 0.50004, 0.99995], rejecting neutral-normal gamma skew |
-| Independent Blender inspection | 24 anatomical objects, no failures; closed outward body/jaw/fin/ray volumes, consistent shared-edge winding; finite vertices/UVs/normals; no loose geometry, zero-area faces or >2-face edges |
-| Negative cases | Corrupt GLB rejected by validator and loader; empty geometry, unexpected clips/skins, missing fin, loose vertex and inconsistent winding rejected |
-| Final visual review | All six views and exported-model browser screenshot inspected by root/modeler/Astra; Astra recommends changes for production realism, not acceptance |
+| `npm run build` | TypeScript and Vite production build pass |
+| `npm test` | 6 unit tests pass |
+| `npm run test:e2e` | 2 Playwright tests pass, including context recovery |
+| `npm run smoke --prefix tools/blender` | Animated fixture exports; pinned validator reports 0 errors and 0 warnings; corrupt fixture is rejected |
 
-The final camera-only reconciliation with the concurrent game-design document regenerated all six views (five orthographic; front three-quarter perspective at 60 mm), then the full C1 suite passed again. Geometry costs remain unchanged.
+The frozen C1 candidate was tested with `npm run test:bass --prefix tools/blender`:
 
-Final GLB SHA-256: `851052321895192dad228db459a43a3787f4a9538d59b835e2b30654b46b0865`.
+| Check | Result |
+| --- | --- |
+| Khronos GLB validator | 0 errors, 0 warnings, 16 informational messages |
+| GLB structure | 1 node, 1 mesh, 10 primitives/materials, 11,028 vertices, 14,326 triangles, 5 embedded images; no animation clips, skins, cameras, lights, or skinning attributes |
+| Three.js browser load | 10 mesh objects and draw calls; 14,326 rendered triangles; no animation clips or skinned meshes; bounds 0.45202 × 0.21055 × 0.11201 m |
+| Texture decode | Five embedded images decoded: 1024² body color, normal and roughness/metalness maps; 512² olive and amber fin color/alpha maps |
+| Normal map samples | 4,096 decoded pixels, mean RGB channels [0.499997, 0.503355, 1.0] |
+| Fin alpha samples | 1,024 pixels per map; olive mean 0.5826 (range 0.4784–0.6980), amber mean 0.5526 (range 0.4510–0.6667) |
+| PBR material proof | Skin is `MeshPhysicalMaterial` with base-color, normal, roughness and metalness maps; exported clearcoat 0.02 and clearcoat roughness 0.24. Both transparent fin materials are single-sided; 10 calls match 10 primitives. |
+| Independent Blender geometry check | 18 source meshes; every mesh is closed and outward-wound per connected component. Body has one connected component, zero boundary/nonmanifold/inconsistent-winding/zero-area/invalid-normal-or-vertex/invalid-UV/loose-vertex counts. Face-domain integer `anatomical_region` has torso/upper/lower regions (0/1/2), all nonempty and connected across shared edges. |
+| Negative cases | Corrupt GLB rejected by validator and Three.js; empty mesh, unexpected animation/skin, missing fin, missing jaw labels, loose vertex, and inconsistent winding rejected |
 
-Final `.blend` SHA-256: `384f0c75fd6367fdfb45f6370d6c8ed96426ed38fa8cc31913dfd4d7542537f2`.
+The independent geometry checker does not detect self-intersections or prove anatomical accuracy. Positive component signed volume checks winding, not every local surface detail. Browser results are from SwiftShader and do not qualify physical iPhone/Safari performance, thermal behavior, or memory residency. Automated checks do not prove visual acceptance or deformable jaw quality. The final six-view visual review and user approval remain separate from these machine checks; C2 and merge remain gated on the user.
 
-Machine reports and render hashes are retained in [evidence/c1](evidence/c1/manifest.json); source statistics and independent validation use different boundary/nonmanifold terminology explained in [modeling notes](C1_MODELING.md).
+Machine-readable reports and rendered evidence are retained under [evidence/c1](evidence/c1/manifest.json), including the browser screenshot, GLB/browser metrics, independent Blender report, and six model views. The exact ignored working artifacts are identified by hashes:
 
-No physical iPhone, Safari, skinning, jaw-opening deformation, animation loop or thermal/memory endurance tests occurred. Automated validation does not prove biological accuracy, every self-intersection, realistic appearance, or achieved device budgets. The retained PNGs are evidence for one frozen candidate; generated Blender/GLB/texture binaries remain ignored and are reproducible from source. Existing GitHub CI continues to check C0; Blender/C1 asset checks ran in this cloud and are not provisioned in CI. C2 and merge remain gated on the user.
+| Artifact | Bytes | SHA-256 |
+| --- | ---: | --- |
+| `artifacts/c1/largemouth-bass.glb` | 3,513,480 | `ed28f05b0114ebcb7f92079d698f4edcdee7cd47f3e656158ac88d9d19cc9371` |
+| `artifacts/c1/largemouth-bass.blend` | 4,478,332 | `54f7f280127d3571509a624c02d364d92e1e7772c173945be998f39b9a1c942c` |
+| `tools/blender/generate_bass.py` | 28,562 | `a0239183ea81be3c71844831fffdc6d20becb6d7ae09f2a85fb72ffba50f1036` |
+| `tools/blender/bass_materials.py` | 10,819 | `cfdd172f4de0b7632bf3e6a6b3a8eed8935ef8124de1e2c76dae274f1522ba6f` |
+
+The working Blender and GLB binaries remain ignored and reproducible from source. C1 asset checks run in this environment and are not provisioned in existing C0 CI.

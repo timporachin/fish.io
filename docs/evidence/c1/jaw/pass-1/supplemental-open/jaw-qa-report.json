@@ -1,0 +1,354 @@
+{
+  "check": "matched-neutral-jaw-revision",
+  "blenderVersion": "4.3.2",
+  "render": {
+    "width": 1600,
+    "height": 1000,
+    "cyclesSamples": 128,
+    "denoising": false,
+    "views": [
+      "jaw_open_25deg"
+    ],
+    "lighting": "fixed neutral gray world and four white area lights",
+    "camera": "fixed orthographic world-space framing per view",
+    "supplementalOpenThreeQuarter": true
+  },
+  "limitations": [
+    "Baseline opening weights are derived from existing face regions and are a QA fixture, not authored articulation.",
+    "A 25-degree weighted vertex rotation is a temporary deformation test, not a rig or animation clip.",
+    "BVH strict segment/triangle checks exclude triangles sharing vertices and do not classify coplanar contacts or enclosed volumes.",
+    "The mouth aperture is a repeatable central-lip vertex-band estimate, not an anatomical landmark annotation.",
+    "Hinge-to-front X span is a mouth-depth proxy; maximum tested opening is 25 degrees, not a biological maximum."
+  ],
+  "before": {
+    "input": "/workspace/fish.io/artifacts/c1/anatomy-before/largemouth-bass.blend",
+    "inputSha256": "2a560d7198d3c52d0878c3cd8fc20dd1b539a911fcd056f41c67ec3026ae9185",
+    "label": "before",
+    "sourceInventory": {
+      "meshObjects": 16,
+      "fins": {
+        "Dorsal_spiny_10_spines": {
+          "vertices": 228,
+          "triangles": 452,
+          "geometrySha256": "e6815fc80c147647503af6f92a4b222ca7f2e7d3c53197901fe3e7707bf80481"
+        },
+        "Dorsal_soft_14_rays": {
+          "vertices": 324,
+          "triangles": 644,
+          "geometrySha256": "fb004543b49907068126d860e5b59c3a0ddf9fa9f15aab5a7000db6a7baef50b"
+        },
+        "Anal_fin": {
+          "vertices": 276,
+          "triangles": 548,
+          "geometrySha256": "13296f1176d51d0d7e8cd8045f56311ad6ee7d08f92285670da5fd7d31da7da1"
+        },
+        "Caudal_rounded_emarginate": {
+          "vertices": 492,
+          "triangles": 980,
+          "geometrySha256": "e828240d7399ac40b44c5b2e25bee762d2214e90d78ff3af734794c50a76fa28"
+        },
+        "Pectoral_right": {
+          "vertices": 300,
+          "triangles": 596,
+          "geometrySha256": "33863ab4af27b2ad6e8e03593df0b72486fbdaa3c7b84c3a6d91d91b5ec147cb"
+        },
+        "Pelvic_right": {
+          "vertices": 252,
+          "triangles": 500,
+          "geometrySha256": "6759ca99a3a8765664b866f0eb8a3aa74bae6d219b4d993dc849bd2bfd0cfe22"
+        },
+        "Pectoral_left": {
+          "vertices": 300,
+          "triangles": 596,
+          "geometrySha256": "6a2b534a23038f4613bdafb991a877f352bedad904229c8c0d91ffccd652b590"
+        },
+        "Pelvic_left": {
+          "vertices": 252,
+          "triangles": 500,
+          "geometrySha256": "321a96d7dbc2eefdabb91b58c20be9b0807615bc4eb1b13926a31bd85db49f18"
+        },
+        "Fin_rays_combined": {
+          "vertices": 2012,
+          "triangles": 3548,
+          "geometrySha256": "ca6924a45f1542bfff5375f6c43592c3fef81be4f9daf6b196f3141648aa6eef"
+        }
+      }
+    },
+    "neutral": {
+      "body": {
+        "looseVertices": 0,
+        "boundaryEdges": 0,
+        "nonManifoldEdges": 0,
+        "inconsistentWindingEdges": 0,
+        "zeroAreaFaces": 0,
+        "invalidVertices": 0,
+        "invalidNormals": 0,
+        "signedVolumeM3": 0.0022202918018044953,
+        "closed": true,
+        "outwardWinding": true,
+        "invalidUvCoordinates": 0
+      },
+      "mouth": {
+        "measurable": true,
+        "selection": {
+          "minX": 0.194,
+          "maxAbsY": 0.016,
+          "upperVertices": 187,
+          "lowerVertices": 154
+        },
+        "upperLowestZM": 0.00564546836540103,
+        "lowerHighestZM": 0.009100000374019146,
+        "verticalApertureM": -0.0034545320086181164,
+        "frontLipXM": 0.2101999968290329,
+        "hingeToFrontDepthM": 0.0591999968290329
+      },
+      "jawIntersections": {
+        "upperTriangles": 1794,
+        "lowerTriangles": 1326,
+        "candidatePairs": 12,
+        "sharedVertexPairsExcluded": 12,
+        "properCrossings": 0,
+        "firstCrossingPairs": [],
+        "crossingVertexBoundsM": null,
+        "firstCrossingTriangles": null,
+        "contactToleranceM": 1e-05,
+        "method": "BVH upper/lower overlap, shared-vertex exclusion, strict edge/triangle interior crossings; coplanar contacts inconclusive"
+      }
+    },
+    "renderFiles": [
+      "/workspace/fish.io/artifacts/c1/anatomical-revision/jaw-qa/supplemental-open/before/jaw_open_25deg.png"
+    ],
+    "renderSha256": {
+      "jaw_open_25deg": "1050f5fed69b3c513524898b2a1a6fa93180e543f0d9deda9f944393aa8eb325"
+    },
+    "posed": {
+      "angleDegrees": 25.0,
+      "maximumTestedOpeningDegrees": 25.0,
+      "axis": "+Y",
+      "weightSource": "derived from baseline FACE/INT anatomical_region incident-face ratio",
+      "weightedVertices": 681,
+      "weightRange": [
+        0.0,
+        1.0
+      ],
+      "maxVertexDisplacementM": 0.025969961915879136,
+      "hingeM": [
+        0.1509999930858612,
+        0.0,
+        -0.008700000122189522
+      ],
+      "body": {
+        "looseVertices": 0,
+        "boundaryEdges": 0,
+        "nonManifoldEdges": 0,
+        "inconsistentWindingEdges": 0,
+        "zeroAreaFaces": 0,
+        "invalidVertices": 0,
+        "invalidNormals": 0,
+        "signedVolumeM3": 0.002212823025208213,
+        "closed": true,
+        "outwardWinding": true,
+        "invalidUvCoordinates": 0
+      },
+      "mouth": {
+        "measurable": true,
+        "selection": {
+          "minX": 0.194,
+          "maxAbsY": 0.016,
+          "upperVertices": 187,
+          "lowerVertices": 141
+        },
+        "upperLowestZM": 0.00564546836540103,
+        "lowerHighestZM": -0.014894451014697552,
+        "verticalApertureM": 0.02053991938009858,
+        "frontLipXM": 0.21001219749450684,
+        "hingeToFrontDepthM": 0.05901220440864563
+      },
+      "jawIntersections": {
+        "upperTriangles": 1794,
+        "lowerTriangles": 1326,
+        "candidatePairs": 6,
+        "sharedVertexPairsExcluded": 6,
+        "properCrossings": 0,
+        "firstCrossingPairs": [],
+        "crossingVertexBoundsM": null,
+        "firstCrossingTriangles": null,
+        "contactToleranceM": 1e-05,
+        "method": "BVH upper/lower overlap, shared-vertex exclusion, strict edge/triangle interior crossings; coplanar contacts inconclusive"
+      },
+      "articulatedBlend": "/workspace/fish.io/artifacts/c1/anatomical-revision/jaw-qa/supplemental-open/before/articulated.blend",
+      "articulatedSha256": "c1d7b828ec9c894808efded71f7bf2bbe4c32ba997152625588f7f898686eed5"
+    }
+  },
+  "after": {
+    "input": "/workspace/fish.io/artifacts/c1/anatomical-revision/largemouth-bass.blend",
+    "inputSha256": "52a9149f1fbde497e037c30402fab4f5cc9afa7ebac8d07dbe2f19e2bd065db7",
+    "label": "after",
+    "sourceInventory": {
+      "meshObjects": 16,
+      "fins": {
+        "Dorsal_spiny_10_spines": {
+          "vertices": 228,
+          "triangles": 452,
+          "geometrySha256": "e6815fc80c147647503af6f92a4b222ca7f2e7d3c53197901fe3e7707bf80481"
+        },
+        "Dorsal_soft_14_rays": {
+          "vertices": 324,
+          "triangles": 644,
+          "geometrySha256": "fb004543b49907068126d860e5b59c3a0ddf9fa9f15aab5a7000db6a7baef50b"
+        },
+        "Anal_fin": {
+          "vertices": 276,
+          "triangles": 548,
+          "geometrySha256": "13296f1176d51d0d7e8cd8045f56311ad6ee7d08f92285670da5fd7d31da7da1"
+        },
+        "Caudal_rounded_emarginate": {
+          "vertices": 492,
+          "triangles": 980,
+          "geometrySha256": "e828240d7399ac40b44c5b2e25bee762d2214e90d78ff3af734794c50a76fa28"
+        },
+        "Pectoral_right": {
+          "vertices": 300,
+          "triangles": 596,
+          "geometrySha256": "33863ab4af27b2ad6e8e03593df0b72486fbdaa3c7b84c3a6d91d91b5ec147cb"
+        },
+        "Pelvic_right": {
+          "vertices": 252,
+          "triangles": 500,
+          "geometrySha256": "6759ca99a3a8765664b866f0eb8a3aa74bae6d219b4d993dc849bd2bfd0cfe22"
+        },
+        "Pectoral_left": {
+          "vertices": 300,
+          "triangles": 596,
+          "geometrySha256": "6a2b534a23038f4613bdafb991a877f352bedad904229c8c0d91ffccd652b590"
+        },
+        "Pelvic_left": {
+          "vertices": 252,
+          "triangles": 500,
+          "geometrySha256": "321a96d7dbc2eefdabb91b58c20be9b0807615bc4eb1b13926a31bd85db49f18"
+        },
+        "Fin_rays_combined": {
+          "vertices": 2012,
+          "triangles": 3548,
+          "geometrySha256": "ca6924a45f1542bfff5375f6c43592c3fef81be4f9daf6b196f3141648aa6eef"
+        }
+      }
+    },
+    "neutral": {
+      "body": {
+        "looseVertices": 0,
+        "boundaryEdges": 0,
+        "nonManifoldEdges": 0,
+        "inconsistentWindingEdges": 0,
+        "zeroAreaFaces": 0,
+        "invalidVertices": 0,
+        "invalidNormals": 0,
+        "signedVolumeM3": 0.002227754154653933,
+        "closed": true,
+        "outwardWinding": true,
+        "invalidUvCoordinates": 0
+      },
+      "mouth": {
+        "measurable": true,
+        "selection": {
+          "minX": 0.194,
+          "maxAbsY": 0.016,
+          "upperVertices": 183,
+          "lowerVertices": 156
+        },
+        "upperLowestZM": 0.005820584483444691,
+        "lowerHighestZM": 0.007449999917298555,
+        "verticalApertureM": -0.0016294154338538647,
+        "frontLipXM": 0.21150000393390656,
+        "hingeToFrontDepthM": 0.06050000393390656
+      },
+      "jawIntersections": {
+        "upperTriangles": 1794,
+        "lowerTriangles": 1326,
+        "candidatePairs": 9,
+        "sharedVertexPairsExcluded": 9,
+        "properCrossings": 0,
+        "firstCrossingPairs": [],
+        "crossingVertexBoundsM": null,
+        "firstCrossingTriangles": null,
+        "contactToleranceM": 1e-05,
+        "method": "BVH upper/lower overlap, shared-vertex exclusion, strict edge/triangle interior crossings; coplanar contacts inconclusive"
+      }
+    },
+    "renderFiles": [
+      "/workspace/fish.io/artifacts/c1/anatomical-revision/jaw-qa/supplemental-open/after/jaw_open_25deg.png"
+    ],
+    "renderSha256": {
+      "jaw_open_25deg": "b94b85842a3d95d652335d48d822be87dac5db94ce7fa44ce1496ef9ab34ce18"
+    },
+    "posed": {
+      "angleDegrees": 25.0,
+      "maximumTestedOpeningDegrees": 25.0,
+      "axis": "+Y",
+      "weightSource": "authored POINT/FLOAT jaw_open_weight",
+      "weightedVertices": 647,
+      "weightRange": [
+        0.0,
+        1.0
+      ],
+      "maxVertexDisplacementM": 0.0268971701248997,
+      "hingeM": [
+        0.1509999930858612,
+        0.0,
+        -0.008700000122189522
+      ],
+      "body": {
+        "looseVertices": 0,
+        "boundaryEdges": 0,
+        "nonManifoldEdges": 0,
+        "inconsistentWindingEdges": 0,
+        "zeroAreaFaces": 0,
+        "invalidVertices": 0,
+        "invalidNormals": 0,
+        "signedVolumeM3": 0.0022214472652168876,
+        "closed": true,
+        "outwardWinding": true,
+        "invalidUvCoordinates": 0
+      },
+      "mouth": {
+        "measurable": true,
+        "selection": {
+          "minX": 0.194,
+          "maxAbsY": 0.016,
+          "upperVertices": 183,
+          "lowerVertices": 138
+        },
+        "upperLowestZM": 0.005820584483444691,
+        "lowerHighestZM": -0.015428096055984497,
+        "verticalApertureM": 0.021248680539429188,
+        "frontLipXM": 0.2122037410736084,
+        "hingeToFrontDepthM": 0.06120374798774719
+      },
+      "jawIntersections": {
+        "upperTriangles": 1794,
+        "lowerTriangles": 1326,
+        "candidatePairs": 9,
+        "sharedVertexPairsExcluded": 9,
+        "properCrossings": 0,
+        "firstCrossingPairs": [],
+        "crossingVertexBoundsM": null,
+        "firstCrossingTriangles": null,
+        "contactToleranceM": 1e-05,
+        "method": "BVH upper/lower overlap, shared-vertex exclusion, strict edge/triangle interior crossings; coplanar contacts inconclusive"
+      },
+      "articulatedBlend": "/workspace/fish.io/artifacts/c1/anatomical-revision/jaw-qa/supplemental-open/after/articulated.blend",
+      "articulatedSha256": "962553c4040ab12fb77c91c1acab82993a30be9a53241bd39a28fe7e5bbeb607"
+    }
+  },
+  "comparison": {
+    "unchangedFinGeometry": true,
+    "changedFins": []
+  },
+  "revisionChecks": {
+    "neutralClosedOutwardFinite": true,
+    "neutralJawCrossingsZero": true,
+    "posedClosedOutwardFinite": true,
+    "posedJawCrossingsZero": true,
+    "openingIncreasesAperture": true
+  }
+}
