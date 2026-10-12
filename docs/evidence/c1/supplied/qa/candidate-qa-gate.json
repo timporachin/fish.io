@@ -1,0 +1,33 @@
+{
+  "checks": {
+    "frozenAssetHashes": true,
+    "triangleBudget": true,
+    "drawCallBudget": true,
+    "mapsAndPbr": true,
+    "staticNoSkinClips": true,
+    "glbFormat": true,
+    "bodyFiniteClean": true,
+    "uvFinite": true,
+    "boundarySemantics": true,
+    "weightedStaticExactTopology": true,
+    "staticOralPocket": true,
+    "weightedJawOpens": true,
+    "headRoiNoStrictCrossings": true
+  },
+  "pass": true,
+  "measurements": {
+    "staticOralGapM": 0.007293646073198766,
+    "weightedRestGapM": 0.005769632655258786,
+    "weightedOpen25GapM": 0.024971213701469916,
+    "candidateSectionXM": 0.20879321506739057,
+    "bilateralEyeSockets": 2,
+    "dorsalFinRimLoops": 1
+  },
+  "limitations": [
+    "The body is open at both eye sockets and a 12-edge thin dorsal fin rim; this gate does not claim a watertight body or closed fin sheets.",
+    "The 25-degree opening uses a temporary source-bone binding on the exact weighted decimated mesh. The static GLB has no skin or animation.",
+    "Strict BVH crossings exclude shared-vertex and coplanar cases and cover the scoped anterior head ROI, not all-body collision freedom.",
+    "The section gap is a repeatable geometry sample, not an annotated anatomical landmark or biologically validated maximum gape.",
+    "Browser loading does not establish physical iPhone/Safari performance or visual acceptance."
+  ]
+}

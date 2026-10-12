@@ -7,3 +7,5 @@
 - **C4 — release hardening:** device/browser matrix, accessibility checks, thermal/memory endurance, recovery, distribution and release automation.
 
 Future milestones are proposals, not authorization. C1 stops at its visual approval gate. The user's C1 request supersedes the earlier roadmap's placement of swimming clips in C1.
+
+The current C1 candidate adapts the owner-supplied DigitalLife3D Model 67A for confirmed personal, noncommercial use. Its original source and previous C1 checkpoints are preserved. The static export, matched seven-view evidence, bounded jaw test and independent Astra review are documented separately; no source swimming action is adopted and no gameplay integration is added. See [supplied asset checkpoint](C1_SUPPLIED_ASSET.md). **C1 remains NOT ACCEPTED until explicit owner visual approval.**

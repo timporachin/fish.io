@@ -1,0 +1,827 @@
+{
+  "file": "/workspace/fish.io/artifacts/c1/supplied-candidate/candidate-static.blend",
+  "qaJawAngleDeg": 0.0,
+  "objects": {
+    "body_mesh": {
+      "matrixWorld": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw": {
+        "vertices": 5281,
+        "faces": 10500,
+        "triangles": 10500,
+        "looseVertices": 0,
+        "zeroAreaFaces": 0,
+        "invalidVertices": 0,
+        "components": [
+          {
+            "vertices": 5281,
+            "edges": 15782,
+            "faces": 10500,
+            "triangles": 10500,
+            "boundaryEdges": 64,
+            "nonManifoldEdges": 0,
+            "wireEdges": 0,
+            "windingConflicts": 0,
+            "bounds": [
+              [
+                -0.225,
+                0.225
+              ],
+              [
+                -0.0419617,
+                0.0419617
+              ],
+              [
+                -0.0926176,
+                0.0889643
+              ]
+            ],
+            "boundaryBounds": [
+              [
+                0.0007695,
+                0.1762747
+              ],
+              [
+                -0.0206019,
+                0.0206019
+              ],
+              [
+                0.0065294,
+                0.0686203
+              ]
+            ]
+          }
+        ],
+        "boundaryGroups": [
+          {
+            "edges": 26,
+            "vertices": 26,
+            "endpoints": 0,
+            "branches": 0,
+            "bounds": [
+              [
+                0.1630725,
+                0.1762747
+              ],
+              [
+                -0.0206019,
+                -0.017644
+              ],
+              [
+                0.0065294,
+                0.0200309
+              ]
+            ],
+            "weightSums": [],
+            "adjacentFaceNormalBounds": [
+              [
+                -0.0850997,
+                0.7030062
+              ],
+              [
+                -0.9944528,
+                -0.7001091
+              ],
+              [
+                -0.3808859,
+                0.6203949
+              ]
+            ]
+          },
+          {
+            "edges": 26,
+            "vertices": 26,
+            "endpoints": 0,
+            "branches": 0,
+            "bounds": [
+              [
+                0.1630725,
+                0.1762747
+              ],
+              [
+                0.017644,
+                0.0206019
+              ],
+              [
+                0.0065294,
+                0.0200309
+              ]
+            ],
+            "weightSums": [],
+            "adjacentFaceNormalBounds": [
+              [
+                -0.0850997,
+                0.7030061
+              ],
+              [
+                0.7001091,
+                0.9944528
+              ],
+              [
+                -0.3808859,
+                0.6203938
+              ]
+            ]
+          },
+          {
+            "edges": 12,
+            "vertices": 12,
+            "endpoints": 0,
+            "branches": 0,
+            "bounds": [
+              [
+                0.0007695,
+                0.0108417
+              ],
+              [
+                -1.28e-05,
+                1.27e-05
+              ],
+              [
+                0.059778,
+                0.0686203
+              ]
+            ],
+            "weightSums": [],
+            "adjacentFaceNormalBounds": [
+              [
+                0.1260156,
+                0.6042153
+              ],
+              [
+                -0.9843962,
+                0.9843962
+              ],
+              [
+                0.1228185,
+                0.9051854
+              ]
+            ]
+          }
+        ],
+        "uvLayers": [
+          {
+            "name": "UVMap",
+            "loops": 31500,
+            "invalid": 0,
+            "bounds": [
+              [
+                0.0099936,
+                0.9957594
+              ],
+              [
+                0.5979419,
+                0.9935538
+              ],
+              [
+                0,
+                0
+              ]
+            ]
+          }
+        ]
+      },
+      "evaluated": {
+        "vertices": 5281,
+        "faces": 10500,
+        "triangles": 10500,
+        "looseVertices": 0,
+        "zeroAreaFaces": 0,
+        "invalidVertices": 0,
+        "components": [
+          {
+            "vertices": 5281,
+            "edges": 15782,
+            "faces": 10500,
+            "triangles": 10500,
+            "boundaryEdges": 64,
+            "nonManifoldEdges": 0,
+            "wireEdges": 0,
+            "windingConflicts": 0,
+            "bounds": [
+              [
+                -0.225,
+                0.225
+              ],
+              [
+                -0.0419617,
+                0.0419617
+              ],
+              [
+                -0.0926176,
+                0.0889643
+              ]
+            ],
+            "boundaryBounds": [
+              [
+                0.0007695,
+                0.1762747
+              ],
+              [
+                -0.0206019,
+                0.0206019
+              ],
+              [
+                0.0065294,
+                0.0686203
+              ]
+            ]
+          }
+        ],
+        "boundaryGroups": [
+          {
+            "edges": 26,
+            "vertices": 26,
+            "endpoints": 0,
+            "branches": 0,
+            "bounds": [
+              [
+                0.1630725,
+                0.1762747
+              ],
+              [
+                0.017644,
+                0.0206019
+              ],
+              [
+                0.0065294,
+                0.0200309
+              ]
+            ],
+            "weightSums": [],
+            "adjacentFaceNormalBounds": [
+              [
+                -0.0850997,
+                0.7030061
+              ],
+              [
+                0.7001091,
+                0.9944528
+              ],
+              [
+                -0.3808859,
+                0.6203938
+              ]
+            ]
+          },
+          {
+            "edges": 26,
+            "vertices": 26,
+            "endpoints": 0,
+            "branches": 0,
+            "bounds": [
+              [
+                0.1630725,
+                0.1762747
+              ],
+              [
+                -0.0206019,
+                -0.017644
+              ],
+              [
+                0.0065294,
+                0.0200309
+              ]
+            ],
+            "weightSums": [],
+            "adjacentFaceNormalBounds": [
+              [
+                -0.0850997,
+                0.7030062
+              ],
+              [
+                -0.9944528,
+                -0.7001091
+              ],
+              [
+                -0.3808859,
+                0.6203949
+              ]
+            ]
+          },
+          {
+            "edges": 12,
+            "vertices": 12,
+            "endpoints": 0,
+            "branches": 0,
+            "bounds": [
+              [
+                0.0007695,
+                0.0108417
+              ],
+              [
+                -1.28e-05,
+                1.27e-05
+              ],
+              [
+                0.059778,
+                0.0686203
+              ]
+            ],
+            "weightSums": [],
+            "adjacentFaceNormalBounds": [
+              [
+                0.1260156,
+                0.6042153
+              ],
+              [
+                -0.9843962,
+                0.9843962
+              ],
+              [
+                0.1228185,
+                0.9051854
+              ]
+            ]
+          }
+        ],
+        "uvLayers": [
+          {
+            "name": "UVMap",
+            "loops": 31500,
+            "invalid": 0,
+            "bounds": [
+              [
+                0.0099936,
+                0.9957594
+              ],
+              [
+                0.5979419,
+                0.9935538
+              ],
+              [
+                0,
+                0
+              ]
+            ]
+          }
+        ]
+      },
+      "groups": {},
+      "modifiers": []
+    },
+    "eye_mesh": {
+      "matrixWorld": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw": {
+        "vertices": 130,
+        "faces": 128,
+        "triangles": 224,
+        "looseVertices": 0,
+        "zeroAreaFaces": 0,
+        "invalidVertices": 0,
+        "components": [
+          {
+            "vertices": 65,
+            "edges": 128,
+            "faces": 64,
+            "triangles": 112,
+            "boundaryEdges": 16,
+            "nonManifoldEdges": 0,
+            "wireEdges": 0,
+            "windingConflicts": 0,
+            "bounds": [
+              [
+                0.1590281,
+                0.1794133
+              ],
+              [
+                -0.0237329,
+                -0.0152373
+              ],
+              [
+                0.0028283,
+                0.0237377
+              ]
+            ],
+            "boundaryBounds": [
+              [
+                0.1590281,
+                0.1794133
+              ],
+              [
+                -0.0216001,
+                -0.0152373
+              ],
+              [
+                0.0028283,
+                0.0237377
+              ]
+            ]
+          },
+          {
+            "vertices": 65,
+            "edges": 128,
+            "faces": 64,
+            "triangles": 112,
+            "boundaryEdges": 16,
+            "nonManifoldEdges": 0,
+            "wireEdges": 0,
+            "windingConflicts": 0,
+            "bounds": [
+              [
+                0.1590279,
+                0.1794131
+              ],
+              [
+                0.0152369,
+                0.0235143
+              ],
+              [
+                0.0028282,
+                0.0237376
+              ]
+            ],
+            "boundaryBounds": [
+              [
+                0.1590279,
+                0.1794131
+              ],
+              [
+                0.0152369,
+                0.0215997
+              ],
+              [
+                0.0028282,
+                0.0237376
+              ]
+            ]
+          }
+        ],
+        "boundaryGroups": [
+          {
+            "edges": 16,
+            "vertices": 16,
+            "endpoints": 0,
+            "branches": 0,
+            "bounds": [
+              [
+                0.1590281,
+                0.1794133
+              ],
+              [
+                -0.0216001,
+                -0.0152373
+              ],
+              [
+                0.0028283,
+                0.0237377
+              ]
+            ],
+            "weightSums": [],
+            "adjacentFaceNormalBounds": [
+              [
+                -0.5523591,
+                0.8749587
+              ],
+              [
+                -0.835939,
+                -0.4128291
+              ],
+              [
+                -0.678465,
+                0.8435941
+              ]
+            ]
+          },
+          {
+            "edges": 16,
+            "vertices": 16,
+            "endpoints": 0,
+            "branches": 0,
+            "bounds": [
+              [
+                0.1590279,
+                0.1794131
+              ],
+              [
+                0.0152369,
+                0.0215997
+              ],
+              [
+                0.0028282,
+                0.0237376
+              ]
+            ],
+            "weightSums": [],
+            "adjacentFaceNormalBounds": [
+              [
+                -0.5523607,
+                0.8749594
+              ],
+              [
+                0.4128276,
+                0.8359371
+              ],
+              [
+                -0.6784642,
+                0.8435942
+              ]
+            ]
+          }
+        ],
+        "uvLayers": [
+          {
+            "name": "UVMap",
+            "loops": 480,
+            "invalid": 0,
+            "bounds": [
+              [
+                0.8782181,
+                0.943624
+              ],
+              [
+                0.9199821,
+                0.9855908
+              ],
+              [
+                0,
+                0
+              ]
+            ]
+          }
+        ]
+      },
+      "evaluated": {
+        "vertices": 130,
+        "faces": 128,
+        "triangles": 224,
+        "looseVertices": 0,
+        "zeroAreaFaces": 0,
+        "invalidVertices": 0,
+        "components": [
+          {
+            "vertices": 65,
+            "edges": 128,
+            "faces": 64,
+            "triangles": 112,
+            "boundaryEdges": 16,
+            "nonManifoldEdges": 0,
+            "wireEdges": 0,
+            "windingConflicts": 0,
+            "bounds": [
+              [
+                0.1590281,
+                0.1794133
+              ],
+              [
+                -0.0237329,
+                -0.0152373
+              ],
+              [
+                0.0028283,
+                0.0237377
+              ]
+            ],
+            "boundaryBounds": [
+              [
+                0.1590281,
+                0.1794133
+              ],
+              [
+                -0.0216001,
+                -0.0152373
+              ],
+              [
+                0.0028283,
+                0.0237377
+              ]
+            ]
+          },
+          {
+            "vertices": 65,
+            "edges": 128,
+            "faces": 64,
+            "triangles": 112,
+            "boundaryEdges": 16,
+            "nonManifoldEdges": 0,
+            "wireEdges": 0,
+            "windingConflicts": 0,
+            "bounds": [
+              [
+                0.1590279,
+                0.1794131
+              ],
+              [
+                0.0152369,
+                0.0235143
+              ],
+              [
+                0.0028282,
+                0.0237376
+              ]
+            ],
+            "boundaryBounds": [
+              [
+                0.1590279,
+                0.1794131
+              ],
+              [
+                0.0152369,
+                0.0215997
+              ],
+              [
+                0.0028282,
+                0.0237376
+              ]
+            ]
+          }
+        ],
+        "boundaryGroups": [
+          {
+            "edges": 16,
+            "vertices": 16,
+            "endpoints": 0,
+            "branches": 0,
+            "bounds": [
+              [
+                0.1590281,
+                0.1794133
+              ],
+              [
+                -0.0216001,
+                -0.0152373
+              ],
+              [
+                0.0028283,
+                0.0237377
+              ]
+            ],
+            "weightSums": [],
+            "adjacentFaceNormalBounds": [
+              [
+                -0.5523591,
+                0.8749587
+              ],
+              [
+                -0.835939,
+                -0.4128291
+              ],
+              [
+                -0.678465,
+                0.8435941
+              ]
+            ]
+          },
+          {
+            "edges": 16,
+            "vertices": 16,
+            "endpoints": 0,
+            "branches": 0,
+            "bounds": [
+              [
+                0.1590279,
+                0.1794131
+              ],
+              [
+                0.0152369,
+                0.0215997
+              ],
+              [
+                0.0028282,
+                0.0237376
+              ]
+            ],
+            "weightSums": [],
+            "adjacentFaceNormalBounds": [
+              [
+                -0.5523607,
+                0.8749594
+              ],
+              [
+                0.4128276,
+                0.8359371
+              ],
+              [
+                -0.6784642,
+                0.8435942
+              ]
+            ]
+          }
+        ],
+        "uvLayers": [
+          {
+            "name": "UVMap",
+            "loops": 480,
+            "invalid": 0,
+            "bounds": [
+              [
+                0.8782181,
+                0.943624
+              ],
+              [
+                0.9199821,
+                0.9855908
+              ],
+              [
+                0,
+                0
+              ]
+            ]
+          }
+        ]
+      },
+      "groups": {},
+      "modifiers": []
+    }
+  },
+  "armatures": {},
+  "images": {
+    "C1 1024px bass_color.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "path": "/workspace/fish.io/artifacts/c1/supplied-candidate/textures/bass_color.png",
+      "packed": false
+    },
+    "C1 1024px bass_normal.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "path": "/workspace/fish.io/artifacts/c1/supplied-candidate/textures/bass_normal.png",
+      "packed": false
+    },
+    "C1 1024px bass_roughness.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "path": "/workspace/fish.io/artifacts/c1/supplied-candidate/textures/bass_roughness.png",
+      "packed": false
+    },
+    "C1 512px bass_alpha.jpg": {
+      "size": [
+        512,
+        512
+      ],
+      "path": "/workspace/fish.io/artifacts/c1/supplied-candidate/textures/bass_alpha.png",
+      "packed": false
+    },
+    "C1 fin color with baked opacity": {
+      "size": [
+        512,
+        512
+      ],
+      "path": "/workspace/fish.io/artifacts/c1/supplied-candidate/textures/bass_color_fin_rgba.png",
+      "packed": false
+    },
+    "Untitled": {
+      "size": [
+        2048,
+        2048
+      ],
+      "path": "/workspace/fish.io/artifacts/c1/user-supplied/original/bass_alpha.jpg",
+      "packed": false
+    }
+  }
+}

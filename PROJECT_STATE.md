@@ -1,8 +1,18 @@
 # FISH.IO project state
 
-**C0 complete. C1 anatomical reconstruction checkpoint delivered; C1 NOT ACCEPTED. C2 not started.**
+**C0 complete. C1 supplied-model review checkpoint delivered; C1 NOT ACCEPTED. C2 not started.**
 
-## Current C1 work
+## Current C1 supplied-model adaptation
+
+The owner supplied DigitalLife3D **Model 67A – Largemouth Bass** and confirmed personal, noncommercial use under CC BY-NC 4.0. The original Blender project and textures are preserved unchanged. This adaptation continues on `dev/c1-largemouth-bass` and draft PR #2; it does not replace the saved procedural checkpoint or modify C0/main. See [source, attribution and adaptation](docs/C1_SUPPLIED_ASSET.md) and [asset notice](docs/third-party/DigitalLife3D-Model67A-NOTICE.md).
+
+The static candidate retains the supplied head, volumetric jaws, oral pocket, body silhouette and fin anatomy, repairs PBR connections/color spaces, reduces geometry and textures, and removes source rig/actions from the runtime export. It contains **10,724 triangles**, four embedded images (three 1024² and one 512²), and a 2,097,516-byte GLB. Estimated RGBA8 texture footprint is 13 MiB base / 17.33 MiB with mips, within the previous texture reference. Physical iPhone/Safari profiling remains unverified. The original performance reference remains **10,976 triangles / 11 calls / five textures**.
+
+[Seven matched views and historical comparisons](docs/C1_SUPPLIED_COMPARISONS.md), [mesh/export/jaw validation](docs/C1_SUPPLIED_VALIDATION.md) and [Astra’s independent review](docs/C1_SUPPLIED_REVIEW.md) are delivered. Three.js measures three draw calls; all four images decode, and the truncated negative fixture is rejected. The exact reduced QA mesh supports the temporary jaw-opening test; the runtime remains static. The portable Blender copy packs its four used images. [Evidence identities](docs/evidence/c1/supplied/manifest.json) bind the checkpoint to the rendered files and ignored generated assets.
+
+Astra recommends presenting this anatomically stronger candidate for owner review while identifying a subtle upper-snout centerline seam, reduced close-up skin detail, broad/opaque-looking fin ribs and source-derived fin-root/dorsal-boundary limitations. **C1 remains NOT ACCEPTED.** Technical checks do not establish full photographic realism or deformation readiness. The owner’s visual approval remains pending; no merge, C2 or Fish Factory work is authorized by this checkpoint.
+
+## Preserved procedural C1 checkpoint
 
 **C1 NOT ACCEPTED.** A targeted jaw reconstruction checkpoint is delivered on `dev/c1-largemouth-bass`; draft [PR #2](https://github.com/timporachin/fish.io/pull/2) remains unmerged. C0 application, simulation and tests are unchanged. Main remains at `95f63b07575cece839f21c6d4dfd6fa9056ebf86`. C2 and Fish Factory have not started.
 

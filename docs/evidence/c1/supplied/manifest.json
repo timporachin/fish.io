@@ -1,0 +1,268 @@
+{
+  "revision": "supplied-model-personal-v1",
+  "status": "C1 NOT ACCEPTED",
+  "branch": "dev/c1-largemouth-bass",
+  "preserved_procedural_checkpoint": "cc122021a06b307415ddac14a62ec0c186cab55a",
+  "main_unchanged": "95f63b07575cece839f21c6d4dfd6fa9056ebf86",
+  "license": "CC BY-NC 4.0; attribution in NOTICE.md",
+  "files": {
+    "NOTICE.md": {
+      "bytes": 2275,
+      "sha256": "7dd125092d4e8570cd137976d9c402a91f50cfe7376f7a9c5008e83a54de1884"
+    },
+    "browser-qa.png": {
+      "bytes": 91281,
+      "sha256": "4bcbf8c6abd1b210b6cb5c45191ed7f9728f0a0fb9ea3ba04fb426d8996f59ab"
+    },
+    "candidate-front.png": {
+      "bytes": 555990,
+      "sha256": "cf448815b760bb7df4c42400225d92f92b4b1422b08f834003f3f2ba9937a17a"
+    },
+    "candidate-head-close.png": {
+      "bytes": 1081541,
+      "sha256": "6040e72455912a1e6df902608f110558976ff7d42d163f0c41682aca1d203440"
+    },
+    "candidate-profile.png": {
+      "bytes": 820568,
+      "sha256": "10089d89c59931aa022bdcdd466de8bc0e41c5d138d0cb2044e0786108187680"
+    },
+    "candidate-three-quarter.png": {
+      "bytes": 762497,
+      "sha256": "c70bb04d35c8c10cede0ff9d8486a7189f88fae42e05cb249dbde2ceb7af0168"
+    },
+    "gallery-command.json": {
+      "bytes": 1892,
+      "sha256": "be53776fa91d21de93662c0ba5dbe7ed5c1f945d9a1c978d1e6f7f3d475bbba7"
+    },
+    "qa/browser-qa.json": {
+      "bytes": 4645,
+      "sha256": "da9610c305b3b92a0ffcb5606f0e21f13deaefeae06b267855119dc994dc1bad"
+    },
+    "qa/candidate-geometry-qa.json": {
+      "bytes": 17900,
+      "sha256": "ceba32e29a4b63983de806d3364c80c7931ea708b7602b7bf313e18fd42d9c49"
+    },
+    "qa/candidate-mouth-qa.json": {
+      "bytes": 79803,
+      "sha256": "db360ed40b7418d6b6dec6b2136610693e1496d48d2dcdc400eae0b7a0b77d2f"
+    },
+    "qa/candidate-qa-gate.json": {
+      "bytes": 1375,
+      "sha256": "0fcc2eb67d6a84896ab5c7c3cca795ac58a760acc31f9d4b83d2450e02cb093f"
+    },
+    "qa/candidate-rest-section.json": {
+      "bytes": 43319,
+      "sha256": "f1863c683fdb6a79e035709798f4a0a7b819bde9e811585e30cc95e4fd977088"
+    },
+    "qa/glb-validator-qa.json": {
+      "bytes": 199,
+      "sha256": "0642f3181184e9c7f453b9737c9efb510ea933447f074d3f12064198905e61ee"
+    },
+    "qa/portable-report.json": {
+      "bytes": 928,
+      "sha256": "398cac4ae819bbb3441ac610e812589d2c9b0ba3ad1bd927aeb9d5d73ccabcab"
+    },
+    "qa/preparation-report.json": {
+      "bytes": 3494,
+      "sha256": "c7aa7a8a44fd05396b9f863bcdd0ea59a16832bad0aa42013d592a3b4e860448"
+    },
+    "qa/qa-candidate-render-report.json": {
+      "bytes": 3104,
+      "sha256": "4f563f8dc5209930c7ba65c5a0e9ef25abf625ba93c04e894e20d1320549f746"
+    },
+    "qa/qa-source-render-report.json": {
+      "bytes": 3965,
+      "sha256": "c366dfacb0a0545ebf15134c14777415a8a9d97ac7319075abf6bf5381c06b75"
+    },
+    "qa/qa-weighted-render-report.json": {
+      "bytes": 3931,
+      "sha256": "620ff5ecc9f665a7bc6d88b6d3ca79b33e64c416635796bf4cce80fc62fcece2"
+    },
+    "qa/source-geometry-qa.json": {
+      "bytes": 46100,
+      "sha256": "a41919eb17dadc09284cc064232d86214ff2b8cd71a5e58ed10baedc2faa36c4"
+    },
+    "qa/source-mouth-qa.json": {
+      "bytes": 92382,
+      "sha256": "55b61f811e8187ae65b3b9cfc779df27a3aabef2b649d78f0fc5290279bb41e0"
+    },
+    "qa/source-rest-section.json": {
+      "bytes": 53557,
+      "sha256": "7ec5a4500ab435c163dadcb64f9930b419f2301e694a7f4786b6b1f39b1ce196"
+    },
+    "qa/weighted-geometry-qa.json": {
+      "bytes": 45959,
+      "sha256": "9f29a22b14faa28943d19d1ae4bedc7cd9a5568ce56a687f11fb7f5976d804ae"
+    },
+    "qa/weighted-static-equivalence.json": {
+      "bytes": 1648,
+      "sha256": "e310f8fadfe3487e8eb2375fa30f6bff38dbdd1a49c8ff44fcfd81d29058d1ce"
+    },
+    "qa-candidate/close_left_mouth.png": {
+      "bytes": 1809653,
+      "sha256": "dbfa3345761ea28cc762d786a8bb48641188947b9de8334134ea6a86d2ad9c54"
+    },
+    "qa-candidate/close_right_mouth.png": {
+      "bytes": 1850666,
+      "sha256": "1562f2c8f6bd89939718c50be047d068dc5dd99ac07b153cb5dadddd7e67e58e"
+    },
+    "qa-candidate/dorsal_root.png": {
+      "bytes": 1971955,
+      "sha256": "36858428d29924a82f8dc77c094e7757270d1bc4b7072c9234af5a6c2dfb02d6"
+    },
+    "qa-candidate/front_mouth.png": {
+      "bytes": 1602652,
+      "sha256": "ad2ddaacab9d615ba275cbfb03a86c55a64917a03f159a482900d0b909d2fee9"
+    },
+    "qa-candidate/front_three_quarter_head.png": {
+      "bytes": 1778149,
+      "sha256": "6e674120a77cafb20a69a5b9cbc2c62104964c6f078fc6b4cb8f42383d68a20c"
+    },
+    "qa-candidate/full_body_lateral.png": {
+      "bytes": 1468188,
+      "sha256": "f2e36466c96f9a786c0fed05fbd0ce7731d3ab4a2a833700f85116b6e049c86f"
+    },
+    "qa-candidate/render-report.json": {
+      "bytes": 3104,
+      "sha256": "4f563f8dc5209930c7ba65c5a0e9ef25abf625ba93c04e894e20d1320549f746"
+    },
+    "qa-candidate/top_snout_jaw.png": {
+      "bytes": 1417785,
+      "sha256": "b081db8a23d85004426c3c67d8dbb52c09d81e4bf5c702c3ea9613f53ecc570a"
+    },
+    "qa-historical/close_left_mouth.png": {
+      "bytes": 1709852,
+      "sha256": "570709d4438318ec921f0e1df32a7d0c90bea93886da419835805bdd25439b21"
+    },
+    "qa-historical/close_right_mouth.png": {
+      "bytes": 1807065,
+      "sha256": "d0dddf6af149571eea33fe4a2fb34d873b8b8cd8494ae0e12330e64b2dcd32a2"
+    },
+    "qa-historical/front_mouth.png": {
+      "bytes": 1783919,
+      "sha256": "0456da4b6274abab194186fa9a6885349e24151bace88de9295cba3f15b60429"
+    },
+    "qa-historical/front_three_quarter_head.png": {
+      "bytes": 1679791,
+      "sha256": "34deea0dace5fcab23756747c40007c04b6c8ce99957cffafc1ad5135db7cf25"
+    },
+    "qa-historical/full_body_lateral.png": {
+      "bytes": 1481364,
+      "sha256": "183974dbeb5021e9261588ca33315475e491707ee1709e6300aa65bca86f7feb"
+    },
+    "qa-historical/render-report.json": {
+      "bytes": 2680,
+      "sha256": "09d66a7011d40a25567408ce9785f2470ea25ec22bac6348b7bc1a1ac693d17a"
+    },
+    "qa-historical/top_snout_jaw.png": {
+      "bytes": 1367599,
+      "sha256": "62201c2bc26878c959c54c0eb9e31f86a737d60ca12f452a05801b41ce07c7f2"
+    },
+    "qa-source/close_left_mouth.png": {
+      "bytes": 2004367,
+      "sha256": "8f4581c9936edb435b005fb5e2f59a0d74522589c86cfb49211b75e6327e7491"
+    },
+    "qa-source/close_right_mouth.png": {
+      "bytes": 2015082,
+      "sha256": "b607b9cf0459de4cbc03d50567b82e03902e82c7e22e326f734f272a2c67d9b5"
+    },
+    "qa-source/dorsal_root.png": {
+      "bytes": 2213259,
+      "sha256": "3db495f0deb244d633001e8160b1884d27934a56f17bffcf4ac54c32eb108ee1"
+    },
+    "qa-source/front_mouth.png": {
+      "bytes": 1674881,
+      "sha256": "2115a959442fe1bc800d327e2f80c1d31b2a6b444992302c217b8ecfdd4a01b0"
+    },
+    "qa-source/front_three_quarter_head.png": {
+      "bytes": 1938499,
+      "sha256": "6174c14437aafb5e1d8d321c8d696beb8868ef6f6d6244c16499479339f3257e"
+    },
+    "qa-source/full_body_lateral.png": {
+      "bytes": 1523774,
+      "sha256": "da758c0c591ad2e6f9a04758c92342f998a0d3f3fd0b7ca8b4a0dd945fd4542b"
+    },
+    "qa-source/jaw_open_25deg.png": {
+      "bytes": 2053662,
+      "sha256": "409a4ed08be9d23098c4fc2b691077c1e84f86bea7bd7776e898d5e92d21ea99"
+    },
+    "qa-source/jaw_open_three_quarter.png": {
+      "bytes": 2014909,
+      "sha256": "eeeeeff28d64b4ffc36d0e5c33aad4a63595c0b4e7915a77f99b8b3a5d923ab7"
+    },
+    "qa-source/render-report.json": {
+      "bytes": 3965,
+      "sha256": "c366dfacb0a0545ebf15134c14777415a8a9d97ac7319075abf6bf5381c06b75"
+    },
+    "qa-source/top_snout_jaw.png": {
+      "bytes": 1588572,
+      "sha256": "ed77576a2749e2ae9de87c2d7871d7f09fdcd9233de88d67e251ee693ac95d5e"
+    },
+    "qa-weighted/close_left_mouth.png": {
+      "bytes": 1809833,
+      "sha256": "06096c3065d588dbd3c7629c8ea88b5c834a8b99affaabf3a8df6bb21f03482d"
+    },
+    "qa-weighted/close_right_mouth.png": {
+      "bytes": 1851176,
+      "sha256": "07a409c5c7b61f16897d1f73d0b42433facc984cb5a153ccbaeb1ff5c3cb4098"
+    },
+    "qa-weighted/dorsal_root.png": {
+      "bytes": 1942274,
+      "sha256": "f3b8294851cd47d2157d1396bf81de382448b505be2d2b5b00a22507a59473fb"
+    },
+    "qa-weighted/front_mouth.png": {
+      "bytes": 1601984,
+      "sha256": "7f8a21a6d09652420d3baec32ab5e2cc2e9fbdb34b6129c92994a6499c9e7f92"
+    },
+    "qa-weighted/front_three_quarter_head.png": {
+      "bytes": 1777406,
+      "sha256": "11d5b7d0a747bdcb18ee02195373cc59df4c145b5e58583bb35fe175f968fda4"
+    },
+    "qa-weighted/full_body_lateral.png": {
+      "bytes": 1467042,
+      "sha256": "3bab8d59ebac482e99d32e31dbc340b19409b3efb8ae9cca4145304224d4f836"
+    },
+    "qa-weighted/jaw_open_25deg.png": {
+      "bytes": 1855304,
+      "sha256": "175c5024a0dc01b06faf4f64439fdb6cd9c8391d4d1b162ac635f98268820e7c"
+    },
+    "qa-weighted/jaw_open_three_quarter.png": {
+      "bytes": 1857131,
+      "sha256": "31115a0d385faf0e8d39cec5fef2e937c96802175a7df639a18c3359bebfb22e"
+    },
+    "qa-weighted/render-report.json": {
+      "bytes": 3931,
+      "sha256": "620ff5ecc9f665a7bc6d88b6d3ca79b33e64c416635796bf4cce80fc62fcece2"
+    },
+    "qa-weighted/top_snout_jaw.png": {
+      "bytes": 1417796,
+      "sha256": "3c7140d39a19d0dbaa3c01ed69f23a0c1681b840433573a5d4109ebb56556dc1"
+    }
+  },
+  "private_generated_assets": {
+    "candidate-static.blend": {
+      "bytes": 2453572,
+      "sha256": "0be1f4cdea04ef070bec30c926b4fe86c9368d62938716de8a01962f34c215e6"
+    },
+    "candidate-static.glb": {
+      "bytes": 2097516,
+      "sha256": "b2476193bb8b79431e3ab15596b660ed0297e5bf7f3f0e5394d85e04bb44a7eb"
+    },
+    "candidate-weighted-qa.blend": {
+      "bytes": 3125736,
+      "sha256": "7d4fb93ab4851bb5a632d32c51c3d5d20754c6442115c77322924c6a1089eec4"
+    },
+    "candidate-portable.blend": {
+      "bytes": 4186800,
+      "sha256": "e1b5ae2b6f593a98d2752f2ce9aa55afdba15cb6c57ba2076358b9ccd62b7d64"
+    },
+    "candidate-review-package.zip": {
+      "bytes": 4193521,
+      "sha256": "1444f56a939aade37c2da9e3cf6f43cec0f235438b380d4cc13a55fd80a4bff4"
+    },
+    "qa-gallery/jaw-comparison.html": {
+      "bytes": 69687654,
+      "sha256": "ff5234b00fa891e9c5bc4eb6d2c216d8d67aea6d0d636d193c07a20b1aca014b"
+    }
+  }
+}

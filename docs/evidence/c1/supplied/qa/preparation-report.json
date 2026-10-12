@@ -1,0 +1,119 @@
+{
+  "source_blend_sha256": "8b98cdb81ae4182bac3f201f6f91cebe182ea476e16c246ef610709a10f98360",
+  "source_license": "CC BY-NC 4.0; personal noncommercial use confirmed by owner",
+  "source_body_evaluated_triangles": 15904,
+  "source_eye_triangles": 224,
+  "candidate_counts": {
+    "body_mesh": {
+      "vertices": 5281,
+      "triangles": 10500
+    },
+    "eye_mesh": {
+      "vertices": 130,
+      "triangles": 224
+    }
+  },
+  "candidate_triangle_total": 10724,
+  "target_triangle_ceiling": 10976,
+  "fin_alpha_polygon_count": 3478,
+  "loose_geometry_cleanup": {
+    "wire_edges_removed": 4,
+    "loose_vertices_removed": 2
+  },
+  "material_count": 2,
+  "coordinates_meters": {
+    "nose_axis": "+X",
+    "dorsal_axis": "+Z",
+    "length": 0.44999998807907104,
+    "bounds": [
+      [
+        -0.22499999403953552,
+        0.22499999403953552
+      ],
+      [
+        -0.04196174442768097,
+        0.04196174070239067
+      ],
+      [
+        -0.09261757135391235,
+        0.08896432816982269
+      ]
+    ]
+  },
+  "static": {
+    "armature_objects": 0,
+    "actions": 0,
+    "armature_modifiers": 0
+  },
+  "textures": {
+    "bass_color.png": {
+      "source_sha256": "0194fd5333dd04947f83ec442def6fa356995c7d46339708601f043d7861177a",
+      "derived": "artifacts/c1/supplied-candidate/textures/bass_color.png",
+      "derived_sha256": "79f679661a83f8bce2114bd4d02005fb60c62b0d090e62ccf7fa94393d3224e5",
+      "source_size": [
+        4096,
+        4096
+      ],
+      "derived_size": [
+        1024,
+        1024
+      ],
+      "source_bytes": 9245448,
+      "derived_bytes": 646574
+    },
+    "bass_normal.png": {
+      "source_sha256": "d1523b724614019bffe62c0b87954ae033c4a9a8919113f173ce54c76994c72b",
+      "derived": "artifacts/c1/supplied-candidate/textures/bass_normal.png",
+      "derived_sha256": "8a2dc942e345c241e559a594c33894749238efa5da5b2602da624197e6bc5458",
+      "source_size": [
+        4096,
+        4096
+      ],
+      "derived_size": [
+        1024,
+        1024
+      ],
+      "source_bytes": 7220910,
+      "derived_bytes": 566782
+    },
+    "bass_roughness.png": {
+      "source_sha256": "2c12aa6ede541b0806246e85fa8933bb879d69afa913427000ec705e469e6f05",
+      "derived": "artifacts/c1/supplied-candidate/textures/bass_roughness.png",
+      "derived_sha256": "ed368eab9a7d279a0c2ce52ab48bea94c03ba7e442f83fc9ae8df595b171a74b",
+      "source_size": [
+        4096,
+        4096
+      ],
+      "derived_size": [
+        1024,
+        1024
+      ],
+      "source_bytes": 4142968,
+      "derived_bytes": 320534
+    },
+    "bass_alpha.jpg": {
+      "source_sha256": "2a87abef53e1178bfb143891e9726ef42440cd4aecd1ed048b120d9012ccf884",
+      "derived": "artifacts/c1/supplied-candidate/textures/bass_alpha.png",
+      "derived_sha256": "b88b5a4cc0e7198e4e1b5a48fafb326b8be969d140e386e1dd3ff7a68cf22352",
+      "source_size": [
+        2048,
+        2048
+      ],
+      "derived_size": [
+        512,
+        512
+      ],
+      "source_bytes": 108829,
+      "derived_bytes": 29701
+    }
+  },
+  "derived_fin_rgba": {
+    "path": "artifacts/c1/supplied-candidate/textures/bass_color_fin_rgba.png",
+    "sha256": "1d9e3e6a06580e3121f89e63bb50bbb85c0975c7cfa9b4173ead1d8440f8085b",
+    "bytes": 217299,
+    "alpha_formula": "opacity = 1 - 0.6 * source_alpha_grayscale"
+  },
+  "glb_bytes": 2097516,
+  "glb_sha256": "b2476193bb8b79431e3ab15596b660ed0297e5bf7f3f0e5394d85e04bb44a7eb",
+  "candidate_blend_sha256": "0be1f4cdea04ef070bec30c926b4fe86c9368d62938716de8a01962f34c215e6"
+}

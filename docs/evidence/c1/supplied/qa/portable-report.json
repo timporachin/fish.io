@@ -1,0 +1,41 @@
+{
+  "input": "artifacts/c1/supplied-candidate/candidate-static.blend",
+  "input_sha256": "0be1f4cdea04ef070bec30c926b4fe86c9368d62938716de8a01962f34c215e6",
+  "portable": "artifacts/c1/supplied-candidate/candidate-portable.blend",
+  "portable_sha256": "e1b5ae2b6f593a98d2752f2ce9aa55afdba15cb6c57ba2076358b9ccd62b7d64",
+  "portable_bytes": 4186800,
+  "packed_images": [
+    {
+      "name": "C1 1024px bass_color.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "packed_bytes": 646574
+    },
+    {
+      "name": "C1 1024px bass_normal.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "packed_bytes": 566782
+    },
+    {
+      "name": "C1 1024px bass_roughness.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "packed_bytes": 320534
+    },
+    {
+      "name": "C1 fin color with baked opacity",
+      "size": [
+        512,
+        512
+      ],
+      "packed_bytes": 217299
+    }
+  ]
+}

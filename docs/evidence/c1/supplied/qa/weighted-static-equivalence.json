@@ -1,0 +1,64 @@
+{
+  "weighted": "/workspace/fish.io/artifacts/c1/supplied-candidate/candidate-weighted-qa.blend",
+  "candidate": "/workspace/fish.io/artifacts/c1/supplied-candidate/candidate-static.blend",
+  "objects": {
+    "body_mesh": {
+      "vertices": 5281,
+      "faces": 10500,
+      "identicalFaceIndexOrder": true,
+      "affineCoefficients": [
+        [
+          1.2639168384046677,
+          5.5221016505422303e-08,
+          -1.2942527628244091e-11
+        ],
+        [
+          -2.6518938364694655e-08,
+          1.263916840427014,
+          -5.370916905667045e-11
+        ],
+        [
+          1.3836712379165783e-09,
+          -7.573410926164925e-10,
+          1.263916839440226
+        ],
+        [
+          0.07608194703490045,
+          1.2371437208003044e-11,
+          2.9271800261465586e-11
+        ]
+      ],
+      "maxAffineResidualM": 2.020471371478713e-08,
+      "meanAffineResidualM": 4.144990724081489e-09
+    },
+    "eye_mesh": {
+      "vertices": 130,
+      "faces": 128,
+      "identicalFaceIndexOrder": true,
+      "affineCoefficients": [
+        [
+          1.263916845582081,
+          2.303906920851958e-08,
+          -8.694692194845489e-09
+        ],
+        [
+          -1.7396013810011546e-08,
+          1.263916811087157,
+          4.17715285971898e-10
+        ],
+        [
+          -9.505323088701556e-08,
+          -6.442719089130855e-09,
+          1.2639168306732476
+        ],
+        [
+          0.07608194451825817,
+          1.9558556996202014e-09,
+          5.329229869899255e-10
+        ]
+      ],
+      "maxAffineResidualM": 1.926128749908434e-08,
+      "meanAffineResidualM": 6.411062716145804e-09
+    }
+  }
+}

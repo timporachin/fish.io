@@ -50,10 +50,16 @@ def main() -> None:
     parser.add_argument("--qa-dir", type=Path, default=ROOT / "artifacts/c1/anatomical-revision-v2/jaw-qa",
                         help="QA directory containing before/, after/, and supplemental-open/")
     parser.add_argument("--review-note", default="", help="Explicit reviewer note for this frozen checkpoint")
+    parser.add_argument("--baseline-label", default="Before · saved pre-jaw checkpoint")
+    parser.add_argument("--comparison-note", default="Private local review of the saved pre-jaw checkpoint and candidate renders.")
+    parser.add_argument("--attribution", default="", help="Credit and change notice for adapted third-party renders")
+    parser.add_argument("--cost-note", default="Original C1 browser validation versus candidate browser validation. The cost reference is the original 10,976-triangle candidate; the before images show the later saved pre-jaw model, not that original asset.")
     parser.add_argument("--embed-images", action="store_true", help="Embed unaltered image bytes for a portable private HTML gallery")
     parser.add_argument("--output", type=Path, help="Output HTML; defaults to <qa-dir>/jaw-comparison.html")
     parser.add_argument("--reference-dir", type=Path, default=ROOT / "artifacts/c1/references")
     parser.add_argument("--supplemental-dir", type=Path, help="Defaults to <qa-dir>/supplemental-open")
+    parser.add_argument("--historical-dir", type=Path, help="Optional six-view rejected checkpoint for comparison with after/")
+    parser.add_argument("--material-dir", type=Path, help="Optional lower-light candidate and browser screenshots")
     parser.add_argument("--baseline-metrics", type=Path, default=ROOT / "docs/evidence/c1/before/browser-validation.json")
     parser.add_argument("--candidate-metrics", type=Path,
                         help="Defaults to <qa-dir>/../browser-validation.json")
@@ -71,6 +77,11 @@ def main() -> None:
     pairs.append(("supplemental_open_three_quarter", "Jaw open · supplemental three-quarter",
                   "Additional open-pose perspective; compare mouth-corner depth and the lower-jaw mass.",
                   supplemental / "before/jaw_open_25deg.png", supplemental / "after/jaw_open_25deg.png"))
+    if args.historical_dir:
+        for key, title, _ in VIEWS[:6]:
+            pairs.append(("historical_" + key, "Rejected checkpoint versus candidate · " + title,
+                          "Different models shown with matching fish-relative camera and lighting settings; this is not an exact landmark overlay.",
+                          args.historical_dir.resolve() / (key + ".png"), qa / "after" / (key + ".png")))
     required = [baseline_metrics, candidate_metrics]
     required.extend(path for *_, before, after in pairs for path in (before, after))
     required.extend(references / name for name, _, _ in PHOTOS)
@@ -94,14 +105,14 @@ def main() -> None:
 
     sections = []
     for key, title, note, before, after in pairs:
-        photo_index = 2 if "open" in key else (1 if key == "front_mouth" else 0)
+        photo_index = 2 if "open" in key else (1 if key.endswith("front_mouth") else 0)
         photo_name, photo_title, photo_caption = PHOTOS[photo_index]
         reference_url = esc(image_url(references / photo_name), quote=True)
         reference = (f'<aside class="view-reference"><a href="#" onclick="this.href=this.querySelector(&quot;img&quot;).src" download="{esc(photo_name, quote=True)}">'
                      f'<img src="{reference_url}" alt="{esc(photo_title, quote=True)}" loading="lazy"></a>'
                      f'<p><strong>Photographic reference · {esc(photo_title)}</strong><br>{esc(photo_caption)}</p></aside>')
         sections.append(f'<section class="comparison"><h2>{esc(title)}</h2><p>{esc(note)}</p><div class="pair">'
-                        + figure(before, "Before · saved pre-jaw checkpoint") + figure(after, "Candidate")
+                        + figure(before, "Before · rejected procedural checkpoint" if key.startswith("historical_") else args.baseline_label) + figure(after, "Candidate")
                         + "</div>" + reference + "</section>")
     photo_cards = []
     for name, title, caption in PHOTOS:
@@ -111,6 +122,14 @@ def main() -> None:
                            f'<figcaption><strong>{esc(title)}</strong><br>{esc(caption)}</figcaption></figure>')
 
     review_note = f'<div class="notice"><p>{esc(args.review_note)}</p></div>' if args.review_note else ""
+    material_evidence = ""
+    if args.material_dir:
+        material_evidence = '<h2>Supplemental material appearance</h2><p>Lower-light neutral Blender views and actual Three.js loading; these use different inspection lighting from the matched geometry pairs.</p><div class="pair">'
+        for name, label in (("candidate-three-quarter.png", "Lower-light neutral three-quarter"),
+                            ("candidate-head-close.png", "Lower-light neutral head"),
+                            ("browser-qa.png", "Exported GLB in Three.js")):
+            material_evidence += figure(args.material_dir.resolve() / name, label)
+        material_evidence += "</div>"
 
     def metric_row(label: str, index: int) -> str:
         return (f"<tr><th>{esc(label)}</th><td>{before_cost[index]:,}</td>"
@@ -140,10 +159,11 @@ th,td {{padding:10px;border-bottom:1px solid #45534a}} th:first-child {{text-ali
 @media(max-width:760px) {{.pair,.references {{grid-template-columns:1fr}} .photo img {{height:auto}} .view-reference {{display:block}}}}
 </style></head><body>
 <header><span class="badge">C1 NOT ACCEPTED</span><h1>Adult largemouth bass · jaw review</h1>
-<p>Private local review of the saved pre-jaw checkpoint and candidate renders. Click any image to download its original pixels. Rendered views share QA camera and lighting settings; the supplemental three-quarter open view is a separate camera setup.</p></header>
+<p>{esc(args.comparison_note)} Click any image to download its original pixels. Rendered views share QA camera and lighting settings; the supplemental three-quarter open view is a separate camera setup.</p><p>{esc(args.attribution)}</p></header>
 <div class="notice"><p>These licensed photographs are for local anatomical review only. Keep the raw images and this linked gallery inside the ignored artifacts workspace; do not commit or publish the photos or this page. The 25° opening is a temporary deformation check, not an authored animation or measured biological angle. C1 remains unaccepted pending review. Any higher triangle budget is an unapproved proposal pending explicit owner approval.</p></div>
 {review_note}
-<h2>Asset cost</h2><p>Original C1 browser validation versus candidate browser validation. The cost reference is the original 10,976-triangle candidate; the before images show the later saved pre-jaw model, not that original asset. Counts load from the JSON evidence at gallery generation time. Draw calls are for one fish; maps are embedded image count.</p>
+{material_evidence}
+<h2>Asset cost</h2><p>{esc(args.cost_note)} Counts load from the JSON evidence at gallery generation time. Draw calls are for one fish; maps are embedded image count.</p>
 <table><thead><tr><th>Metric</th><th>Original</th><th>Candidate</th><th>Change</th></tr></thead><tbody>
 {metric_row('Triangles', 0)}{metric_row('Draw calls', 1)}{metric_row('Maps', 2)}
 </tbody></table>
