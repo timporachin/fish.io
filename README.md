@@ -1,6 +1,6 @@
 # FISH.IO
 
-C0 foundation: Three.js underwater habitat, TypeScript simulation, Vite build, Vitest, Playwright, and Blender headless GLB validation. C1 adds a reproducible largemouth bass modeling candidate and isolated asset validation. User visual approval remains pending; the gameplay scene is preserved.
+C0 foundation: Three.js underwater habitat, TypeScript simulation, Vite build, Vitest, Playwright, and Blender headless GLB validation. C1 adds a reproducible largemouth bass modeling candidate and isolated asset validation. The owner has visually approved C1; the gameplay scene is preserved.
 
 ## Run
 
@@ -21,4 +21,4 @@ Browser tests use cloud `/usr/bin/chromium` by default. For another installed ex
 
 See [game design](docs/GAME_DESIGN.md), [project state](PROJECT_STATE.md), [architecture](docs/ARCHITECTURE.md), [roadmap](docs/ROADMAP.md), [asset pipeline](docs/BLENDER_PIPELINE.md), [C0 test evidence](docs/TEST_EVIDENCE.md), and [C1 modeling and approval](docs/C1_MODELING.md). C2 requires C1 visual approval and further authorization.
 
-Latest C1: [supplied-model adaptation and attribution](docs/C1_SUPPLIED_ASSET.md), [seven-view comparisons](docs/C1_SUPPLIED_COMPARISONS.md) and [independent review](docs/C1_SUPPLIED_REVIEW.md). Personal, noncommercial use; C1 NOT ACCEPTED.
+Latest C1: [supplied-model adaptation and attribution](docs/C1_SUPPLIED_ASSET.md), [seven-view comparisons](docs/C1_SUPPLIED_COMPARISONS.md) and [independent review](docs/C1_SUPPLIED_REVIEW.md). Personal, noncommercial use; [C1 approved](docs/C1_APPROVAL.md). C2 remains unstarted.

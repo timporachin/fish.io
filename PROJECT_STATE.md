@@ -1,6 +1,6 @@
 # FISH.IO project state
 
-**C0 complete. C1 supplied-model review checkpoint delivered; C1 NOT ACCEPTED. C2 not started.**
+**C0 complete. C1 APPROVED by the owner on 2026-10-12. C2 not started.**
 
 ## Current C1 supplied-model adaptation
 
@@ -10,7 +10,7 @@ The static candidate retains the supplied head, volumetric jaws, oral pocket, bo
 
 [Seven matched views and historical comparisons](docs/C1_SUPPLIED_COMPARISONS.md), [mesh/export/jaw validation](docs/C1_SUPPLIED_VALIDATION.md) and [Astra’s independent review](docs/C1_SUPPLIED_REVIEW.md) are delivered. Three.js measures three draw calls; all four images decode, and the truncated negative fixture is rejected. The exact reduced QA mesh supports the temporary jaw-opening test; the runtime remains static. The portable Blender copy packs its four used images. [Evidence identities](docs/evidence/c1/supplied/manifest.json) bind the checkpoint to the rendered files and ignored generated assets.
 
-Astra recommends presenting this anatomically stronger candidate for owner review while identifying a subtle upper-snout centerline seam, reduced close-up skin detail, broad/opaque-looking fin ribs and source-derived fin-root/dorsal-boundary limitations. **C1 remains NOT ACCEPTED.** Technical checks do not establish full photographic realism or deformation readiness. The owner’s visual approval remains pending; no merge, C2 or Fish Factory work is authorized by this checkpoint.
+The owner reviewed the latest full-body render and explicitly stated **“C1 is approved.”** [The approval record](docs/C1_APPROVAL.md) binds this decision to the unchanged supplied-model assets. C1 modeling is accepted. Astra’s pre-approval seam, close-up texture, fin and topology findings remain documented. Draft PR #2 remains unmerged; C2 and Fish Factory remain unstarted pending further instruction. Earlier rejected procedural checkpoints below retain their historical rejection status.
 
 ## Preserved final procedural touchup (`9d4dcb2`)
 

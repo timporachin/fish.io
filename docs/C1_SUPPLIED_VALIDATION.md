@@ -1,6 +1,6 @@
 # C1 supplied bass validation
 
-**Technical checks do not grant visual acceptance. C1 remains NOT ACCEPTED.** The source, permitted personal/noncommercial use, adaptation steps and attribution are documented in [C1 supplied asset](C1_SUPPLIED_ASSET.md). The previous procedural checkpoint remains preserved.
+**C1 visually approved by the owner on 2026-10-12.** See [approval record](C1_APPROVAL.md). Technical checks and the owner’s visual decision remain separate. The source, permitted personal/noncommercial use, adaptation steps and attribution are documented in [C1 supplied asset](C1_SUPPLIED_ASSET.md). The previous procedural checkpoint remains preserved.
 
 ## Frozen runtime candidate
 

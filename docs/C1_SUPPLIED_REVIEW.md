@@ -1,5 +1,7 @@
 # C1 supplied largemouth bass — independent review
 
+> Historical independent review, completed before owner approval. The owner subsequently approved this unchanged candidate; see [C1 approval](C1_APPROVAL.md). Original findings and recommendation below are retained.
+
 **Recommendation: present this frozen candidate for owner review as the stronger anatomical starting point. C1 remains NOT ACCEPTED.** The supplied model resolves much of the conspicuously constructed jaw appearance documented in the [procedural review](C1_JAW_REVIEW.md), and the reduction preserves its adult largemouth silhouette within the original asset budget. Full photographic realism, deformation readiness and owner acceptance are not established by the technical checks.
 
 ## Inspected evidence and identity

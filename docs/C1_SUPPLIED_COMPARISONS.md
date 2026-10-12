@@ -1,6 +1,6 @@
 # C1 supplied bass: visual review evidence
 
-**C1 NOT ACCEPTED.** This is an attributed personal, noncommercial adaptation of DigitalLife3D Model 67A, not an original model authored from scratch. The compared procedural checkpoint at `cc12202` remains preserved, along with the separately archived final touchup at `9d4dcb2`. See [source and changes](C1_SUPPLIED_ASSET.md), [validation](C1_SUPPLIED_VALIDATION.md), [Astra review](C1_SUPPLIED_REVIEW.md) and [creator/license notice](third-party/DigitalLife3D-Model67A-NOTICE.md).
+**C1 visually approved by the owner on 2026-10-12.** See [approval record](C1_APPROVAL.md). This is an attributed personal, noncommercial adaptation of DigitalLife3D Model 67A, not an original model authored from scratch. The compared procedural checkpoint at `cc12202` remains preserved, along with the separately archived final touchup at `9d4dcb2`. See [source and changes](C1_SUPPLIED_ASSET.md), [validation](C1_SUPPLIED_VALIDATION.md), [Astra review](C1_SUPPLIED_REVIEW.md) and [creator/license notice](third-party/DigitalLife3D-Model67A-NOTICE.md).
 
 ## Seven matched anatomical views
 
@@ -37,4 +37,4 @@ The saved rejected procedural `.blend` is also rendered through the same camera/
 | Top | [Previous](evidence/c1/supplied/qa-historical/top_snout_jaw.png) | [Candidate](evidence/c1/supplied/qa-candidate/top_snout_jaw.png) |
 | Three-quarter | [Previous](evidence/c1/supplied/qa-historical/front_three_quarter_head.png) | [Candidate](evidence/c1/supplied/qa-candidate/front_three_quarter_head.png) |
 
-Different meshes and UVs are intentional. The old and new camera positions share fish-relative framing; this is not an exact world-space overlay or a claim of tissue-landmark correspondence. The owner's visual approval remains required. No merge, C2 or Fish Factory development follows from technical validation.
+Different meshes and UVs are intentional. The old and new camera positions share fish-relative framing; this is not an exact world-space overlay or a claim of tissue-landmark correspondence. The owner’s visual approval is recorded in [C1 approval](C1_APPROVAL.md). No merge, C2 or Fish Factory development follows from technical validation.
