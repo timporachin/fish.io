@@ -1,0 +1,235 @@
+{
+  "species": "Micropterus salmoides",
+  "seed": 1947,
+  "blender": "4.3.2",
+  "vertices": 11149,
+  "triangles": 21762,
+  "mesh_objects": 16,
+  "materials": 9,
+  "bounds_min_m": [
+    -0.24180755019187927,
+    -0.07193773984909058,
+    -0.08638041466474533
+  ],
+  "bounds_max_m": [
+    0.21150000393390656,
+    0.07196072489023209,
+    0.10624003410339355
+  ],
+  "length_m": 0.4533075541257858,
+  "textures": [
+    {
+      "name": "BassScaleOlive_1024",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "name": "BassScaleNormal_1024",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "name": "BassScaleRoughness_1024",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "name": "BassFinOlive_512",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "BassPectoralIrisAtlas_512",
+      "width": 512,
+      "height": 512
+    }
+  ],
+  "iris_atlas_region_pixels": {
+    "image": "BassPectoralIrisAtlas_512",
+    "x": 0,
+    "y": 384,
+    "width": 128,
+    "height": 128
+  },
+  "rigged": false,
+  "animated": false,
+  "render_files": [],
+  "mesh_validation": {
+    "Body_quadrilateral_loft": {
+      "vertices": 5117,
+      "triangles": 10230,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 0.002227754154653933,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Eye_orbit_right": {
+      "vertices": 266,
+      "triangles": 528,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 3.789845710744565e-07,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Iris_right": {
+      "vertices": 266,
+      "triangles": 528,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 3.913753426221985e-07,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Pupil_right": {
+      "vertices": 266,
+      "triangles": 528,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 1.0212196831385409e-07,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Eye_orbit_left": {
+      "vertices": 266,
+      "triangles": 528,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 3.789845710744564e-07,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Iris_left": {
+      "vertices": 266,
+      "triangles": 528,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 3.9137534262219847e-07,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Pupil_left": {
+      "vertices": 266,
+      "triangles": 528,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 1.0212196831385409e-07,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Dorsal_spiny_10_spines": {
+      "vertices": 228,
+      "triangles": 452,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 5.116329452975901e-06,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Dorsal_soft_14_rays": {
+      "vertices": 324,
+      "triangles": 644,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 4.592614689932285e-06,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Anal_fin": {
+      "vertices": 276,
+      "triangles": 548,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 3.765206574646604e-06,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Caudal_rounded_emarginate": {
+      "vertices": 492,
+      "triangles": 980,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 1.4411273905269556e-05,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Pectoral_right": {
+      "vertices": 300,
+      "triangles": 596,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 2.156589774494082e-06,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Pelvic_right": {
+      "vertices": 252,
+      "triangles": 500,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 6.753419035171642e-07,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Pectoral_left": {
+      "vertices": 300,
+      "triangles": 596,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 2.156510947923729e-06,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Pelvic_left": {
+      "vertices": 252,
+      "triangles": 500,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 1,
+      "signed_volume_m3": 6.753419035171537e-07,
+      "uv_finite": true,
+      "normals_finite": true
+    },
+    "Fin_rays_combined": {
+      "vertices": 2012,
+      "triangles": 3548,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "zero_area_faces": 0,
+      "connected_components": 119,
+      "signed_volume_m3": 2.0620994717539322e-07,
+      "uv_finite": true,
+      "normals_finite": true
+    }
+  }
+}

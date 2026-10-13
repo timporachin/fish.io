@@ -1,0 +1,638 @@
+{
+  "check": "strict-intra-jaw-self-intersection-regression",
+  "blenderVersion": "4.3.2",
+  "method": "Head FACE anatomical_region 1/2 triangle BVH self-overlap; shared-vertex pairs excluded; strict segment/triangle crossings at 0.01 mm contact tolerance",
+  "limitations": [
+    "Coplanar contacts and enclosed volumes are inconclusive; this is not exhaustive self-intersection proof.",
+    "Baseline opening weights are derived from face-region incidence, not an authored articulation."
+  ],
+  "baseline": {
+    "source": "/workspace/fish.io/artifacts/c1/anatomy-before/largemouth-bass.blend",
+    "sha256": "2a560d7198d3c52d0878c3cd8fc20dd1b539a911fcd056f41c67ec3026ae9185",
+    "jawWeightSource": "derived from baseline FACE/INT anatomical_region incident-face ratio",
+    "poseAngleDegrees": 25.0,
+    "neutral": {
+      "signedVolumeM3": 0.0022202918018044953,
+      "upper": {
+        "triangles": 1794,
+        "uniqueCandidatePairs": 62,
+        "sharedVertexPairsExcluded": 8,
+        "properCrossings": 54,
+        "firstCrossingPairs": [
+          [
+            1730,
+            1779
+          ],
+          [
+            1730,
+            1780
+          ],
+          [
+            1732,
+            1779
+          ],
+          [
+            1732,
+            1780
+          ],
+          [
+            1738,
+            1749
+          ],
+          [
+            1738,
+            1750
+          ],
+          [
+            1740,
+            1750
+          ],
+          [
+            1739,
+            1750
+          ],
+          [
+            1742,
+            1749
+          ],
+          [
+            1741,
+            1749
+          ],
+          [
+            1741,
+            1750
+          ],
+          [
+            1743,
+            1749
+          ]
+        ],
+        "crossingVertexBoundsM": {
+          "0": [
+            0.20005086064338684,
+            0.20829999446868896
+          ],
+          "1": [
+            -0.02285323292016983,
+            0.027423879131674767
+          ],
+          "2": [
+            0.004600000102072954,
+            0.011500000022351742
+          ]
+        },
+        "firstCrossingTriangles": {
+          "a": [
+            [
+              0.20789167284965515,
+              0.007130208890885115,
+              0.010369000025093555
+            ],
+            [
+              0.20821109414100647,
+              0.003427984891459346,
+              0.010956250131130219
+            ],
+            [
+              0.20823754370212555,
+              0.0022853233385831118,
+              0.011175000108778477
+            ]
+          ],
+          "b": [
+            [
+              0.20829999446868896,
+              0.0,
+              0.011500000022351742
+            ],
+            [
+              0.20801414549350739,
+              0.007205885834991932,
+              0.0103658027946949
+            ],
+            [
+              0.20801103115081787,
+              0.007249999791383743,
+              0.01066880114376545
+            ]
+          ]
+        }
+      },
+      "lower": {
+        "triangles": 1326,
+        "uniqueCandidatePairs": 0,
+        "sharedVertexPairsExcluded": 0,
+        "properCrossings": 0,
+        "firstCrossingPairs": [],
+        "crossingVertexBoundsM": null,
+        "firstCrossingTriangles": null
+      }
+    },
+    "posed": {
+      "signedVolumeM3": 0.002212823025208213,
+      "upper": {
+        "triangles": 1794,
+        "uniqueCandidatePairs": 62,
+        "sharedVertexPairsExcluded": 8,
+        "properCrossings": 54,
+        "firstCrossingPairs": [
+          [
+            1730,
+            1779
+          ],
+          [
+            1730,
+            1780
+          ],
+          [
+            1732,
+            1779
+          ],
+          [
+            1732,
+            1780
+          ],
+          [
+            1738,
+            1749
+          ],
+          [
+            1738,
+            1750
+          ],
+          [
+            1740,
+            1750
+          ],
+          [
+            1739,
+            1750
+          ],
+          [
+            1742,
+            1749
+          ],
+          [
+            1741,
+            1749
+          ],
+          [
+            1741,
+            1750
+          ],
+          [
+            1743,
+            1749
+          ]
+        ],
+        "crossingVertexBoundsM": {
+          "0": [
+            0.20005086064338684,
+            0.20829999446868896
+          ],
+          "1": [
+            -0.02285323292016983,
+            0.027423879131674767
+          ],
+          "2": [
+            0.004600000102072954,
+            0.011500000022351742
+          ]
+        },
+        "firstCrossingTriangles": {
+          "a": [
+            [
+              0.20789167284965515,
+              0.007130208890885115,
+              0.010369000025093555
+            ],
+            [
+              0.20821109414100647,
+              0.003427984891459346,
+              0.010956250131130219
+            ],
+            [
+              0.20823754370212555,
+              0.0022853233385831118,
+              0.011175000108778477
+            ]
+          ],
+          "b": [
+            [
+              0.20829999446868896,
+              0.0,
+              0.011500000022351742
+            ],
+            [
+              0.20801414549350739,
+              0.007205885834991932,
+              0.0103658027946949
+            ],
+            [
+              0.20801103115081787,
+              0.007249999791383743,
+              0.01066880114376545
+            ]
+          ]
+        }
+      },
+      "lower": {
+        "triangles": 1326,
+        "uniqueCandidatePairs": 0,
+        "sharedVertexPairsExcluded": 0,
+        "properCrossings": 0,
+        "firstCrossingPairs": [],
+        "crossingVertexBoundsM": null,
+        "firstCrossingTriangles": null
+      }
+    }
+  },
+  "firstPass": {
+    "source": "/workspace/fish.io/artifacts/c1/anatomical-revision/largemouth-bass.blend",
+    "sha256": "52a9149f1fbde497e037c30402fab4f5cc9afa7ebac8d07dbe2f19e2bd065db7",
+    "jawWeightSource": "authored POINT/FLOAT jaw_open_weight",
+    "poseAngleDegrees": 25.0,
+    "neutral": {
+      "signedVolumeM3": 0.002227754154653933,
+      "upper": {
+        "triangles": 1794,
+        "uniqueCandidatePairs": 69,
+        "sharedVertexPairsExcluded": 6,
+        "properCrossings": 63,
+        "firstCrossingPairs": [
+          [
+            1458,
+            1781
+          ],
+          [
+            1458,
+            1782
+          ],
+          [
+            1458,
+            1783
+          ],
+          [
+            1461,
+            1792
+          ],
+          [
+            1461,
+            1748
+          ],
+          [
+            1460,
+            1793
+          ],
+          [
+            1460,
+            1792
+          ],
+          [
+            1460,
+            1748
+          ],
+          [
+            1462,
+            1792
+          ],
+          [
+            1462,
+            1748
+          ],
+          [
+            1462,
+            1741
+          ],
+          [
+            1462,
+            1742
+          ]
+        ],
+        "crossingVertexBoundsM": {
+          "0": [
+            0.20579659938812256,
+            0.210999995470047
+          ],
+          "1": [
+            -0.022853326052427292,
+            0.023217741400003433
+          ],
+          "2": [
+            0.006407999899238348,
+            0.01140000019222498
+          ]
+        },
+        "firstCrossingTriangles": {
+          "a": [
+            [
+              0.2064770758152008,
+              0.004525060765445232,
+              0.009555618278682232
+            ],
+            [
+              0.21088889241218567,
+              0.004570665303617716,
+              0.01059027761220932
+            ],
+            [
+              0.210999995470047,
+              0.0,
+              0.01075000036507845
+            ]
+          ],
+          "b": [
+            [
+              0.21080000698566437,
+              0.0,
+              0.01140000019222498
+            ],
+            [
+              0.21064919233322144,
+              0.007258049212396145,
+              0.009800000116229057
+            ],
+            [
+              0.2106156051158905,
+              0.007441583555191755,
+              0.010445673950016499
+            ]
+          ]
+        }
+      },
+      "lower": {
+        "triangles": 1326,
+        "uniqueCandidatePairs": 0,
+        "sharedVertexPairsExcluded": 0,
+        "properCrossings": 0,
+        "firstCrossingPairs": [],
+        "crossingVertexBoundsM": null,
+        "firstCrossingTriangles": null
+      }
+    },
+    "posed": {
+      "signedVolumeM3": 0.0022214472652168876,
+      "upper": {
+        "triangles": 1794,
+        "uniqueCandidatePairs": 69,
+        "sharedVertexPairsExcluded": 6,
+        "properCrossings": 63,
+        "firstCrossingPairs": [
+          [
+            1458,
+            1781
+          ],
+          [
+            1458,
+            1782
+          ],
+          [
+            1458,
+            1783
+          ],
+          [
+            1461,
+            1792
+          ],
+          [
+            1461,
+            1748
+          ],
+          [
+            1460,
+            1793
+          ],
+          [
+            1460,
+            1792
+          ],
+          [
+            1460,
+            1748
+          ],
+          [
+            1462,
+            1792
+          ],
+          [
+            1462,
+            1748
+          ],
+          [
+            1462,
+            1741
+          ],
+          [
+            1462,
+            1742
+          ]
+        ],
+        "crossingVertexBoundsM": {
+          "0": [
+            0.20579659938812256,
+            0.210999995470047
+          ],
+          "1": [
+            -0.022853326052427292,
+            0.023217741400003433
+          ],
+          "2": [
+            0.006407999899238348,
+            0.01140000019222498
+          ]
+        },
+        "firstCrossingTriangles": {
+          "a": [
+            [
+              0.2064770758152008,
+              0.004525060765445232,
+              0.009555618278682232
+            ],
+            [
+              0.21088889241218567,
+              0.004570665303617716,
+              0.01059027761220932
+            ],
+            [
+              0.210999995470047,
+              0.0,
+              0.01075000036507845
+            ]
+          ],
+          "b": [
+            [
+              0.21080000698566437,
+              0.0,
+              0.01140000019222498
+            ],
+            [
+              0.21064919233322144,
+              0.007258049212396145,
+              0.009800000116229057
+            ],
+            [
+              0.2106156051158905,
+              0.007441583555191755,
+              0.010445673950016499
+            ]
+          ]
+        }
+      },
+      "lower": {
+        "triangles": 1326,
+        "uniqueCandidatePairs": 19,
+        "sharedVertexPairsExcluded": 2,
+        "properCrossings": 16,
+        "firstCrossingPairs": [
+          [
+            92,
+            230
+          ],
+          [
+            92,
+            229
+          ],
+          [
+            92,
+            228
+          ],
+          [
+            90,
+            226
+          ],
+          [
+            90,
+            227
+          ],
+          [
+            91,
+            227
+          ],
+          [
+            91,
+            228
+          ],
+          [
+            89,
+            225
+          ],
+          [
+            88,
+            223
+          ],
+          [
+            88,
+            224
+          ],
+          [
+            88,
+            225
+          ],
+          [
+            86,
+            221
+          ]
+        ],
+        "crossingVertexBoundsM": {
+          "0": [
+            0.15167848765850067,
+            0.1545906960964203
+          ],
+          "1": [
+            -0.011373421177268028,
+            0.011838508769869804
+          ],
+          "2": [
+            -0.036765456199645996,
+            -0.0336017869412899
+          ]
+        },
+        "firstCrossingTriangles": {
+          "a": [
+            [
+              0.15260128676891327,
+              -0.005410466808825731,
+              -0.03649928420782089
+            ],
+            [
+              0.15207770466804504,
+              -0.005145937670022249,
+              -0.03541389852762222
+            ],
+            [
+              0.15224243700504303,
+              -0.00895869079977274,
+              -0.03467132896184921
+            ]
+          ],
+          "b": [
+            [
+              0.15203610062599182,
+              -0.00856646616011858,
+              -0.03474351391196251
+            ],
+            [
+              0.15408480167388916,
+              -0.008188201114535332,
+              -0.035212546586990356
+            ],
+            [
+              0.1545906960964203,
+              -0.011373421177268028,
+              -0.034132953733205795
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "candidate": {
+    "source": "/workspace/fish.io/artifacts/c1/anatomical-revision-v2/largemouth-bass.blend",
+    "sha256": "ab420964c487658ebb7223a0cbf068844f74f6f9dc3b457908891e70fe511fa2",
+    "jawWeightSource": "authored POINT/FLOAT jaw_open_weight",
+    "poseAngleDegrees": 25.0,
+    "neutral": {
+      "signedVolumeM3": 0.0022132848905984425,
+      "upper": {
+        "triangles": 2064,
+        "uniqueCandidatePairs": 0,
+        "sharedVertexPairsExcluded": 0,
+        "properCrossings": 0,
+        "firstCrossingPairs": [],
+        "crossingVertexBoundsM": null,
+        "firstCrossingTriangles": null
+      },
+      "lower": {
+        "triangles": 1548,
+        "uniqueCandidatePairs": 0,
+        "sharedVertexPairsExcluded": 0,
+        "properCrossings": 0,
+        "firstCrossingPairs": [],
+        "crossingVertexBoundsM": null,
+        "firstCrossingTriangles": null
+      }
+    },
+    "posed": {
+      "signedVolumeM3": 0.002207616609885885,
+      "upper": {
+        "triangles": 2064,
+        "uniqueCandidatePairs": 0,
+        "sharedVertexPairsExcluded": 0,
+        "properCrossings": 0,
+        "firstCrossingPairs": [],
+        "crossingVertexBoundsM": null,
+        "firstCrossingTriangles": null
+      },
+      "lower": {
+        "triangles": 1548,
+        "uniqueCandidatePairs": 0,
+        "sharedVertexPairsExcluded": 0,
+        "properCrossings": 0,
+        "firstCrossingPairs": [],
+        "crossingVertexBoundsM": null,
+        "firstCrossingTriangles": null
+      }
+    }
+  }
+}

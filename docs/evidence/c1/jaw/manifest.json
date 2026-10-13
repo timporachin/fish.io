@@ -1,0 +1,236 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "C1-JAW-R2-iteration-9",
+  "status": "NOT_ACCEPTED",
+  "visualReview": "HOLD",
+  "budgetStatus": "PROPOSAL_UNAPPROVED",
+  "branch": "dev/c1-largemouth-bass",
+  "draftPullRequest": "https://github.com/timporachin/fish.io/pull/2",
+  "mainUnchangedReference": "95f63b07575cece839f21c6d4dfd6fa9056ebf86",
+  "sourceCheckpointCommit": "cecdc945926421a4d299ebba5be64bfeff5f0165",
+  "originalPerformanceReference": {
+    "triangles": 10976,
+    "drawCalls": 11,
+    "embeddedImages": 5
+  },
+  "savedPreJawSource": {
+    "triangles": 21762,
+    "materials": 9,
+    "sourceImages": 6
+  },
+  "candidate": {
+    "sourceVertices": 11395,
+    "sourcePolygons": 11525,
+    "triangles": 22254,
+    "runtimeDrawCalls": 9,
+    "embeddedImages": 5,
+    "localHeadTriangleIncrease": 492,
+    "rigged": false,
+    "animated": false
+  },
+  "render": {
+    "width": 1600,
+    "height": 1000,
+    "cyclesSamples": 128,
+    "matchedPrimaryPairs": 7,
+    "supplementalOpenPairs": 1,
+    "neutralLighting": true
+  },
+  "assets": [
+    {
+      "path": "artifacts/c1/anatomical-revision-v2/largemouth-bass.blend",
+      "bytes": 5026060,
+      "sha256": "ab420964c487658ebb7223a0cbf068844f74f6f9dc3b457908891e70fe511fa2"
+    },
+    {
+      "path": "artifacts/c1/anatomical-revision-v2/largemouth-bass.glb",
+      "bytes": 3906132,
+      "sha256": "a4a2dfe6c1b7d0210ca4a7ac1b293f8e28a9f51f1a003c65380eeed3d9170ea0"
+    },
+    {
+      "path": "artifacts/c1/anatomical-revision-v2/jaw-qa/after/articulated.blend",
+      "bytes": 3473197,
+      "sha256": "e86f061e44bf68acb754b747182d4caff6361297b1d9f005c21ab513ae80765f"
+    }
+  ],
+  "authoringSources": [
+    {
+      "path": "tools/blender/generate_bass.py",
+      "bytes": 37410,
+      "sha256": "c239936c2a37fac66e7413354c3579971948c88899ae7a93840ffeff0072986e"
+    },
+    {
+      "path": "tools/blender/bass_materials.py",
+      "bytes": 17103,
+      "sha256": "bc2cd6b1ab8248b09154cf6003c16bf41ece93aade4755cc5352c69b72568a7f"
+    }
+  ],
+  "reviewTools": [
+    {
+      "path": "tools/blender/render_jaw_revision.py",
+      "bytes": 27984,
+      "sha256": "d47743dd97b40be9fc7ce1c45c4d716aecdaeef71d0eb2d13a633886c955d6f8"
+    },
+    {
+      "path": "tools/blender/validate_jaw_self_regression.py",
+      "bytes": 3179,
+      "sha256": "981a4a3784ded59c7720ad99e5ecff2bd37f7f316d959a125cd98b1a3c6d8dc1"
+    },
+    {
+      "path": "tools/blender/build_jaw_gallery.py",
+      "bytes": 11414,
+      "sha256": "bdcfccf340c6d41ee7c29c1b3513b7dc6d70ecaf30d4ffc9cc055a2ddc634b10"
+    },
+    {
+      "path": "tools/blender/test_bass.mjs",
+      "bytes": 9707,
+      "sha256": "cf7900f3e89a804378a45dd948506c20a165e76dc037cbbd982df1577f9f02cd"
+    },
+    {
+      "path": "tools/blender/test_bass_browser.mjs",
+      "bytes": 9870,
+      "sha256": "1f562b7dc377cbf2a614b0caffd92ebe81bce0a90ac3ef03fa5cd7e0fb5bf6c1"
+    },
+    {
+      "path": "tools/blender/validate_bass_geometry.py",
+      "bytes": 12950,
+      "sha256": "edf74e3f0667c043eb577aabf6d523c145a20853c960ed79b88e498d5a39a742"
+    }
+  ],
+  "privateGallery": {
+    "path": "artifacts/c1/anatomical-revision-v2/jaw-qa/jaw-comparison.html",
+    "bytes": 39142120,
+    "sha256": "9852ae5ac0fe085f22783d20db1dc66d74e3394af1dc32f5e0b681082700eb2c"
+  },
+  "independentReview": {
+    "path": "docs/C1_JAW_REVIEW.md",
+    "bytes": 15853,
+    "sha256": "bf9b897751c8077a47cabdf4d2048bdf2845f765cdd60c5e6c0230b609d4958b",
+    "reviewer": "gpt-6-astra",
+    "recommendation": "HOLD"
+  },
+  "evidence": [
+    {
+      "path": "docs/evidence/c1/jaw/after/close_left_mouth.png",
+      "bytes": 1847418,
+      "sha256": "d079db65e10a8c6a74ed630bd22451428468d017482bc0af73912ff9dea8cbdd"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/after/close_right_mouth.png",
+      "bytes": 1808961,
+      "sha256": "1cc21d1b3e73e8d4fe0825807ee503f7e868c45280bd134971d9c4dc1deb08b3"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/after/front_mouth.png",
+      "bytes": 1978432,
+      "sha256": "c8165490c441fe4c16b597875d836b4af28381bef9fb3f0a1b8717b4e92bf0e6"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/after/front_three_quarter_head.png",
+      "bytes": 1806659,
+      "sha256": "222dda044d1d83cbdcd73f7a020f416b7b15b609f6ff0909993d3569cd104ff9"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/after/full_body_lateral.png",
+      "bytes": 1434628,
+      "sha256": "a9e89bc329df68bf2bbb55e92826580abcb19f9d17b9a30089c50d6b2cd2760a"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/after/jaw_open_25deg.png",
+      "bytes": 1780745,
+      "sha256": "c6700e30181de367c3dcbe616f9cecfaa939a74c94ea37d6e34d9dc3ffc80b3d"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/after/top_snout_jaw.png",
+      "bytes": 1687412,
+      "sha256": "26d2930b27e45aadfbd5e502c015c82cb2d9996b7f4e99f051dcd7bc204a5bfe"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/before/close_left_mouth.png",
+      "bytes": 1821342,
+      "sha256": "b463a4877125e7f5df3c96f10224c2505fe17b681a973a0daef88b1ae1a5888d"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/before/close_right_mouth.png",
+      "bytes": 1797003,
+      "sha256": "71b65c2bea57120457bfca18be154ccd63967445cd375964a28800e66cdc619e"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/before/front_mouth.png",
+      "bytes": 1970009,
+      "sha256": "c8ae661e57c24aea1d6d5232041d2dd4b8a4bb8e6184719e4e4519591a20bd5a"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/before/front_three_quarter_head.png",
+      "bytes": 1780228,
+      "sha256": "0bda9bb898871eef96e402a243707938e50fbe0842dc8358ceee10e4c3859563"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/before/full_body_lateral.png",
+      "bytes": 1432885,
+      "sha256": "b135710971faaaa478cb85a2c5aaf9be0a1aec02f072fec26ff1195b556eaa20"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/before/jaw_open_25deg.png",
+      "bytes": 1808693,
+      "sha256": "7b70bbc15b73d05f5e651c317e8eb1bf77b3bb3a502aa39e5aa5395e430fb017"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/before/top_snout_jaw.png",
+      "bytes": 1654639,
+      "sha256": "1e1bf2be7997b5173ddd996fc4edf7e67da7b11e12df0e4bcb01053774658faa"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/blender-geometry-validation.json",
+      "bytes": 15884,
+      "sha256": "3641f0be7708377c8650218e497081bd01d0ddd9b8009e4e66b3d3c5a9f6aefc"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/browser-validation.json",
+      "bytes": 12709,
+      "sha256": "b62d96af1afc68dbfe29c2acb5d5738926c14f83aa1fa5c74af1506ed66340b6"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/head-self-regression.json",
+      "bytes": 14377,
+      "sha256": "abea5703ff267a44171d014386c4f80c94db78a7d99f9817b747d8fa1a9f21fd"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/jaw-qa-report.json",
+      "bytes": 17265,
+      "sha256": "4074884aa1e59c10ea0cd82bff66f61cbc6df34443c1563eaa6fd20494fdca29"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/largemouth-bass-browser.png",
+      "bytes": 73300,
+      "sha256": "4dc0ae1048686cfb8097220539d423faf14f7fa6d45c9c025cd2f9cc7adf69d4"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/largemouth-bass-stats.json",
+      "bytes": 5919,
+      "sha256": "fd96d492ef1c6fdc83ce3684b9764b4d7bc464178827d0c71f902aa11b3ab17f"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/supplemental-open/after/jaw_open_25deg.png",
+      "bytes": 1675911,
+      "sha256": "09c9c5bafe85fb2bfb66c1fc7db5fe2699c0c77bb3aa84dc307bdd21b0b49beb"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/supplemental-open/before/jaw_open_25deg.png",
+      "bytes": 1660592,
+      "sha256": "1050f5fed69b3c513524898b2a1a6fa93180e543f0d9deda9f944393aa8eb325"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/supplemental-open/jaw-qa-report.json",
+      "bytes": 14896,
+      "sha256": "a62e1867ebec30f6853317c51b56f3962fc786c13ffee8c0988d57ef6721ca06"
+    }
+  ],
+  "referencePolicy": "Actual licensed photographs remain in ignored private artifacts; no photo pixels are copied into asset textures or committed publicly.",
+  "limits": [
+    "Strict crossings cover upper/lower head regions at rest and a temporary 25-degree endpoint, excluding shared-vertex/coplanar contacts and enclosed volumes.",
+    "Temporary lower-jaw deformation is not a production rig or natural feeding biomechanics proof.",
+    "iPhone/Safari, LOD, population, memory residency and thermal performance are unverified.",
+    "Owner visual and budget approval remain pending; no merge, C2 or Fish Factory authorization."
+  ]
+}

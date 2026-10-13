@@ -1,0 +1,26 @@
+{
+  "cwd": "repository root",
+  "argv": [
+    "python",
+    "tools/blender/build_jaw_gallery.py",
+    "--qa-dir",
+    "artifacts/c1/supplied-candidate/qa-gallery",
+    "--candidate-metrics",
+    "artifacts/c1/supplied-candidate/qa-gallery/candidate-cost.json",
+    "--historical-dir",
+    "artifacts/c1/supplied-candidate/qa-historical",
+    "--embed-images",
+    "--baseline-label",
+    "Supplied full-resolution source",
+    "--comparison-note",
+    "Matched full-resolution supplied source and reduced candidate, followed by six rejected-procedural comparisons. Source PBR paths/connections/color spaces are repaired for comparison; the original is unchanged. The candidate adds reduced geometry/textures and fin opacity. Temporary opening uses the verified exact reduced QA mesh.",
+    "--cost-note",
+    "Cost compares the original C1 performance reference against the exported candidate. Supplied-source before images show a separate 16,128-triangle source.",
+    "--attribution",
+    "Model 67A Largemouth Bass by DigitalLife3D; CG artists Jer Bot, Johnson Martin and Robert Gutierrez. Source: https://sketchfab.com/3d-models/model-67a-largemouth-bass-e60c457636b640629747c19feac4906c. CC BY-NC 4.0: https://creativecommons.org/licenses/by-nc/4.0/. Changes: static geometry reduction, coordinate/scale normalization, PBR color-space repair, texture resizing and baked fin opacity; temporary jaw QA poses and neutral renders. No endorsement.",
+    "--review-note",
+    "C1 NOT ACCEPTED. Preferred anatomical candidate for owner review; technical validation is not visual acceptance. Bright matched images inspect geometry; use lower-light neutral previews and Three.js screenshot for material appearance. Fin ribs, close-up skin softness, dorsal rim and centerline seam remain review concerns. No merge or C2.",
+    "--material-dir",
+    "artifacts/c1/supplied-candidate"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "candidate": "Rejected C1 model replayed under rework lighting; not a new mesh or material",
+  "baseline_commit": "035700de138c53c59a7c2e9bb5283754d1eb4521",
+  "baseline_blend_sha256": "384f0c75fd6367fdfb45f6370d6c8ed96426ed38fa8cc31913dfd4d7542537f2",
+  "render_script_sha256": "fb7a6442a6d3eac0b8b2f3273250f3f02cf55da4931df9877447a53946d9fd46",
+  "render_samples": 128,
+  "resolution": [
+    1200,
+    800
+  ],
+  "lights": {
+    "key": {
+      "watts": 12,
+      "diameter_m": 0.3
+    },
+    "fill": {
+      "watts": 6,
+      "diameter_m": 0.3
+    },
+    "top": {
+      "watts": 5,
+      "diameter_m": 0.25
+    }
+  },
+  "render_sha256": {
+    "left": "69e428d9d21ae0391882a7670a3804c6151339997cf54b3ab94d81e69be67b30",
+    "right": "8d7c7e7c97911cc8cbe76765be6baf47ca372efc665d121a6a56e778483c685c",
+    "front": "0b388c04b3876153a93106a01f7311fa83cdac3297aab52d12b79954426a9c68",
+    "rear": "5f5bfe3265d166a566ba0fde70d4dba92e5a4f646e1b1215e8b034cb1cb95fa0",
+    "top": "54281c8bde904283f0daf3f3161e16a7dc3155ce224880e71c73bc271d9a293b",
+    "front_three_quarter": "45788cc38cfa387f9c34d48390bf80cbe539c9a7b352a1bcac94f8e12e0110e6"
+  },
+  "original_gallery": "../before/"
+}

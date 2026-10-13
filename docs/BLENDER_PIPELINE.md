@@ -31,3 +31,38 @@ Sources checked from upstream repositories on 2026-10-12:
 - Blender add-on source: `https://raw.githubusercontent.com/blender/blender-addons/main/rigify/__init__.py`
 - Animation Nodes project README: `https://raw.githubusercontent.com/JacquesLucke/animation_nodes/master/README.md`
 - Blender glTF exporter source: `https://raw.githubusercontent.com/blender/blender/main/scripts/addons_core/io_scene_gltf2/__init__.py`
+
+
+## C1 modeling workflow
+
+The C1 entry point is `tools/blender/generate_bass.py`, with original photo-referenced PBR maps authored by `bass_materials.py`. It authors an unrigged largemouth bass in meters with nose +X and dorsal +Z. Generated textures, `.blend`, GLB, six reference images and reports are written to `artifacts/c1/`; those generated asset files remain ignored. Selected reference PNGs are retained in `docs/evidence/c1/` for visual PR review. The owner rejected the first C1 candidate; the rework preserves its evidence and compares all six views under matching inspection lighting. See [photographic references](C1_PHOTO_REFERENCES.md) and [comparisons](C1_COMPARISONS.md).
+
+Run from the repository root using Blender 4.3.2:
+
+```sh
+blender --background --python-exit-code 1 --python tools/blender/generate_bass.py -- --output-dir artifacts/c1 --seed 1947
+npm ci
+npm ci --prefix tools/blender
+npm run test:bass --prefix tools/blender
+```
+
+`--skip-renders` regenerates authoring/export artifacts without reference rendering; `--render-view left` limits a diagnostic run to one view. A release review must use the complete six-view run. `--python-exit-code 1` is required because Blender otherwise can exit successfully after a Python exception. Denoising is disabled on this Debian build because its OpenImageDenoise backend is unavailable.
+
+`test:bass` validates with the pinned Khronos validator, loads the actual embedded GLB textures in Three.js/Chromium, captures a rendered screenshot and runtime metrics, rejects a corrupt model, and independently inspects the authored Blender mesh. The asset viewer is isolated tooling; it adds no fish geometry or asset loading to the C0 gameplay scene. See [C1 modeling](C1_MODELING.md), [references](C1_REFERENCES.md), and [independent review](C1_REVIEW.md).
+
+The C1 request takes priority over the general rig-and-animation proposal above: no armature, skinning or swimming clips are included in C1. Human visual approval is required before C2 animation development. Source topology checks cannot establish deformation readiness or automatically accept visual quality.
+
+
+## Targeted C1 jaw reconstruction (pending acceptance)
+
+The latest revision uses the saved body/fin model as its baseline; it does not restart C1. Archived generator/material sources and asset hashes are under `docs/evidence/c1/jaw/checkpoints/`. The original 10,976-triangle/11-call/five-texture reference is unchanged; higher geometry budgets are proposals pending explicit owner approval. Generated candidates use separate ignored output directories rather than replacing the preserved assets.
+
+`render_jaw_revision.py` compares frozen Blender inputs with fixed neutral cameras and lighting. Its seven anatomical views include a temporary weighted 25° lower-jaw opening, with an optional supplemental three-quarter opening. This loaded-scene deformation is validation only: production exports contain no rig, skin or animation clips. The report checks closed/outward geometry, limited upper/lower triangle crossings, and fin/rear-body position fingerprints; it cannot prove natural feeding biomechanics or every local self-intersection. Hash-verified `--after-only` reuse avoids rerendering an unchanged baseline.
+
+`build_jaw_gallery.py` makes a private local comparison page with the seven pairs, supplemental opening pair and licensed real photographic references. Those raw photos remain local ignored review material. See [jaw modeling](C1_JAW_MODELING.md), [validation](C1_JAW_VALIDATION.md), [references](C1_JAW_REFERENCES.md) and [Astra review](C1_JAW_REVIEW.md). A technical pass is separate from the user's visual acceptance; C2 and merge remain gated.
+
+## Supplied-model C1 adaptation (personal, noncommercial)
+
+The owner subsequently supplied DigitalLife3D Model 67A and confirmed personal, noncommercial use. Its original Blender source, textures, rig and saved actions remain unchanged in ignored artifacts. `prepare_supplied_bass.py` creates a separate static reduced candidate, repairs PBR connections/color spaces and bakes portable fin opacity; it exports no rig or clips. The previous procedural checkpoint remains available for comparison and rollback. Attribution and exact changes are recorded in [supplied asset documentation](C1_SUPPLIED_ASSET.md).
+
+Source-specific geometry, oral-section, controlled jaw-opening and browser checks are separate from the procedural atlas/part-name assertions. A private weighted snapshot retains the exact reduced surface for the temporary jaw test; transform equivalence establishes its correspondence to the final static asset. `render_supplied_bass_qa.py` uses length-scaled cameras and area lights with squared-length energy normalization. Seven matched anatomical views and the historical comparison are for review, not automatic acceptance. See [validation](C1_SUPPLIED_VALIDATION.md), [comparisons](C1_SUPPLIED_COMPARISONS.md) and [independent review](C1_SUPPLIED_REVIEW.md). The owner has [approved the supplied C1 asset](C1_APPROVAL.md); C2 remains untouched.

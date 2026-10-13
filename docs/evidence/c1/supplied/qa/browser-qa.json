@@ -1,0 +1,209 @@
+{
+  "input": "/workspace/fish.io/artifacts/c1/supplied-candidate/candidate-static.glb",
+  "check": "supplied-bass-browser-load",
+  "meshCount": 3,
+  "skinnedMeshCount": 0,
+  "primitiveCount": 3,
+  "drawCalls": 3,
+  "provisionalTotalSceneDrawCallBudget": 100,
+  "remainingCallsBeforeOtherSceneObjects": 97,
+  "triangles": 10724,
+  "animationClips": 0,
+  "bounds": [
+    0.44999998807907104,
+    0.18158189952373505,
+    0.08392348513007164
+  ],
+  "axisConvention": "Blender authoring: nose +X, dorsal +Z; glTF export maps (x,y,z) to (x,z,-y), so dorsal is glTF +Y",
+  "camera": {
+    "position": [
+      0,
+      0.16917337387800216,
+      1.1249999720603228
+    ],
+    "target": [
+      0,
+      -0.0018266215920448303,
+      1.862645149230957e-9
+    ]
+  },
+  "decodedImages": [
+    {
+      "map": "bass_color",
+      "roles": [
+        "baseColor"
+      ],
+      "width": 1024,
+      "height": 1024,
+      "decoded": true,
+      "normalSample": null,
+      "alphaSample": {
+        "region": [
+          0,
+          0,
+          1024,
+          1024
+        ],
+        "mean": 1,
+        "nonZeroMean": 1,
+        "nonZeroFraction": 1,
+        "min": 1,
+        "max": 1,
+        "samples": 16384,
+        "nonZeroSamples": 16384
+      },
+      "pectoralAlphaSample": null,
+      "irisTileSample": null
+    },
+    {
+      "map": "bass_normal",
+      "roles": [
+        "normal"
+      ],
+      "width": 1024,
+      "height": 1024,
+      "decoded": true,
+      "normalSample": {
+        "mean": [
+          0.4986127068014706,
+          0.49867685355392155,
+          0.995132506127451
+        ],
+        "samples": 4096
+      },
+      "alphaSample": null,
+      "pectoralAlphaSample": null,
+      "irisTileSample": null
+    },
+    {
+      "map": "bass_roughness",
+      "roles": [
+        "roughness",
+        "metalness"
+      ],
+      "width": 1024,
+      "height": 1024,
+      "decoded": true,
+      "normalSample": null,
+      "alphaSample": null,
+      "pectoralAlphaSample": null,
+      "irisTileSample": null
+    },
+    {
+      "map": "bass_color_fin_rgba",
+      "roles": [
+        "baseColor"
+      ],
+      "width": 512,
+      "height": 512,
+      "decoded": true,
+      "normalSample": null,
+      "alphaSample": {
+        "region": [
+          0,
+          0,
+          512,
+          512
+        ],
+        "mean": 0.9840628829656863,
+        "nonZeroMean": 0.9840628829656863,
+        "nonZeroFraction": 1,
+        "min": 0.6235294117647059,
+        "max": 1,
+        "samples": 4096,
+        "nonZeroSamples": 4096
+      },
+      "pectoralAlphaSample": null,
+      "irisTileSample": null
+    }
+  ],
+  "materialUvBounds": [
+    {
+      "material": "Bass body PBR opaque",
+      "min": [
+        0.8782180547714233,
+        0.014409184455871582
+      ],
+      "max": [
+        0.9436240196228027,
+        0.08001792430877686
+      ],
+      "indexedVertices": 672
+    },
+    {
+      "material": "Bass body PBR opaque",
+      "min": [
+        0.07265245169401169,
+        0.018410801887512207
+      ],
+      "max": [
+        0.9957593679428101,
+        0.402010977268219
+      ],
+      "indexedVertices": 21066
+    },
+    {
+      "material": "Bass fin PBR alpha",
+      "min": [
+        0.00999361090362072,
+        0.006446242332458496
+      ],
+      "max": [
+        0.707598090171814,
+        0.40205812454223633
+      ],
+      "indexedVertices": 10434
+    }
+  ],
+  "materials": [
+    {
+      "name": "Bass body PBR opaque",
+      "type": "MeshPhysicalMaterial",
+      "color": "ffffff",
+      "roughness": 1,
+      "metalness": 0,
+      "transparent": false,
+      "opacity": 1,
+      "alphaTest": 0,
+      "clearcoat": 0,
+      "clearcoatRoughness": 0,
+      "side": "front",
+      "blending": 1,
+      "baseColorImage": "bass_color",
+      "mapSlots": [
+        "baseColor",
+        "normal",
+        "roughness",
+        "metalness"
+      ]
+    },
+    {
+      "name": "Bass fin PBR alpha",
+      "type": "MeshPhysicalMaterial",
+      "color": "ffffff",
+      "roughness": 1,
+      "metalness": 0,
+      "transparent": true,
+      "opacity": 1,
+      "alphaTest": 0,
+      "clearcoat": 0,
+      "clearcoatRoughness": 0,
+      "side": "front",
+      "blending": 1,
+      "baseColorImage": "bass_color_fin_rgba",
+      "mapSlots": [
+        "baseColor",
+        "normal",
+        "roughness",
+        "metalness"
+      ]
+    }
+  ],
+  "bodyPbrMaterialFound": true,
+  "bodyPbrClearcoatMaterials": [],
+  "transparentMaterialCount": 1,
+  "transparentMeshCount": 1,
+  "clearcoatMaterials": [],
+  "screenshot": "artifacts/c1/supplied-candidate/browser-qa.png",
+  "negativeLoaderError": "Offset is outside the bounds of the DataView"
+}

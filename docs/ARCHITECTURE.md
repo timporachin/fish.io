@@ -33,4 +33,9 @@ Provisional C1 budgets: 60 fps target on selected physical iPhone, 30 fps fallba
 
 ## Reproducibility
 
-Exact direct dependency pins and committed npm lockfiles; `npm ci` in CI. Node/npm are explicitly recorded. Blender version and Debian package are recorded separately; the fixture fails on a different Blender version. No generated binary assets or dependencies enter Git. CI validates build, simulation and browser behavior; Blender is a documented cloud check, not provisioned in GitHub CI. No deployment is configured in C0.
+Exact direct dependency pins and committed npm lockfiles; `npm ci` in CI. Node/npm are explicitly recorded. Blender version and Debian package are recorded separately; the fixture fails on a different Blender version. Generated Blender/GLB asset binaries and dependencies remain ignored; C1 retains review PNGs and reports as documented below. CI validates build, simulation and browser behavior; Blender is a documented cloud check, not provisioned in GitHub CI. No deployment is configured in C0.
+
+
+## C1 tooling addition
+
+The C0 application boundaries are preserved. `tools/blender/generate_bass.py` authors a candidate with separate anatomical parts and exports a joined mesh with material primitives. The isolated viewer and asset tests prove loading in Three.js without adding a model to the gameplay scene. Generated Blender/GLB/texture binaries remain ignored; reference/comparison PNGs and the runtime screenshot/reports are retained under `docs/evidence/c1/` as an explicit review-evidence exception. Read [game design](GAME_DESIGN.md), [current jaw modeling](C1_JAW_MODELING.md) and [independent jaw review](C1_JAW_REVIEW.md) for the visual gate and unqualified mobile/deformation limits.

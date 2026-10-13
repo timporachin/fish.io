@@ -1,0 +1,312 @@
+{
+  "status": "C1 NOT ACCEPTED; final touchup fails visual requirements; owner approval pending",
+  "branch": "dev/c1-largemouth-bass",
+  "draftPr": "https://github.com/timporachin/fish.io/pull/2",
+  "candidate": {
+    "glb": {
+      "path": "artifacts/c1/jaw-final/largemouth-bass.glb",
+      "bytes": 3906464,
+      "sha256": "3704933e5084246765a78b28f5c0e6aa4a903f88b54d668717ceea88574c9260"
+    },
+    "blend": {
+      "path": "artifacts/c1/jaw-final/largemouth-bass.blend",
+      "bytes": 5023436,
+      "sha256": "fb99d5471c7324f2d016fa913253b6eba4b77dc0695c08760a5953fcd71272ea"
+    },
+    "source": [
+      {
+        "path": "tools/blender/generate_bass.py",
+        "bytes": 42337,
+        "sha256": "76ebbf0c419afc50313c1308beeec5608a01c5123ec32670b85ecc3ec832c367"
+      },
+      {
+        "path": "tools/blender/bass_materials.py",
+        "bytes": 17103,
+        "sha256": "bc2cd6b1ab8248b09154cf6003c16bf41ece93aade4755cc5352c69b72568a7f"
+      }
+    ]
+  },
+  "baselineProvenance": {
+    "colorImages": "Verbatim preceding v2 images, originally generated from the historical asset below; not rendered from the regenerated baseline file.",
+    "historicalGlb": {
+      "path": "artifacts/c1/anatomical-revision-v2/largemouth-bass.glb",
+      "bytes": 3906132,
+      "sha256": "a4a2dfe6c1b7d0210ca4a7ac1b293f8e28a9f51f1a003c65380eeed3d9170ea0"
+    },
+    "historicalBlend": {
+      "path": "artifacts/c1/anatomical-revision-v2/largemouth-bass.blend",
+      "bytes": 5026060,
+      "sha256": "ab420964c487658ebb7223a0cbf068844f74f6f9dc3b457908891e70fe511fa2"
+    },
+    "historicalSources": [
+      {
+        "path": "tools/blender/generate_bass.py",
+        "bytes": 37410,
+        "sha256": "c239936c2a37fac66e7413354c3579971948c88899ae7a93840ffeff0072986e"
+      },
+      {
+        "path": "tools/blender/bass_materials.py",
+        "bytes": 17103,
+        "sha256": "bc2cd6b1ab8248b09154cf6003c16bf41ece93aade4755cc5352c69b72568a7f"
+      }
+    ],
+    "historicalPrimaryReport": {
+      "path": "docs/evidence/c1/jaw/jaw-qa-report.json",
+      "bytes": 17265,
+      "sha256": "4074884aa1e59c10ea0cd82bff66f61cbc6df34443c1563eaa6fd20494fdca29"
+    },
+    "historicalSupplementalReport": {
+      "path": "docs/evidence/c1/jaw/supplemental-open/jaw-qa-report.json",
+      "bytes": 14896,
+      "sha256": "a62e1867ebec30f6853317c51b56f3962fc786c13ffee8c0988d57ef6721ca06"
+    },
+    "images": [
+      {
+        "path": "docs/evidence/c1/jaw/after/full_body_lateral.png",
+        "bytes": 1434628,
+        "sha256": "a9e89bc329df68bf2bbb55e92826580abcb19f9d17b9a30089c50d6b2cd2760a"
+      },
+      {
+        "path": "docs/evidence/c1/jaw/after/close_left_mouth.png",
+        "bytes": 1847418,
+        "sha256": "d079db65e10a8c6a74ed630bd22451428468d017482bc0af73912ff9dea8cbdd"
+      },
+      {
+        "path": "docs/evidence/c1/jaw/after/close_right_mouth.png",
+        "bytes": 1808961,
+        "sha256": "1cc21d1b3e73e8d4fe0825807ee503f7e868c45280bd134971d9c4dc1deb08b3"
+      },
+      {
+        "path": "docs/evidence/c1/jaw/after/front_mouth.png",
+        "bytes": 1978432,
+        "sha256": "c8165490c441fe4c16b597875d836b4af28381bef9fb3f0a1b8717b4e92bf0e6"
+      },
+      {
+        "path": "docs/evidence/c1/jaw/after/top_snout_jaw.png",
+        "bytes": 1687412,
+        "sha256": "26d2930b27e45aadfbd5e502c015c82cb2d9996b7f4e99f051dcd7bc204a5bfe"
+      },
+      {
+        "path": "docs/evidence/c1/jaw/after/front_three_quarter_head.png",
+        "bytes": 1806659,
+        "sha256": "222dda044d1d83cbdcd73f7a020f416b7b15b609f6ff0909993d3569cd104ff9"
+      },
+      {
+        "path": "docs/evidence/c1/jaw/after/jaw_open_25deg.png",
+        "bytes": 1780745,
+        "sha256": "c6700e30181de367c3dcbe616f9cecfaa939a74c94ea37d6e34d9dc3ffc80b3d"
+      },
+      {
+        "path": "docs/evidence/c1/jaw/supplemental-open/after/jaw_open_25deg.png",
+        "bytes": 1675911,
+        "sha256": "09c9c5bafe85fb2bfb66c1fc7db5fe2699c0c77bb3aa84dc307bdd21b0b49beb"
+      }
+    ],
+    "rebuiltGeometryBaseline": {
+      "path": "artifacts/c1/checkpoint-v2/largemouth-bass.blend",
+      "bytes": 5026060,
+      "sha256": "c35fc9ac979074f6400918c9d18c54c5296936c667da90b064281de081658ac3"
+    },
+    "geometryChecks": "Primary and supplemental QA use rebuilt baseline geometry with before.renderFiles empty (--skip-before-renders). Clay before pixels are freshly rendered from this rebuilt baseline.",
+    "archivedExactSources": [
+      {
+        "path": "docs/evidence/c1/jaw/final-touchup/checkpoints/v2/generate_bass.py",
+        "bytes": 37410,
+        "sha256": "c239936c2a37fac66e7413354c3579971948c88899ae7a93840ffeff0072986e"
+      },
+      {
+        "path": "docs/evidence/c1/jaw/final-touchup/checkpoints/v2/bass_materials.py",
+        "bytes": 17103,
+        "sha256": "bc2cd6b1ab8248b09154cf6003c16bf41ece93aade4755cc5352c69b72568a7f"
+      }
+    ]
+  },
+  "reports": {
+    "primary": {
+      "path": "docs/evidence/c1/jaw/final-touchup/jaw-qa-report.json",
+      "bytes": 17367,
+      "sha256": "27894b5d3191b9be30331f2cff02f9714dcb6b71447b9691f237a104340775b3"
+    },
+    "supplemental": {
+      "path": "docs/evidence/c1/jaw/final-touchup/supplemental-open/jaw-qa-report.json",
+      "bytes": 16184,
+      "sha256": "582f12d8e6482dda5d87628d03e5ee1df0293721a1fc9e114ac567a6790e47c4"
+    },
+    "clay": {
+      "path": "docs/evidence/c1/jaw/final-touchup/clay/jaw-qa-report.json",
+      "bytes": 17127,
+      "sha256": "ea9779674fa8489b6845c8a95395d4f9fa997f640d5b689144d6dbae4e492d3c"
+    }
+  },
+  "privatePhotographicReferences": [
+    {
+      "path": "artifacts/c1/references/stock-306335267.jpg",
+      "bytes": 107716,
+      "sha256": "189e8e12d2237582891a37484fd0ea6955174789cb784fa514eb21c38c8e5576",
+      "dimensions": [
+        1600,
+        1066
+      ],
+      "use": "private licensed reference; not copied into product or committed"
+    },
+    {
+      "path": "artifacts/c1/references/stock-381475146.jpg",
+      "bytes": 161674,
+      "sha256": "3ae36d4649e5ed04a100d88cd9cd3df919cf859ad5db28a24715f57373e1984a",
+      "dimensions": [
+        1600,
+        1065
+      ],
+      "use": "private licensed reference; not copied into product or committed"
+    },
+    {
+      "path": "artifacts/c1/references/stock-482505893.jpg",
+      "bytes": 140992,
+      "sha256": "eeeb507e6b48efebbfe5e396661e9db5fd7e54c467afd6d744d8f6308f564fe1",
+      "dimensions": [
+        1600,
+        1066
+      ],
+      "use": "private licensed reference; not copied into product or committed"
+    },
+    {
+      "path": "artifacts/c1/references/stock-512226129.jpg",
+      "bytes": 176972,
+      "sha256": "d080be22b89fc7db175cbb68e7461cc13d09ecd594844e36eb38fcb7b1fa9bf0",
+      "dimensions": [
+        1592,
+        1194
+      ],
+      "use": "private licensed reference; not copied into product or committed"
+    }
+  ],
+  "budget": {
+    "ownerReferenceTriangles": 10976,
+    "previousUnapprovedTriangles": 22254,
+    "finalUnapprovedTriangles": 22238,
+    "removedCapTriangles": 676,
+    "addedCheekSupportTriangles": 660,
+    "netReductionTriangles": 16,
+    "drawCalls": 9,
+    "embeddedImages": 5,
+    "approved": false
+  },
+  "renderScope": "Unchanged cameras/lighting/material source for 128-sample1600x1000 color views; supplementary1200x75032-sample uniform matte views. No denoising or image retouching.",
+  "artifacts": [
+    {
+      "path": "docs/evidence/c1/jaw/final-touchup/after/close_left_mouth.png",
+      "bytes": 1830669,
+      "sha256": "e58f5f78dd355fc390d82e113eb285652dbf8a4642a5e145bc4beece22552be8"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/final-touchup/after/close_right_mouth.png",
+      "bytes": 1792148,
+      "sha256": "de3005572d1dfe628184bf30e135c229adc19a7507ecf364bc75f077e9304b3f"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/final-touchup/after/front_mouth.png",
+      "bytes": 2011759,
+      "sha256": "ae08f565b3ba90fb53c473352f800fdef7efcb71fd47e8af9d4c95bb3408438b"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/final-touchup/after/front_three_quarter_head.png",
+      "bytes": 1806451,
+      "sha256": "69bf72b76a9dd8f3f8f6b04f343e45d2c47b081ffb950ff7fb9adfb3fbb35ef5"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/final-touchup/after/full_body_lateral.png",
+      "bytes": 1434140,
+      "sha256": "e85d3b9b3a74cb4054eb8956d3a19764b90d0c1b71ead1375724a2b653064a6c"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/final-touchup/after/jaw_open_25deg.png",
+      "bytes": 1774759,
+      "sha256": "9c6a0d8c590e142c266b79aa3aac1984796188ef22a23cdf2d2fe3a1002dffd6"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/final-touchup/after/top_snout_jaw.png",
+      "bytes": 1671478,
+      "sha256": "8f1acb205db47a7479f737a236d7453293c0cd26c538c0ddd7c98070e3dc1fb8"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/final-touchup/blender-geometry-validation.json",
+      "bytes": 15867,
+      "sha256": "72f5dfe9684f9a9046b314034d6bddf76dcb7bcef0255546e425e9d9a109d1ff"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/final-touchup/browser-validation.json",
+      "bytes": 12655,
+      "sha256": "c08b5175417a5ef32a45a6cc9cdd8b6064197098cba2aca76d9c0b4c5cd26481"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/final-touchup/checkpoints/v2/bass_materials.py",
+      "bytes": 17103,
+      "sha256": "bc2cd6b1ab8248b09154cf6003c16bf41ece93aade4755cc5352c69b72568a7f"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/final-touchup/checkpoints/v2/generate_bass.py",
+      "bytes": 37410,
+      "sha256": "c239936c2a37fac66e7413354c3579971948c88899ae7a93840ffeff0072986e"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/final-touchup/clay/after/close_right_mouth.png",
+      "bytes": 616712,
+      "sha256": "e0b4bf75633ca6b3832f1118a6979be6d03fff10f50ea3206fd4f8a6dbfaa7a7"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/final-touchup/clay/after/front_three_quarter_head.png",
+      "bytes": 627745,
+      "sha256": "b4fd63fa6bf19a4ef4ae971ec28e2643b38342a917038ee1dc51c7ba6937f22f"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/final-touchup/clay/after/jaw_open_25deg.png",
+      "bytes": 628816,
+      "sha256": "a2397ea58e3eb30b7542d441eb08ebd2e8b163c9818f24c01c9c771e07e9d53b"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/final-touchup/clay/before/close_right_mouth.png",
+      "bytes": 616027,
+      "sha256": "e6e18929a23e830411a3702e39e7c0cdb1a94e2e0ddacb7781d5f957aa53223b"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/final-touchup/clay/before/front_three_quarter_head.png",
+      "bytes": 622718,
+      "sha256": "06cf26d3e20a35fd532079872ba81b151cf101cae1797ff46a696cceea1238f9"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/final-touchup/clay/before/jaw_open_25deg.png",
+      "bytes": 626958,
+      "sha256": "46ff6c09ae8c2cbc8d38238f0dfac3c6e758e1d3ee63e1600a6bb06682bcfc44"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/final-touchup/clay/jaw-qa-report.json",
+      "bytes": 17127,
+      "sha256": "ea9779674fa8489b6845c8a95395d4f9fa997f640d5b689144d6dbae4e492d3c"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/final-touchup/jaw-qa-report.json",
+      "bytes": 17367,
+      "sha256": "27894b5d3191b9be30331f2cff02f9714dcb6b71447b9691f237a104340775b3"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/final-touchup/largemouth-bass-browser.png",
+      "bytes": 73441,
+      "sha256": "88b5c81d83fa64ce9485a469dab02ab9bba8b2c83ff186dbbc9975336674f387"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/final-touchup/largemouth-bass-stats.json",
+      "bytes": 5915,
+      "sha256": "156e619ad293a3de395e4d5a1025a96536bf697cc5c8f85dfb6f9994b00ae90d"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/final-touchup/supplemental-open/after/jaw_open_25deg.png",
+      "bytes": 1673973,
+      "sha256": "0c09a602ef8ec443d4b564ff9753e0d443e92c272d95ab47f92e75f7a4e68404"
+    },
+    {
+      "path": "docs/evidence/c1/jaw/final-touchup/supplemental-open/jaw-qa-report.json",
+      "bytes": 16184,
+      "sha256": "582f12d8e6482dda5d87628d03e5ee1df0293721a1fc9e114ac567a6790e47c4"
+    }
+  ]
+}

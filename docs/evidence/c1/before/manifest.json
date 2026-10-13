@@ -1,0 +1,40 @@
+{
+  "candidate": "C1 largemouth bass, visual approval pending",
+  "base_commit": "0ce0fc6143ea0b4827acd3d341f862a4c2e5090b",
+  "branch": "dev/c1-largemouth-bass",
+  "render_engine": "Cycles CPU",
+  "render_samples": 64,
+  "resolution": [
+    1200,
+    800
+  ],
+  "coordinate_convention": "nose +X, dorsal +Z, anatomical left +Y, right -Y; exporter maps (x,y,z) to (x,z,-y)",
+  "generator_sha256": "8a327c4af4f1945d2dc491f61c684a984b42a245db4d1ab01974591c8b7d3bf1",
+  "render_sha256": {
+    "left": "2a122c9e6a08c44771d6120effea700cf68067df626653b20119f8747e86d384",
+    "right": "38d747bc5364775946b320a2c8dd4f441aa14f165214104847ab9fdc9c0f6e02",
+    "front": "65badd3dd5eaa6b67d8c26150e81a9ee413215ce252492bf375aff76f8c368b1",
+    "rear": "bf672d329feee220250eb4cf644e15ffb1723523272d8f85a9c63cb48805787c",
+    "top": "6ec3abf6a530bbb3ac02c8b0bbfad49c09489e07416802b27e8af3336c46a564",
+    "front_three_quarter": "3c21e29919ee694c6224fcc1348c3a17f8b3ab9bc23e399c2768eca0519369cf"
+  },
+  "validation": {
+    "path": "artifacts/c1/largemouth-bass.glb",
+    "bytes": 2585016,
+    "sha256": "851052321895192dad228db459a43a3787f4a9538d59b835e2b30654b46b0865"
+  },
+  "incorporated_main_commit": "95f63b07575cece839f21c6d4dfd6fa9056ebf86",
+  "camera_projections": {
+    "left": "orthographic",
+    "right": "orthographic",
+    "front": "orthographic",
+    "rear": "orthographic",
+    "top": "orthographic",
+    "front_three_quarter": "perspective, 60 mm"
+  },
+  "blender_asset": {
+    "path": "artifacts/c1/largemouth-bass.blend",
+    "bytes": 3530732,
+    "sha256": "384f0c75fd6367fdfb45f6370d6c8ed96426ed38fa8cc31913dfd4d7542537f2"
+  }
+}

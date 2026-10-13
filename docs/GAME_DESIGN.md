@@ -1,6 +1,6 @@
 # Fish.io — Game Design Specification
 
-**Status:** Living design specification · **Project:** `timporachin/fish.io` · **Platform:** iPhone-first landscape web game · **Updated:** 2026-10-11
+**Status:** Living design specification · **Project:** `timporachin/fish.io` · **Platform:** iPhone-first landscape web game · **Updated:** 2026-10-12
 
 > This document preserves the Fish.io direction and confirmed design decisions. It is not a claim that every feature is implemented. A feature marked **Proposed** is not an approved gameplay rule. Engineering agents must not silently turn proposals into requirements.
 
@@ -114,6 +114,8 @@ Current repository foundation: Three.js, TypeScript, Vite, deterministic simulat
 | C4 — Release hardening | Accessibility, save reliability, performance, deployment and distribution checks | Release criteria satisfied |
 
 **C1 is already underway.** This design file is documentation, not a request to interrupt or reset C1. Reconcile it with C1 when that work completes; do not overwrite C1 changes.
+
+**2026-10-12 C1 scope reconciliation:** The owner's C1 request authorizes modeling, materials, six-view evidence, geometry/export checks and an isolated Three.js load test. It explicitly holds C2 animation development until visual approval. The current C1 candidate passes technical checks but remains visually unaccepted; see `C1_MODELING.md` and `C1_REVIEW.md`. Animation/rigging comes first in the next authorized phase; the gameplay/control rules above remain open. No C2 work is authorized by this document.
 
 ## 9. Open design decisions (do not invent answers)
 

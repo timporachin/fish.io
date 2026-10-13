@@ -1,0 +1,454 @@
+{
+  "check": "matched-neutral-jaw-revision",
+  "blenderVersion": "4.3.2",
+  "render": {
+    "width": 1600,
+    "height": 1000,
+    "cyclesSamples": 128,
+    "denoising": false,
+    "views": [
+      "jaw_open_25deg"
+    ],
+    "lighting": "fixed neutral gray world and four white area lights",
+    "camera": "fixed orthographic world-space framing per view",
+    "supplementalOpenThreeQuarter": true,
+    "materialMode": "authored materials"
+  },
+  "limitations": [
+    "Baseline opening weights are derived from existing face regions and are a QA fixture, not authored articulation.",
+    "A 25-degree weighted vertex rotation is a temporary deformation test, not a rig or animation clip.",
+    "BVH strict segment/triangle checks exclude triangles sharing vertices and do not classify coplanar contacts or enclosed volumes.",
+    "Intra-jaw self-overlap checks are limited to upper/lower head face regions and are not exhaustive self-intersection proof.",
+    "The mouth aperture is a repeatable central-lip vertex-band estimate, not an anatomical landmark annotation.",
+    "Hinge-to-front X span is a mouth-depth proxy; maximum tested opening is 25 degrees, not a biological maximum."
+  ],
+  "before": {
+    "input": "/workspace/fish.io/artifacts/c1/checkpoint-v2/largemouth-bass.blend",
+    "inputSha256": "c35fc9ac979074f6400918c9d18c54c5296936c667da90b064281de081658ac3",
+    "label": "before",
+    "sourceInventory": {
+      "meshObjects": 16,
+      "fins": {
+        "Dorsal_spiny_10_spines": {
+          "vertices": 228,
+          "triangles": 452,
+          "geometrySha256": "e6815fc80c147647503af6f92a4b222ca7f2e7d3c53197901fe3e7707bf80481"
+        },
+        "Dorsal_soft_14_rays": {
+          "vertices": 324,
+          "triangles": 644,
+          "geometrySha256": "fb004543b49907068126d860e5b59c3a0ddf9fa9f15aab5a7000db6a7baef50b"
+        },
+        "Anal_fin": {
+          "vertices": 276,
+          "triangles": 548,
+          "geometrySha256": "13296f1176d51d0d7e8cd8045f56311ad6ee7d08f92285670da5fd7d31da7da1"
+        },
+        "Caudal_rounded_emarginate": {
+          "vertices": 492,
+          "triangles": 980,
+          "geometrySha256": "e828240d7399ac40b44c5b2e25bee762d2214e90d78ff3af734794c50a76fa28"
+        },
+        "Pectoral_right": {
+          "vertices": 300,
+          "triangles": 596,
+          "geometrySha256": "33863ab4af27b2ad6e8e03593df0b72486fbdaa3c7b84c3a6d91d91b5ec147cb"
+        },
+        "Pelvic_right": {
+          "vertices": 252,
+          "triangles": 500,
+          "geometrySha256": "6759ca99a3a8765664b866f0eb8a3aa74bae6d219b4d993dc849bd2bfd0cfe22"
+        },
+        "Pectoral_left": {
+          "vertices": 300,
+          "triangles": 596,
+          "geometrySha256": "6a2b534a23038f4613bdafb991a877f352bedad904229c8c0d91ffccd652b590"
+        },
+        "Pelvic_left": {
+          "vertices": 252,
+          "triangles": 500,
+          "geometrySha256": "321a96d7dbc2eefdabb91b58c20be9b0807615bc4eb1b13926a31bd85db49f18"
+        },
+        "Fin_rays_combined": {
+          "vertices": 2012,
+          "triangles": 3548,
+          "geometrySha256": "ca6924a45f1542bfff5375f6c43592c3fef81be4f9daf6b196f3141648aa6eef"
+        }
+      },
+      "noncranialBodyPositions": {
+        "maxAuthoringX": 0.13,
+        "vertexCount": 3024,
+        "indexedPositionSha256": "3e22afc8b2612019353350118d1f56def06806468a2bb17c8f1327c011150df4"
+      }
+    },
+    "neutral": {
+      "body": {
+        "looseVertices": 0,
+        "boundaryEdges": 0,
+        "nonManifoldEdges": 0,
+        "inconsistentWindingEdges": 0,
+        "zeroAreaFaces": 0,
+        "invalidVertices": 0,
+        "invalidNormals": 0,
+        "signedVolumeM3": 0.0022132848905984425,
+        "closed": true,
+        "outwardWinding": true,
+        "invalidUvCoordinates": 0
+      },
+      "mouth": {
+        "measurable": true,
+        "selection": {
+          "minX": 0.194,
+          "maxAbsY": 0.016,
+          "upperVertices": 228,
+          "lowerVertices": 202
+        },
+        "upperLowestZM": 0.00634820107370615,
+        "lowerHighestZM": 0.0044999998062849045,
+        "verticalApertureM": 0.0018482012674212456,
+        "frontLipXM": 0.21070000529289246,
+        "hingeToFrontDepthM": 0.05970000529289246
+      },
+      "jawIntersections": {
+        "upperTriangles": 2064,
+        "lowerTriangles": 1548,
+        "candidatePairs": 12,
+        "sharedVertexPairsExcluded": 12,
+        "properCrossings": 0,
+        "firstCrossingPairs": [],
+        "crossingVertexBoundsM": null,
+        "firstCrossingTriangles": null,
+        "contactToleranceM": 1e-05,
+        "method": "BVH upper/lower overlap, shared-vertex exclusion, strict edge/triangle interior crossings; coplanar contacts inconclusive"
+      },
+      "headSelfIntersections": {
+        "upper": {
+          "triangles": 2064,
+          "uniqueCandidatePairs": 0,
+          "sharedVertexPairsExcluded": 0,
+          "properCrossings": 0,
+          "firstCrossingPairs": [],
+          "crossingVertexBoundsM": null,
+          "firstCrossingTriangles": null
+        },
+        "lower": {
+          "triangles": 1548,
+          "uniqueCandidatePairs": 0,
+          "sharedVertexPairsExcluded": 0,
+          "properCrossings": 0,
+          "firstCrossingPairs": [],
+          "crossingVertexBoundsM": null,
+          "firstCrossingTriangles": null
+        },
+        "method": "Separate upper/lower BVH self-overlap; nonadjacent strict segment/triangle crossings only; coplanar contacts and enclosed volumes inconclusive",
+        "contactToleranceM": 1e-05
+      }
+    },
+    "renderFiles": [],
+    "renderSha256": {},
+    "posed": {
+      "angleDegrees": 25.0,
+      "maximumTestedOpeningDegrees": 25.0,
+      "axis": "+Y",
+      "weightSource": "authored POINT/FLOAT jaw_open_weight",
+      "weightedVertices": 757,
+      "weightRange": [
+        0.0,
+        1.0
+      ],
+      "maxVertexDisplacementM": 0.02643931941229657,
+      "hingeM": [
+        0.1509999930858612,
+        0.0,
+        -0.008700000122189522
+      ],
+      "body": {
+        "looseVertices": 0,
+        "boundaryEdges": 0,
+        "nonManifoldEdges": 0,
+        "inconsistentWindingEdges": 0,
+        "zeroAreaFaces": 0,
+        "invalidVertices": 0,
+        "invalidNormals": 0,
+        "signedVolumeM3": 0.002207616609885885,
+        "closed": true,
+        "outwardWinding": true,
+        "invalidUvCoordinates": 0
+      },
+      "mouth": {
+        "measurable": true,
+        "selection": {
+          "minX": 0.194,
+          "maxAbsY": 0.016,
+          "upperVertices": 228,
+          "lowerVertices": 180
+        },
+        "upperLowestZM": 0.00634820107370615,
+        "lowerHighestZM": -0.018333688378334045,
+        "verticalApertureM": 0.024681889452040195,
+        "frontLipXM": 0.21055835485458374,
+        "hingeToFrontDepthM": 0.059558361768722534
+      },
+      "jawIntersections": {
+        "upperTriangles": 2064,
+        "lowerTriangles": 1548,
+        "candidatePairs": 11,
+        "sharedVertexPairsExcluded": 11,
+        "properCrossings": 0,
+        "firstCrossingPairs": [],
+        "crossingVertexBoundsM": null,
+        "firstCrossingTriangles": null,
+        "contactToleranceM": 1e-05,
+        "method": "BVH upper/lower overlap, shared-vertex exclusion, strict edge/triangle interior crossings; coplanar contacts inconclusive"
+      },
+      "headSelfIntersections": {
+        "upper": {
+          "triangles": 2064,
+          "uniqueCandidatePairs": 0,
+          "sharedVertexPairsExcluded": 0,
+          "properCrossings": 0,
+          "firstCrossingPairs": [],
+          "crossingVertexBoundsM": null,
+          "firstCrossingTriangles": null
+        },
+        "lower": {
+          "triangles": 1548,
+          "uniqueCandidatePairs": 0,
+          "sharedVertexPairsExcluded": 0,
+          "properCrossings": 0,
+          "firstCrossingPairs": [],
+          "crossingVertexBoundsM": null,
+          "firstCrossingTriangles": null
+        },
+        "method": "Separate upper/lower BVH self-overlap; nonadjacent strict segment/triangle crossings only; coplanar contacts and enclosed volumes inconclusive",
+        "contactToleranceM": 1e-05
+      },
+      "articulatedBlend": "/workspace/fish.io/artifacts/c1/jaw-final/jaw-qa/supplemental-open/before/articulated.blend",
+      "articulatedSha256": "12ff40e8c7718d44799d1d7b021f811a04f47bcc28c3169cbf4b015ce62fd5ae"
+    }
+  },
+  "baselineRendersSkipped": true,
+  "after": {
+    "input": "/workspace/fish.io/artifacts/c1/jaw-final/largemouth-bass.blend",
+    "inputSha256": "fb99d5471c7324f2d016fa913253b6eba4b77dc0695c08760a5953fcd71272ea",
+    "label": "after",
+    "sourceInventory": {
+      "meshObjects": 16,
+      "fins": {
+        "Dorsal_spiny_10_spines": {
+          "vertices": 228,
+          "triangles": 452,
+          "geometrySha256": "e6815fc80c147647503af6f92a4b222ca7f2e7d3c53197901fe3e7707bf80481"
+        },
+        "Dorsal_soft_14_rays": {
+          "vertices": 324,
+          "triangles": 644,
+          "geometrySha256": "fb004543b49907068126d860e5b59c3a0ddf9fa9f15aab5a7000db6a7baef50b"
+        },
+        "Anal_fin": {
+          "vertices": 276,
+          "triangles": 548,
+          "geometrySha256": "13296f1176d51d0d7e8cd8045f56311ad6ee7d08f92285670da5fd7d31da7da1"
+        },
+        "Caudal_rounded_emarginate": {
+          "vertices": 492,
+          "triangles": 980,
+          "geometrySha256": "e828240d7399ac40b44c5b2e25bee762d2214e90d78ff3af734794c50a76fa28"
+        },
+        "Pectoral_right": {
+          "vertices": 300,
+          "triangles": 596,
+          "geometrySha256": "33863ab4af27b2ad6e8e03593df0b72486fbdaa3c7b84c3a6d91d91b5ec147cb"
+        },
+        "Pelvic_right": {
+          "vertices": 252,
+          "triangles": 500,
+          "geometrySha256": "6759ca99a3a8765664b866f0eb8a3aa74bae6d219b4d993dc849bd2bfd0cfe22"
+        },
+        "Pectoral_left": {
+          "vertices": 300,
+          "triangles": 596,
+          "geometrySha256": "6a2b534a23038f4613bdafb991a877f352bedad904229c8c0d91ffccd652b590"
+        },
+        "Pelvic_left": {
+          "vertices": 252,
+          "triangles": 500,
+          "geometrySha256": "321a96d7dbc2eefdabb91b58c20be9b0807615bc4eb1b13926a31bd85db49f18"
+        },
+        "Fin_rays_combined": {
+          "vertices": 2012,
+          "triangles": 3548,
+          "geometrySha256": "ca6924a45f1542bfff5375f6c43592c3fef81be4f9daf6b196f3141648aa6eef"
+        }
+      },
+      "noncranialBodyPositions": {
+        "maxAuthoringX": 0.13,
+        "vertexCount": 3024,
+        "indexedPositionSha256": "3e22afc8b2612019353350118d1f56def06806468a2bb17c8f1327c011150df4"
+      }
+    },
+    "neutral": {
+      "body": {
+        "looseVertices": 0,
+        "boundaryEdges": 0,
+        "nonManifoldEdges": 0,
+        "inconsistentWindingEdges": 0,
+        "zeroAreaFaces": 0,
+        "invalidVertices": 0,
+        "invalidNormals": 0,
+        "signedVolumeM3": 0.002194521427560235,
+        "closed": true,
+        "outwardWinding": true,
+        "invalidUvCoordinates": 0
+      },
+      "mouth": {
+        "measurable": true,
+        "selection": {
+          "minX": 0.194,
+          "maxAbsY": 0.016,
+          "upperVertices": 88,
+          "lowerVertices": 61
+        },
+        "upperLowestZM": 0.009360191412270069,
+        "lowerHighestZM": 0.006300000008195639,
+        "verticalApertureM": 0.0030601914040744305,
+        "frontLipXM": 0.2105949968099594,
+        "hingeToFrontDepthM": 0.059594996809959416
+      },
+      "jawIntersections": {
+        "upperTriangles": 2072,
+        "lowerTriangles": 1258,
+        "candidatePairs": 6,
+        "sharedVertexPairsExcluded": 6,
+        "properCrossings": 0,
+        "firstCrossingPairs": [],
+        "crossingVertexBoundsM": null,
+        "firstCrossingTriangles": null,
+        "contactToleranceM": 1e-05,
+        "method": "BVH upper/lower overlap, shared-vertex exclusion, strict edge/triangle interior crossings; coplanar contacts inconclusive"
+      },
+      "headSelfIntersections": {
+        "upper": {
+          "triangles": 2072,
+          "uniqueCandidatePairs": 0,
+          "sharedVertexPairsExcluded": 0,
+          "properCrossings": 0,
+          "firstCrossingPairs": [],
+          "crossingVertexBoundsM": null,
+          "firstCrossingTriangles": null
+        },
+        "lower": {
+          "triangles": 1258,
+          "uniqueCandidatePairs": 0,
+          "sharedVertexPairsExcluded": 0,
+          "properCrossings": 0,
+          "firstCrossingPairs": [],
+          "crossingVertexBoundsM": null,
+          "firstCrossingTriangles": null
+        },
+        "method": "Separate upper/lower BVH self-overlap; nonadjacent strict segment/triangle crossings only; coplanar contacts and enclosed volumes inconclusive",
+        "contactToleranceM": 1e-05
+      }
+    },
+    "renderFiles": [
+      "/workspace/fish.io/artifacts/c1/jaw-final/jaw-qa/supplemental-open/after/jaw_open_25deg.png"
+    ],
+    "renderSha256": {
+      "jaw_open_25deg": "0c09a602ef8ec443d4b564ff9753e0d443e92c272d95ab47f92e75f7a4e68404"
+    },
+    "posed": {
+      "angleDegrees": 25.0,
+      "maximumTestedOpeningDegrees": 25.0,
+      "axis": "+Y",
+      "weightSource": "authored POINT/FLOAT jaw_open_weight",
+      "weightedVertices": 612,
+      "weightRange": [
+        0.0,
+        1.0
+      ],
+      "maxVertexDisplacementM": 0.026350331093227267,
+      "hingeM": [
+        0.1509999930858612,
+        0.0,
+        -0.008681036531925201
+      ],
+      "body": {
+        "looseVertices": 0,
+        "boundaryEdges": 0,
+        "nonManifoldEdges": 0,
+        "inconsistentWindingEdges": 0,
+        "zeroAreaFaces": 0,
+        "invalidVertices": 0,
+        "invalidNormals": 0,
+        "signedVolumeM3": 0.0021890895437312497,
+        "closed": true,
+        "outwardWinding": true,
+        "invalidUvCoordinates": 0
+      },
+      "mouth": {
+        "measurable": true,
+        "selection": {
+          "minX": 0.194,
+          "maxAbsY": 0.016,
+          "upperVertices": 88,
+          "lowerVertices": 52
+        },
+        "upperLowestZM": 0.009360191412270069,
+        "lowerHighestZM": -0.017054643481969833,
+        "verticalApertureM": 0.026414834894239902,
+        "frontLipXM": 0.21080341935157776,
+        "hingeToFrontDepthM": 0.05980342626571655
+      },
+      "jawIntersections": {
+        "upperTriangles": 2072,
+        "lowerTriangles": 1258,
+        "candidatePairs": 8,
+        "sharedVertexPairsExcluded": 8,
+        "properCrossings": 0,
+        "firstCrossingPairs": [],
+        "crossingVertexBoundsM": null,
+        "firstCrossingTriangles": null,
+        "contactToleranceM": 1e-05,
+        "method": "BVH upper/lower overlap, shared-vertex exclusion, strict edge/triangle interior crossings; coplanar contacts inconclusive"
+      },
+      "headSelfIntersections": {
+        "upper": {
+          "triangles": 2072,
+          "uniqueCandidatePairs": 0,
+          "sharedVertexPairsExcluded": 0,
+          "properCrossings": 0,
+          "firstCrossingPairs": [],
+          "crossingVertexBoundsM": null,
+          "firstCrossingTriangles": null
+        },
+        "lower": {
+          "triangles": 1258,
+          "uniqueCandidatePairs": 0,
+          "sharedVertexPairsExcluded": 0,
+          "properCrossings": 0,
+          "firstCrossingPairs": [],
+          "crossingVertexBoundsM": null,
+          "firstCrossingTriangles": null
+        },
+        "method": "Separate upper/lower BVH self-overlap; nonadjacent strict segment/triangle crossings only; coplanar contacts and enclosed volumes inconclusive",
+        "contactToleranceM": 1e-05
+      },
+      "articulatedBlend": "/workspace/fish.io/artifacts/c1/jaw-final/jaw-qa/supplemental-open/after/articulated.blend",
+      "articulatedSha256": "0e4fb065517299ccfc7f0ba865fe59e1cace30068a7580dc590197a1779fc7c6"
+    }
+  },
+  "comparison": {
+    "unchangedFinGeometry": true,
+    "changedFins": [],
+    "unchangedNoncranialBodyPositions": true
+  },
+  "revisionChecks": {
+    "neutralClosedOutwardFinite": true,
+    "neutralJawCrossingsZero": true,
+    "neutralHeadSelfCrossingsZero": true,
+    "posedClosedOutwardFinite": true,
+    "posedJawCrossingsZero": true,
+    "posedHeadSelfCrossingsZero": true,
+    "openingIncreasesAperture": true
+  }
+}

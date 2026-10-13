@@ -1,0 +1,53 @@
+{
+  "status": "Preserved unaccepted checkpoints; generated assets remain local and ignored",
+  "checkpoints": {
+    "anatomy-before": {
+      "generate_bass.py": {
+        "sha256": "1f6ed858dd878a069fce486dfa33de74e70b81e158909846368733ba9af74645",
+        "bytes": 33681,
+        "local_path": "artifacts/c1/anatomy-before/generate_bass.py",
+        "preserved_source_path": "docs/evidence/c1/jaw/checkpoints/anatomy-before/generate_bass.py"
+      },
+      "bass_materials.py": {
+        "sha256": "e1d7d7b0145d514e215756974955e81dfe5e6e3e67060333e73e618c13a3438d",
+        "bytes": 16591,
+        "local_path": "artifacts/c1/anatomy-before/bass_materials.py",
+        "preserved_source_path": "docs/evidence/c1/jaw/checkpoints/anatomy-before/bass_materials.py"
+      },
+      "largemouth-bass.blend": {
+        "sha256": "2a560d7198d3c52d0878c3cd8fc20dd1b539a911fcd056f41c67ec3026ae9185",
+        "bytes": 5007976,
+        "local_path": "artifacts/c1/anatomy-before/largemouth-bass.blend"
+      },
+      "largemouth-bass.glb": {
+        "sha256": "8b49fdf3d49ad3d2a4b40a858ecf59ac6939806ed1926cc913fb2936748493d8",
+        "bytes": 3919240,
+        "local_path": "artifacts/c1/anatomy-before/largemouth-bass.glb"
+      }
+    },
+    "anatomical-revision": {
+      "generate_bass.py": {
+        "sha256": "00a7e5b8c8b84423de1ef45be87e6b2388a85754ac370446cbc45212f8851b0e",
+        "bytes": 35898,
+        "local_path": "tools/blender/generate_bass.py",
+        "preserved_source_path": "docs/evidence/c1/jaw/checkpoints/anatomical-revision/generate_bass.py"
+      },
+      "bass_materials.py": {
+        "sha256": "bc2cd6b1ab8248b09154cf6003c16bf41ece93aade4755cc5352c69b72568a7f",
+        "bytes": 17103,
+        "local_path": "tools/blender/bass_materials.py",
+        "preserved_source_path": "docs/evidence/c1/jaw/checkpoints/anatomical-revision/bass_materials.py"
+      },
+      "largemouth-bass.blend": {
+        "sha256": "52a9149f1fbde497e037c30402fab4f5cc9afa7ebac8d07dbe2f19e2bd065db7",
+        "bytes": 4998400,
+        "local_path": "artifacts/c1/anatomical-revision/largemouth-bass.blend"
+      },
+      "largemouth-bass.glb": {
+        "sha256": "850617dca1cdd5c5a036299299f5607acb2030b04d46981a601111b269175b05",
+        "bytes": 3891076,
+        "local_path": "artifacts/c1/anatomical-revision/largemouth-bass.glb"
+      }
+    }
+  }
+}

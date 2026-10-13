@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Largemouth bass GLB validation</title>
+  <script type="importmap">
+    { "imports": { "three": "/node_modules/three/build/three.module.js" } }
+  </script>
+  <style>
+    html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #071e2a; color: #e6f3ef; font: 14px system-ui, sans-serif; }
+    canvas { display: block; width: 100%; height: 100%; }
+    #status { position: fixed; top: 12px; left: 12px; padding: 8px 11px; border-radius: 6px; background: #071e2a; }
+  </style>
+</head>
+<body>
+  <div id="status">Loading GLB…</div>
+  <script type="module">
+    import * as THREE from '/node_modules/three/build/three.module.js';
+    import { GLTFLoader } from '/node_modules/three/examples/jsm/loaders/GLTFLoader.js';
+
+    const status = document.querySelector('#status');
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+    renderer.setPixelRatio(1);
+    renderer.setSize(innerWidth, innerHeight);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    document.body.append(renderer.domElement);
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x071e2a);
+    scene.add(new THREE.HemisphereLight(0xc9e8e2, 0x263d3a, 2.0));
+    const key = new THREE.DirectionalLight(0xfff2d7, 3.0);
+    key.position.set(-2, 4, 5);
+    scene.add(key);
+    const camera = new THREE.PerspectiveCamera(35, innerWidth / innerHeight, 0.001, 100);
+    window.addEventListener('resize', () => {
+      camera.aspect = innerWidth / innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(innerWidth, innerHeight);
+      render();
+    });
+    let loaded;
+    const render = () => { if (loaded) renderer.render(scene, camera); };
+    const model = new URLSearchParams(location.search).get('model') || '/artifacts/c1/largemouth-bass.glb';
+    window.__bassState = { status: 'loading' };
+    new GLTFLoader().load(model, (gltf) => {
+      loaded = gltf;
+      scene.add(gltf.scene);
+      gltf.scene.updateMatrixWorld(true);
+      const bounds = new THREE.Box3().setFromObject(gltf.scene);
+      const size = bounds.getSize(new THREE.Vector3());
+      const center = bounds.getCenter(new THREE.Vector3());
+      const maxDimension = Math.max(size.x, size.y, size.z);
+      camera.position.set(center.x, center.y + maxDimension * 0.38, center.z + maxDimension * 2.5);
+      camera.lookAt(center);
+      camera.near = Math.max(maxDimension / 1000, 0.0001);
+      camera.far = maxDimension * 20;
+      camera.updateProjectionMatrix();
+      render();
+      const meshes = [];
+      const skinnedMeshes = [];
+      const textures = new Map();
+      gltf.scene.traverse((object) => {
+        if (object.isMesh) {
+          meshes.push(object);
+          if (object.isSkinnedMesh) skinnedMeshes.push(object);
+          for (const material of (Array.isArray(object.material) ? object.material : [object.material])) {
+            const slots = { baseColor: 'map', normal: 'normalMap', roughness: 'roughnessMap', metalness: 'metalnessMap',
+              ambientOcclusion: 'aoMap', emissive: 'emissiveMap', alpha: 'alphaMap' };
+            for (const [role, slot] of Object.entries(slots)) {
+              const texture = material?.[slot];
+              if (texture?.isTexture) {
+                const imageName = texture.name || texture.userData?.name || texture.source?.uuid;
+                if (!textures.has(imageName)) textures.set(imageName, { texture, roles: new Set() });
+                textures.get(imageName).roles.add(role);
+              }
+            }
+          }
+        }
+      });
+      const decodedImages = [...textures].map(([imageName, { texture, roles }]) => ({
+        map: imageName,
+        roles: [...roles],
+        width: texture.image?.width ?? texture.source?.data?.width ?? 0,
+        height: texture.image?.height ?? texture.source?.data?.height ?? 0,
+        decoded: Boolean(texture.image?.complete || texture.image?.width || texture.source?.data?.width),
+        normalSample: roles.has('normal') ? sampleNormal(texture.image ?? texture.source?.data) : null,
+        alphaSample: roles.has('baseColor') ? sampleAlpha(texture.image ?? texture.source?.data) : null,
+        pectoralAlphaSample: roles.has('baseColor') && (texture.name || '').includes('pectoral-iris-atlas')
+          ? sampleAlpha(texture.image ?? texture.source?.data, { x0: 0, y0: 128, x1: 512, y1: 512 }) : null,
+        irisTileSample: roles.has('baseColor') && (texture.name || '').includes('pectoral-iris-atlas')
+          ? sampleIrisTile(texture.image ?? texture.source?.data) : null,
+      }));
+      const info = renderer.info.render;
+      const materials = [...new Set(meshes.flatMap((mesh) => Array.isArray(mesh.material) ? mesh.material : [mesh.material]))];
+      const materialUvBounds = [];
+      for (const mesh of meshes) {
+        const uv = mesh.geometry.getAttribute('uv');
+        if (!uv) continue;
+        const groups = mesh.geometry.groups.length ? mesh.geometry.groups
+          : [{ start: 0, count: mesh.geometry.index?.count ?? uv.count, materialIndex: 0 }];
+        const materialList = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+        for (const group of groups) {
+          const material = materialList[group.materialIndex];
+          if (!material) continue;
+          const min = [Infinity, Infinity], max = [-Infinity, -Infinity];
+          for (let i = group.start; i < group.start + group.count; i++) {
+            const vi = mesh.geometry.index ? mesh.geometry.index.getX(i) : i;
+            for (let axis = 0; axis < 2; axis++) {
+              const value = uv.getComponent(vi, axis);
+              min[axis] = Math.min(min[axis], value);
+              max[axis] = Math.max(max[axis], value);
+            }
+          }
+          materialUvBounds.push({ material: material.name, min, max, indexedVertices: group.count });
+        }
+      }
+      const metrics = {
+        meshCount: meshes.length,
+        skinnedMeshCount: skinnedMeshes.length,
+        primitiveCount: meshes.reduce((sum, mesh) => sum + (Array.isArray(mesh.material) ? mesh.material.length : 1), 0),
+        drawCalls: info.calls,
+        provisionalTotalSceneDrawCallBudget: 100,
+        remainingCallsBeforeOtherSceneObjects: 100 - info.calls,
+        triangles: info.triangles,
+        animationClips: gltf.animations.length,
+        bounds: [size.x, size.y, size.z],
+        axisConvention: 'Blender authoring: nose +X, dorsal +Z; glTF export maps (x,y,z) to (x,z,-y), so dorsal is glTF +Y',
+        camera: { position: camera.position.toArray(), target: center.toArray() },
+        decodedImages,
+        materialUvBounds,
+        materials: materials.map((material) => ({
+          name: material.name, type: material.type, color: material.color?.getHexString() ?? null,
+          roughness: material.roughness ?? null, metalness: material.metalness ?? null,
+          transparent: material.transparent, opacity: material.opacity, alphaTest: material.alphaTest,
+          clearcoat: material.clearcoat ?? 0, clearcoatRoughness: material.clearcoatRoughness ?? null,
+          side: material.side === THREE.DoubleSide ? 'double' : material.side === THREE.BackSide ? 'back' : 'front',
+          blending: material.blending,
+          baseColorImage: material.map?.name || material.map?.userData?.name || null,
+          mapSlots: Object.entries({ baseColor: 'map', normal: 'normalMap', roughness: 'roughnessMap', metalness: 'metalnessMap',
+            ambientOcclusion: 'aoMap', emissive: 'emissiveMap' }).filter(([, slot]) => Boolean(material[slot])).map(([role]) => role),
+        })),
+      };
+      metrics.bodyPbrMaterialFound = metrics.materials.some((material) =>
+        ['baseColor', 'normal', 'roughness'].every((role) => material.mapSlots.includes(role)));
+      metrics.bodyPbrClearcoatMaterials = metrics.materials.filter((material) =>
+        ['baseColor', 'normal', 'roughness'].every((role) => material.mapSlots.includes(role)) && material.clearcoat > 0)
+        .map((material) => ({ name: material.name, type: material.type, clearcoat: material.clearcoat,
+          clearcoatRoughness: material.clearcoatRoughness, roughness: material.roughness }));
+      metrics.transparentMaterialCount = metrics.materials.filter((material) => material.transparent).length;
+      metrics.transparentMeshCount = meshes.filter((mesh) =>
+        (Array.isArray(mesh.material) ? mesh.material : [mesh.material]).some((material) => material.transparent)).length;
+      metrics.clearcoatMaterials = metrics.materials.filter((material) => material.clearcoat > 0).map((material) => ({
+        name: material.name, type: material.type, clearcoat: material.clearcoat,
+        clearcoatRoughness: material.clearcoatRoughness,
+      }));
+      window.__bassState = { status: 'loaded', metrics };
+      status.textContent = `Loaded • ${metrics.triangles.toLocaleString()} triangles • ${metrics.drawCalls} draw calls`;
+      status.dataset.status = 'loaded';
+    }, undefined, (error) => {
+      const message = error?.message || String(error);
+      window.__bassState = { status: 'error', error: message };
+      status.textContent = `Load failed: ${message}`;
+      status.dataset.status = 'error';
+    });
+
+    function sampleNormal(image) {
+      if (!image) return null;
+      const width = image.width || image.videoWidth || 0;
+      const height = image.height || image.videoHeight || 0;
+      if (!width || !height) return null;
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const context = canvas.getContext('2d', { willReadFrequently: true });
+      context.drawImage(image, 0, 0, width, height);
+      const pixels = context.getImageData(0, 0, width, height).data;
+      const sum = [0, 0, 0];
+      let samples = 0;
+      for (let y = 0; y < height; y += 16) {
+        for (let x = 0; x < width; x += 16) {
+          const index = (y * width + x) * 4;
+          sum[0] += pixels[index]; sum[1] += pixels[index + 1]; sum[2] += pixels[index + 2];
+          samples++;
+        }
+      }
+      return { mean: sum.map((value) => value / samples / 255), samples };
+    }
+
+    function pixelsFor(image) {
+      if (!image) return null;
+      const width = image.width || image.videoWidth || 0;
+      const height = image.height || image.videoHeight || 0;
+      if (!width || !height) return null;
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const context = canvas.getContext('2d', { willReadFrequently: true });
+      context.drawImage(image, 0, 0, width, height);
+      const pixels = context.getImageData(0, 0, width, height).data;
+      return { width, height, pixels };
+    }
+
+    function sampleAlpha(image, rectangle) {
+      const source = pixelsFor(image);
+      if (!source) return null;
+      const { width, height, pixels } = source;
+      const { x0 = 0, y0 = 0, x1 = width, y1 = height } = rectangle || {};
+      let sum = 0;
+      let nonZeroSum = 0;
+      let nonZeroSamples = 0;
+      let min = 1;
+      let max = 0;
+      let samples = 0;
+      for (let y = y0; y < y1; y += 8) {
+        for (let x = x0; x < x1; x += 8) {
+          const alpha = pixels[(y * width + x) * 4 + 3] / 255;
+          sum += alpha; min = Math.min(min, alpha); max = Math.max(max, alpha); samples++;
+          if (alpha > 0) { nonZeroSum += alpha; nonZeroSamples++; }
+        }
+      }
+      return { region: [x0, y0, x1, y1], mean: sum / samples, nonZeroMean: nonZeroSamples ? nonZeroSum / nonZeroSamples : 0,
+        nonZeroFraction: nonZeroSamples / samples, min, max, samples, nonZeroSamples };
+    }
+
+    function sampleIrisTile(image) {
+      const source = pixelsFor(image);
+      if (!source || source.width !== 512 || source.height !== 512) return null;
+      const { width, pixels } = source;
+      const sums = { inner: [0, 0, 0], goldRing: [0, 0, 0] };
+      const counts = { inner: 0, goldRing: 0 };
+      let minAlpha = 1;
+      for (let y = 0; y < 128; y += 2) {
+        for (let x = 0; x < 128; x += 2) {
+          const index = (y * width + x) * 4;
+          minAlpha = Math.min(minAlpha, pixels[index + 3] / 255);
+          const radius = Math.hypot((x - 63.5) / 63.5, (y - 63.5) / 63.5);
+          const band = radius >= .63 && radius <= .72 ? 'goldRing'
+            : radius >= .25 && radius <= .42 ? 'inner' : null;
+          if (!band) continue;
+          for (let channel = 0; channel < 3; channel++) sums[band][channel] += pixels[index + channel] / 255;
+          counts[band]++;
+        }
+      }
+      return { region: [0, 0, 128, 128], innerMean: sums.inner.map((sum) => sum / counts.inner),
+        goldRingMean: sums.goldRing.map((sum) => sum / counts.goldRing),
+        innerSamples: counts.inner, goldRingSamples: counts.goldRing, minSampledAlpha: minAlpha };
+    }
+  </script>
+</body>
+</html>
